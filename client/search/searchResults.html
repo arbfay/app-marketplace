@@ -1,0 +1,42 @@
+<template name="searchResults">
+  <div class="row">
+    <div class="col s6">
+      <div class="container">
+        <h3 class="center-align">Résultats de la recherche</h3>
+        <ul>
+          {{#each res in results}}
+            {{>lessonCard res}}
+          {{else}}
+            Aucune recherche effectuée.
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+
+    <div class="col s6">
+      <div class="map-container">
+        Map
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="lessonCard">
+  <li class="col m6">
+    <div class="card">
+      <div class="card-title">
+        {{title}}
+      </div>
+      <div class="card-content">
+        {{shortDesc}}
+      </div>
+      <div class="card-action">
+        <button class="btn cyan darken-2" id="see">Voir</button>
+      </div>
+    </div>
+  </li>
+</template>
+
+<template name="lesCard">
+  lesCard
+</template>

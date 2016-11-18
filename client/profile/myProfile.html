@@ -1,0 +1,78 @@
+<template name="myProfile">
+  {{> navbar}}
+  <div class="container">
+    <div class="row">
+      <div class="col m4 center-align" style="padding-top:20px;">
+        <img src="http://res.cloudinary.com/trys/image/upload/v1479230217/blank-profile-picture_ognoje.png"
+        alt="" class="circle responsive-img" width="200px"/>
+      </div>
+
+      <div class="col m8 valign-wrapper">
+        <div class="row valign">
+          <p>Fayçal Arbai</p>
+          <p>I am the f****** dev of this platform.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col m4">
+        <div class="collection">
+          <a href="#!" class="collection-item myInfo">Mes infos</a>
+          <a href="#!" class="collection-item myRes">Mes réservations</a>
+          <a href="#!" class="collection-item changePass">Changer de mot de passe</a>
+          <a href="#!" class="collection-item logOut">Se déconnecter</a>
+        </div>
+      </div>
+      <div class="col m8">
+        {{> Template.dynamic template=content}}
+    </div>
+  </div>
+  </div>
+
+  {{> footer}}
+</template>
+
+<template name="myInfo">
+  {{> profileEditingCard}}
+</template>
+
+<template name="myRes">
+  <h3>Mes réservations</h3>
+  <ul class="collection">
+    {{#each reservation in reservationsList}}
+      {{> myResItem reservation}}
+    {{/each}}
+  </ul>
+</template>
+
+<template name="myResItem">
+  <li class="collection-item">
+    <h2>{{lessonTitle}}</h2>
+    <p>
+      {{lessonDate}} à {{lessonTime}}
+    </p>
+    <a href="#!" class="secondary-content"><i class="material-icons">cancel</i></a>
+  </li>
+</template>
+
+<template name="changePass">
+  <h3>Changer de mot de passe</h3>
+  <div class="card">
+    <form class="chaPas">
+      <div class="card-content">
+        <div class="input-field">
+          <input type="password" class="validate" id="oldPassword" name="oldPassword">
+          <label for="oldPassword">Ancien mot de passe</label>
+        </div>
+        <div class="input-field">
+          <input type="password" class="validate" id="newPassword" name="newPassword">
+          <label for="newPassword">Nouveau mot de passe</label>
+        </div>
+      </div>
+      <div class="card-action">
+        <button type="submit" class="btn red accent-2 confPass">Modifier</button>
+      </div>
+    </form>
+  </div>
+</template>

@@ -1,0 +1,80 @@
+<template name="navbar">
+  <ul id="languages" class="dropdown-content">
+    <li><a href="#!">Français</a></li>
+    <li><a href="#!">Nederlands</a></li>
+    <li><a href="#!">English</a></li>
+  </ul>
+  {{#if isCoach id=currentUser }}
+    {{> navbarCoach}}
+  {{else}}
+    {{> navbarUser}}
+  {{/if}}
+</template>
+
+<template name="navbarCoach">
+  <nav class="white-text cyan darken-2">
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo"><img alt="logo" class="image-xs" style="margin:5px 0px 5px 5px;" src="img/logo-trys-2-v1_transp_cut.png"></a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse">
+        <i class="material-icons">menu</i>
+      </a>
+      <ul  class="right hide-on-med-and-down">
+        <li><a href="#">Bonjour Coach</a></li>
+        <li><a href="/profile">Mon profil</a></li>
+          <li><a href="/coaching/panel">Mes cours</a></li>
+      </ul>
+      <ul id="mobile-demo" class="side-nav">
+          <li><a href="#">Bonjour Coach</a></li>
+          <li><a href="/profile">Mon profil</a></li>
+          <li><a href="/coaching/panel">Mes cours</a></li>
+        </ul>
+      </div>
+    </nav>
+</template>
+
+<template name="navbarUser">
+  {{#if currentUser}}
+  <nav class="white-text cyan darken-2">
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo"><img alt="logo" class="image-xs" style="margin:5px 0px 5px 5px;" src="img/logo-trys-2-v1_transp_cut.png"></a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse">
+        <i class="material-icons">menu</i>
+      </a>
+      <ul  class="right hide-on-med-and-down">
+        <li><a href="#">Bonjour Patrick</a></li>
+        <li><a href="/profile">Mon profil</a></li>
+        <li><a href="#" class="logoutLink">Se deconnecter</a></li>
+      </ul>
+      <ul id="mobile-demo" class="side-nav">
+          <li><a href="#">Bonjour Patrick</a></li>
+          <li><a href="/profile">Mon profil</a></li>
+          <li><span class="logoutLink">Se deconnecter</span></li>
+        </ul>
+      </div>
+    </nav>
+  {{else}}
+    <nav class="white-text cyan darken-2">
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo center-align" style="margin:5px 0px 5px 5px;"><img alt="logo" class="image-xs" src="img/logo-trys-2-v1_transp_cut.png"></a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse">
+          <i class="material-icons">menu</i>
+        </a>
+        <ul  class="right hide-on-med-and-down">
+          <li><a href="/login">Se connecter</a></li>
+          <li><a href="/signup" class="btn waves-effect waves-light red accent-2">S'inscrire</a></li>
+          <li><a href="#">Devenir coach</a></li>
+
+        </ul>
+        <ul id="mobile-demo" class="side-nav">
+            <li><a href="/login">Se connecter</a></li>
+            <li><a href="/signup" class="btn waves-effect waves-light red accent-2">S'inscrire</a></li>
+            <li><a href="#">Devenir coach</a></li>
+          </ul>
+        </div>
+      </nav>
+    {{/if}}
+</template>
+
+<template name="navbarAdmin">
+
+</template>

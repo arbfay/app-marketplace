@@ -1,0 +1,104 @@
+<template name="reservationConfirmation">
+  <div class="container">
+    <div class="row">
+      <h2 class="center-align">Confirmation de réservation</h2>
+    </div>
+
+    <div class="row">
+      <div class="col m6">
+        {{> profileEditingCard}}
+      </div>
+
+      <div class="col m6">
+          <div class="row">
+            {{> lessonConfirmationCard}}
+          </div>
+          <div class="row center-align">
+            <button class="btn waves-effect waves-light payBtn red accent-2">Payer</button>
+          </div>
+          <div class="row center-align">
+            <button class=" btn cyan darken-3 waves-effect waves-light cancelBtn">Annuler</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="profileEditingCard">
+  <form>
+    <div class="card">
+      <div class="card-title center-align"><h2>Mes infos</h2></div>
+      <div class="card-content">
+        <div class="container profileInfo">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="lastName" type="text" class="validate" value="{{firstName}}">
+              <label class="active" for="lastName">Nom</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="firstName" type="text" class="validate" value="{{lastName}}">
+              <label class="active" for="firstName">Prénom</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="street" type="text" class="validate" value="{{street}}">
+              <label class="active" for="street">Rue</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="city" type="text" class="validate" value="{{city}}">
+              <label class="active" for="city">Commune</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="zip" type="text" class="validate" value="{{zip}}">
+              <label class="active" for="zip">Code Postal</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-action">
+        <button type="submit" class="waves-effect waves-light updateProfile">
+          Modifier
+        </button>
+      </div>
+    </div>
+  </form>
+</template>
+
+<template name="lessonConfirmationCard">
+  <div class="card">
+    <div class="card-title">
+      <div class="card-title center-align"><h2>Résumé du cours</h2></div>
+    </div>
+    <div class="card-content">
+      <div class="row">
+        <h5>{{lessonTitle}}</h5>
+      </div>
+
+      <div class="row">
+        <img src="http://res.cloudinary.com/trys/image/upload/v1479230217/blank-profile-picture_ognoje.png"
+        alt="" class="circle responsive-img" width="50px"/>
+        Patrick Taichi
+      </div>
+
+      <div class="row">
+        <p>{{lessonShortDesc}}</p>
+      </div>
+
+      <div class="row">
+        <div class="col s6">
+          {{lessonDate}} à {{lessonTime}}
+        </div>
+
+        <div class="col s6">
+          {{lessonPrice}} €
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

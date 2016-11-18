@@ -1,0 +1,50 @@
+<template name="coachingPanel">
+  <div class="container">
+    <div class="row">
+      <h3 class="center-align">Coaching Panel</h3>
+    </div>
+    <div class="row">
+      <div class="col m4">
+        <ul class="collection">
+          {{#each lesson in coachLessons}}
+             {{> coachingLessonItem lesson}}
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="col m8">
+        {{> attendingListTemplate }}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="attendingListTemplate">
+  <div class="card">
+    <form>
+      <div class="card-content">
+        <ul class="collection">
+          {{#each users}}
+            <li class="collection-item">
+              {{email}}
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="card-action">
+
+      </div>
+    </form>
+  </div>
+</template>
+
+<template name="coachingLessonItem">
+  <li class="collection-item"><a href='#!'>
+    <div class="">
+      {{title}}
+    </div>
+    <div class="">
+      {{date}} à {{time}}
+    </div>
+  </a></li>
+</template>

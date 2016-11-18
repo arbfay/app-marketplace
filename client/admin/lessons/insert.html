@@ -1,0 +1,105 @@
+<template name="insertLessonByAdmin">
+  <div class="container">
+    <div class="card">
+      <h3 class="center-align">Ajouter un cours</h3>
+
+      <div class="card-content">
+        <div class="container">
+          <form>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="title" type="text" class="validate">
+                <label for="title">Titre du cours (ex: XIntense Accro Yoga)</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="shortDesc" type="text" length="100" class="validate">
+                <label for="shortDesc">Courte description (max. 100 lettres)</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="longDesc" length="1000" class="materialize-textarea"></textarea>
+                <label for="longDesc">Longue description (max. 1000 lettres)</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s6">
+                <p>
+                  <input name="category" type="radio" id="yoga" value="yoga"/>
+                  <label for="yoga">Yoga</label>
+                </p>
+                <p>
+                  <input name="category" type="radio" id="pilates" value="pilates" />
+                  <label for="pilates">Pilates</label>
+                </p>
+                <p>
+                  <input name="category" type="radio" id="taiChi" value="taiChi" />
+                  <label for="taiChi">Tai Chi</label>
+                </p>
+                <p>
+                  <input name="category" type="radio" id="qiGong" value="qiGong" />
+                  <label for="qiGong">Qi Gong</label>
+                </p>
+              </div>
+
+              <div class="input-field col s6">
+                <input id="userEmail" type="email" class="autocomplete">
+                <label for="userMail">Utilisateur</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="address" type="text" class="validate" length="150">
+                <label for="address">Adresse</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s4">
+                <input id="maxAttendees" type="number" max="20" min="0" class="validate">
+                <label for="maxAttendees">Nombre de participants</label>
+              </div>
+
+              <div class="input-field col s4">
+                <input id="price" type="number" max="40" min="5" step="0.01" class="validate baseCalculation">
+                <label for="price">Prix par participant</label>
+              </div>
+
+              <div class="input-field col s4">
+                <input id="commission" type="number" step="0.01">
+                <label for="commission">Calcul de la commission</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s4">
+                <input id="date" type="date" class="datepicker">
+                <label for="date"></label>
+              </div>
+
+              <div class="input-field col s4">
+                <input id="time" class="timepicker" type="time">
+                <label for="time"></label>
+              </div>
+
+              <div class="input-field col s4">
+                <input type="checkbox" id="duplicateEveryWeek" />
+                <label for="duplicateEveryWeek">Toutes les semaines</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <button type="submit">Envoyer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,30 @@
+<template name="signupForm">
+
+  <div class="container">
+    <div class="card">
+      <div class="card-title">
+        <h3 class="center-align">Devenir membre</h3>
+      </div>
+      <div class="card-content">
+        <form>
+          <div class="row">
+            <div class="input-field col s6 push-s3">
+              <input id="email" type="email" class="validate">
+              <label for="email" data-error="Ceci n'est pas une adresse valide.">
+                Adresse e-mail</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6 push-s3">
+              <input id="password" type="password" class="validate">
+              <label for="password">Mot de passe</label>
+            </div>
+          </div>
+          <div class="row center-align">
+            <button class="btn red accent-2 mdl-shadow--2dp" id="sendForm">S'inscrire</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
