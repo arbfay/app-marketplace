@@ -8,6 +8,38 @@ Template.searchResults.onCreated(function() {
 });
 */
 
+Template.map.onCreated(function() {
+  GoogleMaps.ready('map', function(map) {
+    var res = Session.get('searchResults');
+
+    for(var i = 0; i < res.length; i++) {
+
+        marker = new google.maps.Marker({
+       position: new google.maps.LatLng(res[i].geospatial.coordinates[1],
+                                        res[i].geospatial.coordinates[0]),
+       map: map.instance
+      });
+      console.log(marker);
+    }
+
+  });
+});
+
+
+Template.map.helpers({
+  mapOptions: function() {
+    if (GoogleMaps.loaded()) {
+      var l = Session.get('searchedLoc');
+      return {
+        center: new google.maps.LatLng(l.coordinates[1], l.coordinates[0]),
+        zoom: 14
+      };
+    }
+  }
+});
+
+
+
 
 Template.searchResults.helpers({
   results : function(){
@@ -36,25 +68,34 @@ Template.searchResults.helpers({
                   coord.lat()
                 ]
               };
+              Session.set('searchedLoc', loc);
             } else {
               console.log("Problem with the geocoder : " + status);
             }
           });
           //We look for the lessons near the searched location
+          var r={};
+          Meteor.call('geoNear',loc, (err, res) => {
+            if(res){
+              r=res;
+              Session.set('searchResults', r);
+            } else {
+              console.log(err);
+            }
+          });
 
-          var res = Meteor.call('geoNear',loc);
-          console.log(res);
     }
     else {
       var dateSearch= new Date();
       var daysToAdd = 14;
+
       dateSearch.setDate(dateSearch.getDate() + daysToAdd);
 
-      resultats=Lessons.find({date: { $lt: dateSearch}});
-      return resultats;
+      //
+      r2=Lessons.find({date: { $lt: dateSearch}}).fetch();
+      Session.set('searchResults',r2);
     }
-
-    return resultats;
+    return Session.get('searchResults');
   },
 
 });

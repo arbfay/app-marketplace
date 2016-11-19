@@ -1,4 +1,5 @@
 
+
 Template.lessonCard.events({
   "click #see": function(event, template){
      event.preventDefault();

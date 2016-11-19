@@ -1,0 +1,82 @@
+<template name="adminPanel">
+  <div class="container">
+    <div class="row">
+      <h3>Panneau d'administration</h3>
+    </div>
+
+    <div class="row">
+      <div class="col m4">
+        <ul class="collection">
+          {{> buttonItems}}
+        </ul>
+      </div>
+
+
+      <div class="col m8">
+        {{> statsPanel}}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="buttonItems">
+  <li class="collection-item">
+    <button class="btn cyan darken-3 insertLesson">
+      Nouveau cours
+    </button>
+  </li>
+  <li class="collection-item">
+    <button class="btn green accent-2 insertCoach">
+      Nouveau coach
+    </button>
+  </li>
+  <li class="collection-item">
+    <button class="btn red darken-3 updateLesson">
+      Modifier un cours
+    </button>
+  </li>
+  <li class="collection-item">
+    <button class="btn blue darken-3 updateReservation">
+      Modifier une réservation
+    </button>
+  </li>
+</template>
+
+<template name="statsPanel">
+  <div class="row">
+    <h4>Statistiques</h4>
+  </div>
+
+  <div class="row">
+    <div class="col m6">
+      {{> statCard lessonsCount}}
+    </div>
+    <div class="col m6">
+      {{> statCard coachesCount}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col m6">
+      {{> statCard reservationsCount}}
+    </div>
+    <div class="col m6">
+      {{> statCard usersCount}}
+    </div>
+  </div>
+</template>
+
+<template name="statCard">
+  <div class="card">
+    <div class="card-title">
+      {{stat}}
+    </div>
+    <div class="card-content">
+      {{name}}
+    </div>
+    <div class="card-action">
+      <button class="btn yellow accent-2">
+        Voir
+      </button>
+    </div>
+  </div>
+</template>
