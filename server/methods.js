@@ -9,5 +9,19 @@ Meteor.methods({
      } else if (collectionName==="users") {
        return Meteor.users.find().count();
      }
-   }
+   },
+
+   sendMail:function(to,from,subject,text){
+     check([to, from, subject, text], [String]);
+
+     this.unblock();
+      Email.send({
+        to: to,
+        from: from,
+        subject: subject,
+        html: text
+      });
+
+      return 1;
+   },
 });

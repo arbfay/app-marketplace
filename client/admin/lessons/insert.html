@@ -88,10 +88,10 @@
                 <label for="time"></label>
               </div>
 
-              <div class="input-field col s4">
-                <input type="checkbox" id="duplicateEveryWeek" />
-                <label for="duplicateEveryWeek">Toutes les semaines</label>
-              </div>
+              <div class="file-field input-field col s4">
+                <input name="file" type="file"
+                 class="cloudinary-fileupload" data-cloudinary-field="image_id"
+                 data-form-data=" ... html-escaped JSON data ... " ></input>
             </div>
 
             <div class="row">
@@ -102,4 +102,5 @@
       </div>
     </div>
   </div>
+
 </template>

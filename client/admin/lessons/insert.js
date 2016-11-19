@@ -70,7 +70,11 @@ Template.insertLessonByAdmin.events({
 
      maxAttendees= parseInt(maxAttendees);
 
+
+
+
      var toInsert={
+
        title:title,
        shortDesc:shortDesc,
        longDesc:longDesc,
