@@ -1,12 +1,9 @@
 <template name="mainParallax">
-  <section class="parallax-container">
-    <div class="parallax">
-      <img alt="image" src="http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg">
-    </div>
+  <div class="section searchImg">
     <div class="container v-align-transform">
       <div class="row">
-        <div class="col-md-10 col-md-offset-1 col-sm-12 text-center">
-          <h2 class="mb8"><strong>De l'exercice.</strong> Trouvez des cours
+        <div class="col m10 push-m1 s12 center-align">
+          <h2 class="mb8" style="color:white;"><b>De l'exercice.</b> Trouvez des cours
                      de Yoga, Pilates ou Tai Chi à Bruxelles
                      et détendez-vous.</h2>
           <div class="row">
@@ -14,44 +11,239 @@
           </div>
         </div>
       </div>
-
     </div>
+  </div>
 
-  </section>
+  {{> lessonsExample}}
+
+  {{> showingFeatures}}
+
+  {{> newsletterForm}}
 </template>
 
+<!--
 <template name="lessonsExample">
-  <div class="container">
-    <div class="row">
-      <div class="col m4">
-        <div class="card">
-          <div class="card-title">
-            Card 1
+  <section style="padding-top:40px;">
+  					<div class="container">
+  						<div class="row">
+  							<div class="col-sm-4">
+
+  								<div class="mdl-card mdl-shadow-2dp">
+  									<div class="mdl-card__media">
+  										<img src="img/yoga-class.jpg" width="400" height="200" border="0" alt="">
+  									</div>
+
+  									<div class="mdl-card__title card-title" >
+  										Holy Yoga
+  										<div class="card-location card-elem-light">
+  											<i class="material-icons" style="font-size: 14px;">place</i>
+  											<span>230 m</span>
+  										</div>
+  									</div>
+
+  									<div class="mdl-card__supporting-text card-category">
+  											<span>€€ ・ Yoga</span>
+  									</div>
+
+  									<div class="mdl-card__supporting-text card-elem-light">
+  										The Holy Yoga combines Christian meditation and some forms of yoga. The course is given in English.
+  									</div>
+  								</div>
+  							</div>
+
+  							<div class="col-sm-4">
+
+  								<div class="mdl-card mdl-shadow-2dp">
+  									<div class="mdl-card__media">
+  										<img src="img/resis-band.jpg" width="400" height="200" border="0" alt="">
+  									</div>
+
+  									<div class="mdl-card__title card-title" >
+  										Resistive Band
+  										<div class="card-location card-elem-light">
+  											<i class="material-icons" style="font-size: 14px;">place</i>
+  											<span>437 m</span>
+  										</div>
+  									</div>
+
+  									<div class="mdl-card__supporting-text card-category">
+  											<span>€€€ ・ Pilates</span>
+  									</div>
+
+  									<div class="mdl-card__supporting-text card-elem-light">
+  										Une bande résistive est utilisée pour faire des exercices qui tonifient différentes parties du corps.
+  									</div>
+  								</div>
+  							</div>
+
+  							<div class="col-sm-4">
+
+  								<div class="mdl-card mdl-shadow-2dp">
+  									<div class="mdl-card__media">
+  										<img src="img/taichi.jpg" width="400" height="200" border="0" alt="">
+  									</div>
+
+  									<div class="mdl-card__title card-title" >
+  										Tai Chi Yang with Patrick
+  										<div class="card-location card-elem-light">
+  											<i class="material-icons" style="font-size: 14px;">place</i>
+  											<span>876 m</span>
+  										</div>
+  									</div>
+
+  									<div class="mdl-card__supporting-text card-category">
+  											<span>€ ・ Tai Chi</span>
+  									</div>
+
+  									<div class="mdl-card__supporting-text card-elem-light">
+  										Différents styles existent en Tai Chi. Parmi ceux-ci, il y a le style Yang. Patrick est maître dans ce style.
+  									</div>
+  								</div>
+  							</div>
+
+  						</div>
+  					</div>
+
+  				</section>
+</template> -->
+
+<template name="lessonsExample">
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col m4">
+
+          <div class="card">
+            <div class="card-image">
+              <img src="http://res.cloudinary.com/trys/image/upload/v1479316560/yoga-class_ff9hqf.jpg" width="400" height="200" border="0" alt="" />
+            </div>
+
+            <div class="card-title">
+              <div class="mt8" style="margin-left : 8px;">
+                Holy Yoga
+              </div>
+            </div>
+
+            <div class="card-content" style="padding-bottom:0px;">
+              <div class="row">
+                €€ ・ Yoga
+              </div>
+              <div class="row">
+                	The Holy Yoga combines Christian meditation and some forms of yoga. The course is given in English.
+              </div>
+            </div>
+
+            <div class="card-action">
+              <a href="#">Voir le cours</a>
+            </div>
           </div>
-          <div class="card-content">
-            This is a card-content.
+
+        </div>
+
+        <div class="col m4">
+          <div class="card">
+            <div class="card-image">
+              <img src="http://res.cloudinary.com/trys/image/upload/v1479316560/yoga-class_ff9hqf.jpg" width="400" height="200" border="0" alt="" />
+            </div>
+
+            <div class="card-title">
+              <div class="mt8" style="margin-left : 8px;">
+                Holy Yoga
+              </div>
+            </div>
+
+            <div class="card-content" style="padding-bottom:0px;">
+              <div class="row">
+                €€ ・ Yoga
+              </div>
+              <div class="row">
+                	The Holy Yoga combines Christian meditation and some forms of yoga. The course is given in English.
+              </div>
+            </div>
+
+            <div class="card-action">
+              <a href="#">Voir le cours</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col m4">
+          <div class="card">
+            <div class="card-image">
+              <img src="http://res.cloudinary.com/trys/image/upload/v1479316560/yoga-class_ff9hqf.jpg" width="400" height="200" border="0" alt="" />
+            </div>
+
+            <div class="card-title">
+              <div class="mt8" style="margin-left : 8px;">
+                Holy Yoga
+              </div>
+            </div>
+
+            <div class="card-content" style="padding-bottom:0px;">
+              <div class="row">
+                €€ ・ Yoga
+              </div>
+              <div class="row">
+                  The Holy Yoga combines Christian meditation and some forms of yoga. The course is given in English.
+              </div>
+            </div>
+
+            <div class="card-action">
+              <a href="#">Voir le cours</a>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</template>
 
-      <div class="col m4">
-        <div class="card">
-          <div class="card-title">
-            Card 2
-          </div>
-          <div class="card-content">
-            This is a card-content.
+<template name="showingFeatures">
+  <div class="section">
+    <div class="">
+      <div class="row">
+        <div class="col m6">
+          <div class="row">
+            <div class="col m4">
+              <img alt="Accès facile" src="http://res.cloudinary.com/trys/image/upload/v1479746682/map_npdf8b.png">
+            </div>
+            <div class="col m8">
+              <h5 class="uppercase bold mb16">Plus de recherches fastidieuses</h5>
+              <p class="fade-1-4">
+                Des coachs qui donnent des cours partout à Bruxelles et que vous pouvez trouver en un seul endroit. Voilà qui aide.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="col m4">
-        <div class="card">
-          <div class="card-title">
-            Card 3
-          </div>
-          <div class="card-content">
-            This is a card-content.
+        <div class="col m6">
+            <div class="row">
+              <div class="col m4">
+                <img alt="Récompenses" src="http://res.cloudinary.com/trys/image/upload/v1479746682/reward_bbaep0.png">
+              </div>
+              <div class="col m8">
+                <h5 class="uppercase bold mb16">Rester motivé avec des cadeaux !</h5>
+                <p class="fade-1-4">
+                  Pour chaque cours, recevez des points et entrez ainsi dans l'arène. Hissez-vous dans le top 10% et recevez des cadeaux.
+                </p>
+              </div>
+            </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col m3"></div>
+        <div class="col m6">
+          <div class="row">
+            <div class="col m4">
+              <img alt="Responsable" src="http://res.cloudinary.com/trys/image/upload/v1479746682/responsable_dzam0h.png">
+            </div>
+            <div class="col m8">
+              <h5 class="uppercase bold mb16">Avec une entreprise qui s'engage</h5>
+              <p class="fade-1-4">
+                Il ne s'agit pas seulement d'une plateforme sauvage, nous nous engageons avec nos coachs à fournir un service de qualité.
+              </p>
+            </div>
           </div>
         </div>
       </div>

@@ -80,7 +80,6 @@ Template.profileEditingCard.events({
   "click .updateProfile" (event) {
     event.preventDefault();
 
-    var t = event.target;
     var firstName= $("#firstName").val();
     var lastName = $("#lastName").val();
     var street = $("#street").val();
@@ -153,7 +152,24 @@ Template.lessonConfirmationCard.helpers({
   lessonPrice: function(){
     var lesson = getCurrentLesson();
     if(lesson !==""){
-      return lesson.price;
+      var price = lesson.price;
+      if(Session.get('promoCode')){
+        var pC = Session.get('promoCode');
+        var rTA = new ReactiveVar(0);
+
+        Meteor.call('applyPromoCode',pC, (err,res)=>{
+          if(res){
+              rTA.set(res.reductionToApply);
+          } else{
+            console.log(res);
+            console.log(err);
+          }
+        });
+
+        price = price - rTA.get();
+      }
+
+      return price;
     }
   }
 });
@@ -164,9 +180,42 @@ Template.reservationConfirmation.events({
 
     var reservationId = FlowRouter.getParam('reservationId');
     var lesson = getCurrentLesson();
+
+    var price;
+
+    if(lesson !==""){
+      price = lesson.price;
+      if(Session.get('promoCode')){
+        var pC = Session.get('promoCode');
+        var rTA = new ReactiveVar(0);
+
+        Meteor.call('applyPromoCode',pC, (err,res)=>{
+          if(res){
+            if(res.maxUsage >0){
+              rTA.set(res.reductionToApply);
+              Meteor.call('addPromoCodeUsage',res, Accounts.user().emails[0].address,(error,results)=>{
+                if(err){
+                  console.log('Attempt to add the usage of the promo code');
+                  console.log(error);
+                }
+              });
+
+            }
+          } else{
+            console.log(res);
+            console.log(err);
+          }
+        });
+
+        price = price - rTA.get();
+      }
+    } else {
+      alert('Mauvaise tentative');
+    }
+
     if(lesson.maxAttendeesLeft > 0){
       var email = Accounts.user().emails[0].address;
-      var priceInCents = lesson.price * 100;
+      var priceInCents = price * 100;
 
       var handler = StripeCheckout.configure({
         key: 'pk_test_LqluwQNx3xv8VtbJwYme8XJc',

@@ -48,3 +48,12 @@
     background-color: #FF1744;
     text-decoration-color: white;
   }
+
+  .searchImg{
+    height:90vh;
+    width:100vw;
+    background: -moz-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat;
+    background: -webkit-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat;
+    background: -o-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat;
+  }

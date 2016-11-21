@@ -28,13 +28,13 @@ Template.insertLessonByAdmin.events({
      var shortDesc=t.shortDesc.value;
      var longDesc = t.longDesc.value;
      var category = t.category.value;
-     var userEmail = t.userEmail.value;
+     var coachEmail = t.userEmail.value;
      var address = t.address.value;
      var maxAttendees = t.maxAttendees.value;
      var price=t.price.value;
      var date = t.date.value;
      var time = t.time.value;
-
+     var imgUrl = t.imgUrl.value;
      var attendeesList = AttendeesList.insert({reservations:[],users:[]});
 
      //Pricing
@@ -74,12 +74,12 @@ Template.insertLessonByAdmin.events({
 
 
      var toInsert={
-
+       imgUrl:imgUrl,
        title:title,
        shortDesc:shortDesc,
        longDesc:longDesc,
        category:category,
-       userEmail:userEmail,
+       coachEmail:coachEmail,
        address:address,
        geospatial:{
          type:"place",

@@ -89,14 +89,16 @@
               </div>
 
               <div class="file-field input-field col s4">
-                <input name="file" type="file"
-                 class="cloudinary-fileupload" data-cloudinary-field="image_id"
-                 data-form-data=" ... html-escaped JSON data ... " ></input>
-            </div>
+                <div class="input-field col s12">
+                  <input id="imgUrl" type="url" class="validate">
+                  <label for="imgUrl">URL Cloudinary</label>
+                </div>
+              </div>
 
             <div class="row">
               <button type="submit">Envoyer</button>
             </div>
+          </div>
           </form>
         </div>
       </div>

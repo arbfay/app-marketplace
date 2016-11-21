@@ -19,6 +19,43 @@ Template.myProfile.events({
   },
 });
 
+function getNames (){
+
+  var userMail = "";
+  if(Accounts.user()){
+    var userMail = Accounts.user().emails[0].address;
+  }
+
+  var userProfile = UserProfiles.findOne({email:userMail});
+
+  if(userProfile){
+    var firstName = userProfile.firstName;
+    var lastName = userProfile.lastName;
+    return {
+      firstName : firstName,
+      lastName : lastName
+    };
+  } else{
+    return {
+      firstName : "Prénom",
+      lastName : "Nom"
+    };
+  }
+}
+Template.myProfile.helpers({
+  firstName : function(){
+    var res = getNames();
+          console.log(res);
+          Session.set('firstName',res.firstName);
+          Session.set('lastName', res.lastName);
+          
+    return Session.get('firstName');
+  },
+  lastName : function(){
+    return Session.get('lastName');
+  }
+});
+
 Template.myRes.helpers({
   reservationsList : function(){
     var userId = Meteor.userId();

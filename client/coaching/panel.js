@@ -39,6 +39,17 @@ Template.attendingListTemplate.helpers({
     } else {
       return {};
     }
+  },
+  firstName : function(){
+    var res = getNames();
+          console.log(res);
+          Session.set('firstName',res.firstName);
+          Session.set('lastName', res.lastName);
+
+    return Session.get('firstName');
+  },
+  lastName : function(){
+    return Session.get('lastName');
   }
 });
 
