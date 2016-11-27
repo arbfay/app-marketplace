@@ -1,29 +1,54 @@
 <template name="signupForm">
+  <div style="
+    height:100vh;
+    width:100vw;
+    background: #FFCDD2 no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 
-  <div class="container">
-    <div class="card">
-      <div class="card-title">
-        <h3 class="center-align">Devenir membre</h3>
-      </div>
-      <div class="card-content">
-        <form>
-          <div class="row">
-            <div class="input-field col s6 push-s3">
-              <input id="email" type="email" class="validate">
-              <label for="email" data-error="Ceci n'est pas une adresse valide.">
-                Adresse e-mail</label>
+  ">
+    <div class="container">
+      <div class="row">
+        <div class="col m6 s12 push-m3">
+          <div class="card">
+            <div class="card-title">
+              <h3 class="center-align">Devenir membre</h3>
             </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s6 push-s3">
-              <input id="password" type="password" class="validate">
-              <label for="password">Mot de passe</label>
+            <div class="card-content">
+              <form>
+                <div class="row">
+                  <div class="input-field col m8 push-m2 s12">
+                    <input id="email" type="email" class="validate">
+                    <label for="email" data-error="Ceci n'est pas une adresse valide.">
+                      Adresse e-mail</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col m8 push-m2 s12">
+                    <input id="password" type="password" class="validate">
+                    <label for="password">Mot de passe</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col m8 push-m2 s12">
+                    <input type="checkbox" id="agreement" />
+                    <label for="agreement" style ="font-size:12px;">J'accepte les <a href="#">Conditions Générales d'Utilisation</a>.</label>
+                  </div>
+                </div>
+                <div class="row center-align">
+                  <button class="btn red accent-2 mdl-shadow--2dp" id="sendForm">S'inscrire</button>
+                </div>
+              </form>
             </div>
+            <div class="card-action">
+              Déjà membre ?
+              <a href="/signup" style="text-transform:none">Connectez-vous par ici !</a>
+            </div>
+
           </div>
-          <div class="row center-align">
-            <button class="btn red accent-2 mdl-shadow--2dp" id="sendForm">S'inscrire</button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>

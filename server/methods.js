@@ -65,5 +65,79 @@ Meteor.methods({
          }
        }
      });
+   },
+   insertCoach : function(data){
+     check(data.updatedAt, Date);
+     var coachId = Coaches.insert(data);
+     var coachMail = data.email;
+     var userProfile = UserProfiles.findOne({email:coachMail});
+
+     UserProfiles.update(userProfile._id,{
+       $set :{
+         coachId : coachId,
+         coachActive: true,
+       }
+     });
+
+   },
+   insertUserProfile : function(data){
+     var firstName = data.firstName;
+     var lastName = data.lastName;
+     var points = data.points;
+     var zip = data.address.zip;
+
+     check(firstName,String);
+     check(lastName,String);
+     check(points, Number);
+     check(zip, String);
+
+     UserProfiles.insert(data);
+
+     SSR.compileTemplate('htmlEmail', Assets.getText('welcome-email.html'));
+
+     Email.send({
+        to: data.email,
+        from: "Fayçal de Trys <faycal@trys.be>",
+        subject: "Mot de bienvenue et petite question",
+        html: SSR.render('htmlEmail',{}),
+      });
+
+     return true;
+   },
+   updateUserProfile : function(id,data){
+     UserProfiles.update(
+       {_id:id},
+       {$set : data},
+       function(err){
+         if(err){
+           console.log(err);
+         }
+       });
+   },
+
+   insertAttendeesList : function(s){
+    if(s ==="ok"){
+      return AttendeesList.insert({reservations:[],users:[]});
+    }
+   },
+
+   insertLessonByAdmin : function(data){
+     check(data.title,String);
+     check(data.shortDesc,String);
+     check(data.longDesc, String);
+     check(data.coachEmail, String);
+     check(data.address, String);
+     check(data.updatedAt, Date);
+
+     data.attendeesList = AttendeesList.insert({reservations:[],users:[]});
+
+     return Lessons.insert(data);
+   },
+   insertReservation : function(data){
+     check(data.lessonTitle,String);
+     check(isComplete, Boolean);
+     check(isPaid, Boolean);
+
+     return Reservation.insert(data);
    }
 });

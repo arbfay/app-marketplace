@@ -1,1 +1,1 @@
-Lessons._ensureIndex({'geospatial.coordinates':'2dsphere'});
+Lessons._ensureIndex({'geospatial':'2dsphere'});

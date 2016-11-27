@@ -4,35 +4,48 @@ Template.reservationCard.events({
 
     //Create a reservation that is not complete
     var userId = Meteor.userId();
+    if(userId === null){
+      FlowRouter.go('/login');
+    }
     var userMail = Accounts.user().emails[0].address;
+    Meteor.subscribe("userProfileByMail", userMail);
+
     var userProfile = UserProfiles.findOne({email:userMail});
 
-
     var userProfileId = userProfile._id;
-    var lessonId = FlowRouter.getParam('lessonId');
-    var lesson = Lessons.findOne(lessonId);
+
+    var lessons = Lessons.find().fetch();
+    var selection = Session.get('selectedDate');
+    var lesson = lessons[selection.select];
+    var lessonId = lesson._id;
     var coachId= lesson.coachId;
 
     if(lesson && userId && userProfileId){
-      var resId = Reservations.insert({
+      var toInsert = {
         userId:userId,
         userProfileId :userProfileId,
         lessonId : lessonId,
         lessonTitle:lesson.title,
         lessonDate:lesson.date,
         lessonTime:lesson.time,
+        lessonMoment:lesson.moment,
         coachId : coachId,
         isComplete:false,
         isPaid:false,
         createdAt : new Date(),
         updatedAt : new Date(),
+      };
+      Meteor.call('insertReservation', toInsert, function(err,res){
+        if(err){
+          Materialize.toast("Erreur lors de l'insertion d'une réservation",4000,'rounded');
+        } else{
+          FlowRouter.go('/class/:lessonId/:reservationId',{lessonId:lessonId,
+                                                          reservationId:res},{});
+        }
       });
-      console.log(resId);
-      //Use the id of the reservation to go to resConfirmation
-      FlowRouter.go('/class/:lessonId/:reservationId',{lessonId:lessonId,
-                                                      reservationId:resId,},{});
+
     } else {
-      FlowRouter.go('/');
+      //FlowRouter.go('/');
     }
 
   },

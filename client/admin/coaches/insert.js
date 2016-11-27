@@ -3,17 +3,25 @@ Template.coachInsert.events({
     event.preventDefault();
 
     var coachMail = event.target.coachEmail.value;
+    var imgUrl = event.target.imgUrl.value;
+    var shortDesc = event.target.shortDesc.value;
 
-    var userCoach = Meteor.users.findOne({'emails.address':coachMail},{});
-    var userCoachId = userCoach._id;
+    Meteor.subscribe('userByMail',""+coachMail);
+
+
+    var userCoach = Meteor.users.findOne({'emails.address':coachMail});
+    console.log(userCoach);
+    
     var toInsert = {
       createdAt:new Date(),
       updatedAt: new Date(),
-      userId:userCoachId,
+      userId:userCoach._id,
       email:coachMail,
+      imgUrl:imgUrl,
+      shortDesc : shortDesc,
     };
 
-    var coachId = Coaches.insert(toInsert,function(err,id){
+    var coachId = Meteor.call("insertCoach",toInsert,function(err,res){
       if(err){
         console.log("Erreur lors de l'insertion d'un coach : " + err);
         alert("Erreur lors de l'insertion d'un coach");
@@ -21,19 +29,8 @@ Template.coachInsert.events({
         Materialize.toast('Nouveau coach enregistré !', 4000, 'rounded');
       }
     });
-    var userProfile = UserProfiles.findOne({email:coachMail});
 
-    var s= UserProfiles.update(
-      {_id:userProfile._id},{
-      $set : {
-        coachId:coachId,}
-      },
-      function(err){
-        if(err){
-          console.log(err);
-        }
-      });
-    console.log(s);
+
     event.target.coachEmail.value='';
   }
 });

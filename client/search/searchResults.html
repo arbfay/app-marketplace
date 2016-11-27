@@ -1,76 +1,104 @@
 <template name="searchResults">
-  <div class="row">
-    <div class="col s6">
+  <div class="row firstRow">
+    <div class="col m7 s12">
+      <div class="section">
+        <div class="row">
+          {{> searchbarForResults}}
+        </div>
+        <div class="row">
+          {{> filterCategory}}
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          {{> lessonsResults}}
+        </div>
+      </div>
       <div class="container">
-        <h3 class="center-align">Résultats de la recherche</h3>
-        <ul>
-          {{#each res in results}}
-            {{>lessonCard res}}
-          {{else}}
-            Aucune recherche effectuée.
-          {{/each}}
-        </ul>
+        <div class="row center-align">
+          <button class="btn-flat btn-large showMore">
+            Afficher plus
+          </button>
+        </div>
       </div>
     </div>
 
-    <div class="col s6">
+    <div class="col m5 hide-on-small-only" style=" padding-right:0px !important;">
       {{> map}}
     </div>
   </div>
 </template>
 
-<template name="lessonCard">
-  <li class="col m6">
-    <div class="card hoverable">
-      <div class="card-title">
-        {{title}}
-      </div>
-      <div class="card-content">
-        {{shortDesc}}
-      </div>
-      <div class="card-action">
-        <button class="btn cyan darken-2" id="see">Voir</button>
-      </div>
+<template name="filterCategory">
+  <div class="center-align">
+    <div class="col s4">
+      <input type="checkbox" id="categoryYoga" checked />
+      <label for="categoryYoga">Yoga</label>
     </div>
+
+    <div class="col s4">
+      <input type="checkbox" id="categoryPilates" checked />
+      <label for="categoryPilates">Pilates</label>
+    </div>
+
+    <div class="col s4">
+      <input type="checkbox" id="categoryTaiChi" checked />
+      <label for="categoryTaiChi">Tai Chi</label>
+    </div>
+  </div>
+</template>
+
+<template name="lessonsResults">
+  <ul style="overflow-y: auto">
+    {{#each res in results}}
+      {{>lessonCard res}}
+    {{else}}
+      Aucun cours trouvé.
+    {{/each}}
+  </ul>
+</template>
+
+<template name="lessonCard">
+  <li class="col m6 s12">
+              <div class="card hoverable">
+                <div class="card-image">
+                  <img src="{{imgUrl}}" border="0" alt="" height="186px" width="300px"/>
+                </div>
+
+                <div class="card-title">
+                  <div class="mt8" style="margin-left : 8px;">
+                    <a href="{{path}}">{{title}}</a>
+                    <div class="card-location card-elem-light">
+                      <i class="material-icons" style="font-size: 14px;">update</i>
+                      {{duration}} min - 
+                      <span>{{distance}}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-content" style="padding-bottom:0px;">
+                  <div class="row">
+                    {{euro}} ・ {{category}}
+                  </div>
+                  <div class="row">
+                    	<p class="truncate">{{shortDesc}}</p>
+                  </div>
+                </div>
+
+                <div class="card-action">
+                  <a href="{{path}}">{{dateForHuman}}</a>
+                </div>
+              </div>
   </li>
 </template>
 
-<!--
-<template name="lessonCard">
-  <li class="col m6">
-    <div class="card hoverable">
-      <div class="card-image">
-        <img src="http://res.cloudinary.com/trys/image/upload/v1479316560/yoga-class_ff9hqf.jpg" width="400" height="200" border="0" alt="" />
-      </div>
-
-      <div class="card-title">
-        <div class="mt8" style="margin-left : 8px;">
-          Holy Yoga
-        </div>
-      </div>
-
-      <div class="card-content" style="padding-bottom:0px;">
-        <div class="row">
-          €€ ・ Yoga
-        </div>
-        <div class="row">
-            The Holy Yoga combines Christian meditation and some forms of yoga. The course is given in English.
-        </div>
-      </div>
-
-      <div class="card-action">
-        <a href="#">Voir le cours</a>
-      </div>
-    </div>
-  </li>
-</template> -->
-
 <template name="map">
-  <div class="map-container container" style="
+  <div class="map-container" style="
   width: 100%;
-  max-width: 100%;
-  height: 500px;
+  height: 100vh;
+  min-height:100%;
   padding-top:30px;
+  position:relative;
+  z-index: -1;
   ">
     {{> googleMap name="map" options=mapOptions}}
   </div>

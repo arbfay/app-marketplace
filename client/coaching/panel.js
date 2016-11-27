@@ -1,21 +1,11 @@
 Template.coachingPanel.helpers({
-  /*dataCont: function(){
-    var a = Session.get('lessonId');
-    var l=Lessons.findOne(a);
-    console.log(l);
-    if(l){
-      console.log(l.attendeesList);
-      var aL = attendeesList.findOne(l).users;
-      return aL;
-    } else{
-      console.log('No such lesson');
-      return {};
-    }
-  },*/
+
   coachLessons : function(){
     //partant du principe que celui qui arrive sur cette page est forcement un coach
-    var l = Lessons.find({userEmail:Accounts.user().emails[0].address}).fetch();
-    console.log(l);
+    var coachEmail =Accounts.user().emails[0].address;
+    Meteor.subscribe("lessonsFromCoach",coachEmail)
+    var l = Lessons.find({coachEmail:coachEmail}).fetch();
+
     if(l){
       return l;
     }
@@ -23,15 +13,27 @@ Template.coachingPanel.helpers({
       return {};
     }
   },
+  title : function(){
+    var lessonId = Session.get('lessonId');
+    var lesson = Lessons.findOne(lessonId);
+
+    return lesson.title;
+  },
+  dateTime : function(){
+    var lessonId = Session.get('lessonId');
+    var lesson = Lessons.findOne(lessonId);
+
+    return lesson.moment.format("ddd D MMM à HH:mm");
+  }
 });
-
-
 
 Template.attendingListTemplate.helpers({
   users: function(){
     var lessonId=Session.get('lessonId');
     var aL = Lessons.findOne(lessonId).attendeesList;
     console.log(aL);
+    Meteor.subscribe('attendessListById', aL);
+
     var res = AttendeesList.findOne(aL).users;
     console.log(res);
     if(res){

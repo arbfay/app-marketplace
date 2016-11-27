@@ -1,0 +1,7 @@
+{
+  "galaxy.meteor.com": {
+     "env": {
+       "MONGO_URL": "mongodb://arbfay94:anticonard@ds159377.mlab.com:59377/test-trys"
+     }
+   }
+}

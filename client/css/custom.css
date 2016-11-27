@@ -1,59 +1,90 @@
 /****** PLACE YOUR CUSTOM STYLES HERE ******/
 
-  .card-location{
-	text-align:right;
-    font-size: 15px;
-    vertical-align: middle;
-	clear:left;
-	display:inline-block;
-  }
+.card-location{
+text-align:right;
+  font-size: 15px;
+  vertical-align: middle;
+clear:left;
+display:inline-block;
+}
 
-  .card-elem-light{
+.card-elem-light{
 
-	  color:grey;
-  }
+  color:grey;
+}
 
-  .card-category{
-	  padding-top:0;
-	  padding-bottom:0;
-  }
-  .card-title{
-	  padding-bottom:0;
-	  margin-bottom:0;
-  }
+.card-category{
+  padding-top:0;
+  padding-bottom:0;
+}
+.card-title{
+  padding-bottom:0;
+  margin-bottom:0;
+}
 
-  .image-s{
-	  width:60%;
+.image-s{
+  width:60%;
 
-  }
+}
 
-  .image-newsletter{
-	  background-color:#0097A7;
+.image-newsletter{
+  background-color:#0097A7;
 
-  }
+}
 
-  .btn-border-2{
-    border-radius : 2px;
-  }
+.btn-border-2{
+  border-radius : 2px;
+}
 
-  .btn-1
-  {
-    background-color: #FF5252;
-    text-decoration-color: white;
-    border : 0px;
-  }
+.btn-1
+{
+  background-color: #FF5252;
+  text-decoration-color: white;
+  border : 0px;
+}
 
-  .btn-1:hover
-  {
-    background-color: #FF1744;
-    text-decoration-color: white;
-  }
+.btn-1:hover
+{
+  background-color: #FF1744;
+  text-decoration-color: white;
+}
 
-  .searchImg{
-    height:90vh;
-    width:100vw;
-    background: -moz-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat;
-    background: -webkit-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat;
-    background: -o-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat;
-    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat;
-  }
+.searchImg{
+  height:90vh;
+  width:100vw;
+  background: -moz-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
+  background: -o-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.priceReservationCard{
+  font-weight: bold;
+  color:white;
+  font-size:36px;
+  font:"Roboto";
+  padding-top:32px;
+  padding-right:16px;
+  padding-left:16px;
+}
+
+.ulReservationCard li{
+  padding:4px 4px 30px 11px !important;
+  line-height:20px !important;
+}
+
+.ulReservationCard.material-icons{
+  font-size:18px !important;
+}
+
+.firstRow{
+  margin-bottom: 0px !important;
+}
+
+footer{
+  margin-top:0px !important;
+}

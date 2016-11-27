@@ -1,104 +1,165 @@
 <template name="lessonPage">
 
-      <div class="parallax-container white-text">
-        <div class="parallax">
-          <img src="img/yoga-class.jpg"/>
-        </div>
-        <h2>{{title}}</h2>
-      </div>
+      <div class="section" style="
+      height:60vh;
+      width:100vw;
+      background: -moz-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+      background: -webkit-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+      background: -o-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
 
-      <div class="container">
-        <div class="row">
-          <ul class="collection">
-            <li class="collection-item avatar">
-              <img src="img/yoga-class.jpg" alt="" class="circle">
-              <span class="title"><a href="#">Patrick</a></span>
-              <p>Professeur de yoga et de tai chi
-              </p>
-              <span class="secondary-content">
-                <i class="material-icons">grade</i>
-                <i class="material-icons">grade</i>
-                <i class="material-icons">grade</i>
-                <i class="material-icons">grade</i>
-                <i class="material-icons">grade</i>
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="row">
-          <div class="col m7">
-            <p>
-              {{longDesc}}
-            </p>
-          </div>
-
-          <div class="col m5">
-            {{> reservationCard}}
+      ">
+        <div class="container v-align-transform">
+          <div class="row firstRow">
+            <div class="col m10 push-m1 s12 center-align">
+              <h2 class="mb8" style="color:white;">{{title}}</h2>
+            </div>
           </div>
         </div>
       </div>
 
-    {{> generatedMap}}
+      <div class="row">
+        <div class="container">
+          <div class="row">
+            <div style="padding-top:30px;">
+                <img src="{{coachImgUrl}}" alt="" class="circle" width="52px;">
+                <span class="title"><a href="#">{{coachName}}</a></span>
+                <p>
+                  {{coachShortDesc}}
+                </p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col l7 m6">
+              <div class="row">
+                <p class="flow-text">{{longDesc}}</p>
+              </div>
+
+              <div class="row">
+                <div class="divider"></div>
+
+                <h4 style="margin-top:10px;">Prochaines séances</h4>
+
+                <div class="collection center-align">
+                  <a href="#!" class="collection-item active" id="date1">
+                    <div class="row firstRow">
+                      <div class="col m3">
+                        {{date1.day}}
+                        {{date1.date}}
+                        {{date1.month}}
+                      </div>
+                      <div class="col m3">
+                        {{date1.time}}
+                      </div>
+                      <div class="col m3">
+                        {{date1.duration}} min
+                      </div>
+                      <div class="col m3">
+                        {{date1.price}}€
+                      </div>
+                    </div>
+                  </a>
+                  <a href="#!" class="collection-item" id="date2">
+                    <div class="row firstRow">
+                      <div class="col m3">
+                        {{date2.day}}
+                        {{date2.date}}
+                        {{date2.month}}
+                      </div>
+                      <div class="col m3">
+                        {{date2.time}}
+                      </div>
+                      <div class="col m3">
+                        {{date2.duration}} min
+                      </div>
+                      <div class="col m3">
+                        {{date2.price}}€
+                      </div>
+                    </div>
+                  </a>
+                  <a href="#!" class="collection-item" id="date3">
+                    <div class="row firstRow">
+                      <div class="col m3">
+                        {{date3.day}}
+                        {{date3.date}}
+                        {{date3.month}}
+                      </div>
+                      <div class="col m3">
+                        {{date3.hour}}
+                      </div>
+                      <div class="col m3">
+                        {{date3.duration}} min
+                      </div>
+                      <div class="col m3">
+                        {{date3.price}}€
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+            <div class="col m1">
+            </div>
+            <div class="col l4 m5 s12">
+              {{> reservationCard}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="">
+        <div class="col s12 map-container" style="
+          margin:0 0 0 0 !important;
+          padding:30px 0 0 0 !important;
+          width : 100vw;
+          height : 300px;
+          position:relative;
+        ">
+          {{> lessonMap}}
+        </div>
+      </div>
 </template>
 
-<template name="generatedMap">
-  <div>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2519.379269646797!2d4.369470486933307!3d50.842660635264224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c49ca2d698a9%3A0x3099f0d014e9fabc!2sRue+de+la+Science+23%2C+1000+Bruxelles!5e0!3m2!1sfr!2sbe!4v1478869100369"
-      width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
-  </div>
+<template name="lessonMap">
+      {{> googleMap name="lessonMap" options=mapOptions}}
 </template>
 
 <template name="reservationCard">
-  <div class="card reservationForm">
-    <div class="card-content">
-      <span class="card-title">Prochaines dates</span>
-      <ul>
-        <li>
-          <button class="waves-effect waves-teal btn-flat">
-            <span class="center-align">MAR 4 SEPT.<br/>13:00</span>
-          </button>
-        </li>
 
-        <li>
-          <button class="waves-effect waves-teal btn-flat">
-            <span class="center-align">MAR 4 SEPT.<br/>13:00</span>
-          </button>
-        </li>
+    <div class="card-panel red accent-2">
+        <div class="priceReservationCard">
+          <div class="center-align">
+            €
+            <span style="font-size:64px;">{{price}}</span>
+          </div>
 
-        <li>
-          <button class="waves-effect waves-teal btn-flat">
-            <span class="center-align">MAR 4 SEPT.<br/>13:00</span>
-          </button>
-        </li>
-      </ul>
-
-      <div class="divider"></div>
-      <span class="center-align card-title">
-        Inscription
-      </span>
-
-      <div class="container">
-        <div class="row">
-          <table>
-            <tbody>
-              <tr>
-                <td>Prix</td>
-                <td>8€</td>
-              </tr>
-              <tr>
-                <td>Date</td>
-                <td>MAR 4 SEPT.<br/> 13:00</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="" style="font-size:20px; margin-top:30px;">
+          <ul class="ulReservationCard">
+            <li>
+              <i class="material-icons">event</i>
+              {{day}} {{date}} {{month}}
+            </li>
+            <li>
+              <i class="material-icons">schedule</i>
+              {{hour}}
+            </li>
+            <li>
+              <i class="material-icons">update</i>
+              {{duration}} min
+            </li>
+          </ul>
         </div>
       </div>
+
+      <div class="row center-align">
+        <button id="reservation" class="waves-effect waves-teal btn cyan darken-2">
+          Reserver
+        </button>
+      </div>
     </div>
-    <div class="card-action center-align">
-      <button id="reservation" class="waves-effect waves-teal btn red accent-3">
-        Reserver
-      </button>
-    </diV>
-  </div>
 </template>

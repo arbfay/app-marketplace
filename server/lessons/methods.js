@@ -1,5 +1,5 @@
 Meteor.methods({
-  'geoNear' (loc){
+  'geoNear' (loc,lim){
     return Lessons.aggregate([
        {
          $geoNear: {
@@ -7,10 +7,10 @@ Meteor.methods({
             distanceField: "dist.calculated",
             //query: { $lt: {date: new Date() + 2 weeks}},
             includeLocs: "dist.location",
-            limit: 20, //max number of returned lessons
+            limit: lim, //max number of returned lessons
             spherical: true
          }
        }
     ]);
-  }
+  },
 });

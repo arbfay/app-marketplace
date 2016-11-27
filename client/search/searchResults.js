@@ -1,57 +1,17 @@
-/*
-Template.searchResults.onCreated(function() {
+
+Template.lessonsResults.onCreated(function() {
   var self = this;
-  self.autorun(function(){
-    var cat = FlowRouter.getQueryParam('category');
-    self.subscribe('matchingLessons',cat);
-  });
-});
-*/
-
-Template.map.onCreated(function() {
-  GoogleMaps.ready('map', function(map) {
-    var res = Session.get('searchResults');
-
-    for(var i = 0; i < res.length; i++) {
-
-        marker = new google.maps.Marker({
-       position: new google.maps.LatLng(res[i].geospatial.coordinates[1],
-                                        res[i].geospatial.coordinates[0]),
-       map: map.instance
-      });
-      console.log(marker);
-    }
-
-  });
-});
-
-
-Template.map.helpers({
-  mapOptions: function() {
-    if (GoogleMaps.loaded()) {
-      var l = Session.get('searchedLoc');
-      return {
-        center: new google.maps.LatLng(l.coordinates[1], l.coordinates[0]),
-        zoom: 14
-      };
-    }
-  }
-});
-
-
-
-
-Template.searchResults.helpers({
-  results : function(){
+  GoogleMaps.load({key:'AIzaSyCuNWnVv37wxgpCzzPK_tPJdMhbdys_Y64'});
+  self.autorun(function() {
     var address =FlowRouter.getQueryParam('address');
-    //We transform the address we get into coordinates
-    var resultats={};
+    var r = "";
+    var ready = GoogleMaps.loaded();
 
-    GoogleMaps.load({key:'AIzaSyCuNWnVv37wxgpCzzPK_tPJdMhbdys_Y64'});
-    if(GoogleMaps.loaded()){
+
+    if(ready){
         var coord;
         var loc = {
-          type:"place",
+          type:"Point",
           coordinates:[
             4.371,
             50.843
@@ -59,13 +19,15 @@ Template.searchResults.helpers({
         };
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({'address': address}, function(results, status){
-          if(status == google.maps.GeocoderStatus.OK){
+          if(status === google.maps.GeocoderStatus.OK){
               coord=results[0].geometry.location;
+              lat = coord.lat();
+              lng = coord.lng();
               loc = {
-                type:"place",
+                type:"Point",
                 coordinates:[
-                  coord.lng(),
-                  coord.lat()
+                  lng,
+                  lat
                 ]
               };
               Session.set('searchedLoc', loc);
@@ -73,29 +35,133 @@ Template.searchResults.helpers({
               console.log("Problem with the geocoder : " + status);
             }
           });
-          //We look for the lessons near the searched location
-          var r={};
-          Meteor.call('geoNear',loc, (err, res) => {
-            if(res){
-              r=res;
-              Session.set('searchResults', r);
-            } else {
-              console.log(err);
-            }
-          });
-
+    } else {
+      console.log("error with GoogleMaps : " + ready);
     }
-    else {
-      var dateSearch= new Date();
-      var daysToAdd = 14;
 
-      dateSearch.setDate(dateSearch.getDate() + daysToAdd);
+    var limit = Session.get('searchLimit');
+    const handle = self.subscribe('nearLessons', Session.get('searchedLoc'), limit);
+  });
+});
 
-      //
-      r2=Lessons.find({date: { $lt: dateSearch}}).fetch();
-      Session.set('searchResults',r2);
+Template.map.onCreated(function() {
+  GoogleMaps.ready('map', function(map) {
+    var res = Session.get('searchResults');
+
+    for(var i = 0; i < res.length; i++) {
+
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(res[i].geospatial.coordinates[1],
+                                            res[i].geospatial.coordinates[0]),
+            map: map.instance,
+            title : res[i].title,
+            icon : 'http://res.cloudinary.com/trys/image/upload/v1479832863/loc_marker_v1axu1.png'
+                                      });
+        var contentString = '<div><strong>' + res[i].title + '</strong></div>'+
+                            '<div>'+ res[i].price+' €</div>' +
+                            '<a href="/class/'+ res[i]._id +'" class="btn-flat"> Voir </a>';
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
     }
-    return Session.get('searchResults');
+
+  });
+});
+
+Template.searchResults.onCreated(function(){
+  GoogleMaps.load({key:'AIzaSyCuNWnVv37wxgpCzzPK_tPJdMhbdys_Y64'});
+  Session.set("searchLimit", 6);
+});
+
+Template.map.helpers({
+  mapOptions: function() {
+    if (GoogleMaps.loaded()) {
+      Session.setDefault('searchedLoc', {type:"place",coordinates:[4.371, 50.843]});
+
+      var l = Session.get('searchedLoc');
+      return {
+        center: new google.maps.LatLng(l.coordinates[1], l.coordinates[0]),
+        zoom: 14,
+        styles : [
+          {"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},
+          {"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},
+          {"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},
+          {"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},
+          {"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},
+          {"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}
+        ],
+      };
+    }
+  }
+});
+
+Template.lessonsResults.helpers({
+  results : function(){
+    Session.setDefault("filterCategory",["Yoga", "Pilates", "Tai Chi"]);
+
+    var cat = Session.get("filterCategory");
+
+    Session.set('searchResults',  Lessons.find({category : {$in : cat}}).fetch());
+    return Lessons.find({category : {$in : cat}}).fetch();
   },
+});
 
+
+Template.searchResults.events({
+  "click .showMore" : function(event){
+    event.preventDefault();
+
+    Session.setDefault("searchLimit", 6);
+    var s = Session.get("searchLimit");
+    Session.set("searchLimit", s + 6);
+  }
+});
+
+Template.filterCategory.events({
+  "click #categoryYoga" : (event) =>{
+
+    var s = Session.get("filterCategory");
+    var i = s.indexOf("Yoga");
+    if(i < 0){
+      s.push("Yoga");
+      Session.set("filterCategory",s);
+      document.getElementById("categoryYoga").checked = true;
+    } else {
+      s.splice(i, 1);
+      Session.set("filterCategory",s);
+      document.getElementById("categoryYoga").checked = false;
+    }
+  },
+  "click #categoryPilates" : (event) =>{
+
+    var s = Session.get("filterCategory");
+    var i = s.indexOf("Pilates");
+    if(i < 0){
+      s.push("Pilates");
+      Session.set("filterCategory",s);
+      document.getElementById("categoryPilates").checked = true;
+    } else {
+      s.splice(i, 1);
+      Session.set("filterCategory",s);
+      document.getElementById("categoryPilates").checked = false;
+    }
+  },
+  "click #categoryTaiChi" : (event) =>{
+
+    var s = Session.get("filterCategory");
+    var i = s.indexOf("Tai Chi");
+    if(i < 0){
+      s.push("Tai Chi");
+      Session.set("filterCategory",s);
+      document.getElementById("categoryTaiChi").checked = true;;
+    } else {
+      s.splice(i, 1);
+      Session.set("filterCategory",s);
+      document.getElementById("categoryTaiChi").checked = false;
+    }
+  },
 });

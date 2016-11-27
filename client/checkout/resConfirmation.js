@@ -8,6 +8,8 @@ Template.profileEditingCard.helpers({
     } else{
       return "";
     }
+
+    Meteor.subscribe('userProfileByMail', userMail);
     var userProfile = UserProfiles.findOne({email:userMail});
 
     if(userProfile){
@@ -95,22 +97,26 @@ Template.profileEditingCard.events({
     if(userProfile){
       var userProfileId = userProfile._id;
     } else{
-      FlowRouter.go('/profile');
+      FlowRouter.go('/login');
     }
 
-    UserProfiles.update(userProfileId,{
-      $set : {
-        firstName:firstName,
-        lastName:lastName,
-        address:{
-          street:street,
-          city:city,
-          zip:zip
-        }
+    var toUpdate = {
+      firstName:firstName,
+      lastName:lastName,
+      address:{
+        street:street,
+        city:city,
+        zip:zip
+      }
+    };
+
+    Meteor.call('updateUserProfile', userProfileId, toUpdate, function(err){
+      if(err){
+        console.log(err);
+      } else {
+        Materialize.toast("Modifications enregistrées.", 4000, 'rounded');
       }
     });
-
-    Materialize.toast("Modifications enregistrées.", 4000, 'rounded');
   },
 });
 

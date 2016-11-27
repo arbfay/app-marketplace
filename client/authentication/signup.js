@@ -8,8 +8,7 @@ Template.signupForm.events({
 
     var userId=Accounts.createUser({email:email, password:password});
 
-
-    var UPid=UserProfiles.insert({
+    var toInsert = {
                         user:userId,
                         createdAt : new Date(),
                         updatedAt : new Date(),
@@ -23,12 +22,18 @@ Template.signupForm.events({
                           country:"Belgium"
                         },
                         email:email,
-                        });
+                      };
 
-    Materialize.toast("Bienvenu jeune padawan !", 4000, 'rounded');
+    Meteor.call("insertUserProfile", toInsert, function(err,res){
+      if(err){
+        Materialize.toast("Echec lors de l'insertion du profil");
+      } else{
+        Materialize.toast("Faites du bien à votre corps !", 4000, 'rounded');
+      }
+    });
 
     target.email.value="";
     target.password.value="";
-    FlowRouter.go('/profile');
+    FlowRouter.go('/');
   }
 });
