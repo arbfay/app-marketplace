@@ -6,10 +6,69 @@
           {{> searchbarForResults}}
         </div>
         <div class="row">
+          <div class="center-align">
+            <div class="col s4">
+              <input type="checkbox" id="categoryYoga" checked />
+              <label for="categoryYoga">Yoga</label>
+            </div>
+
+            <div class="col s4">
+              <input type="checkbox" id="categoryPilates" checked />
+              <label for="categoryPilates">Pilates</label>
+            </div>
+
+            <div class="col s4">
+              <input type="checkbox" id="categoryTaiChi" checked />
+              <label for="categoryTaiChi">Tai Chi</label>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="row" style="max-height:100vh;overflow:auto;">
+          <ul>
+            {{#each res in results}}
+              {{>lessonCard res}}
+
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row center-align">
+          <button class="btn-flat btn-large showMore">
+            Afficher plus
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col m5 hide-on-small-only" style=" padding-right:0px !important;">
+      <div class="map-container" style="
+      width: 100%;
+      height: 120vh;
+      min-height:100%;
+      padding-top:30px;
+      position:relative;
+      ">
+        {{> googleMap name="map" options=mapOptions}}
+      </div>
+    </div>
+  </div>
+</template>
+
+<!--
+<template name="searchResults">
+  <div class="row firstRow">
+    <div class="col m7 s12">
+      <div class="section">
+        <div class="row">
+          {{> searchbarForResults}}
+        </div>
+        <div class="row">
           {{> filterCategory}}
         </div>
         <div class="divider"></div>
-        <div class="row">
+        <div class="row" style="max-height:100vh;overflow:auto;">
           {{> lessonsResults}}
         </div>
       </div>
@@ -26,8 +85,7 @@
       {{> map}}
     </div>
   </div>
-</template>
-
+</template> -->
 <template name="filterCategory">
   <div class="center-align">
     <div class="col s4">
@@ -48,11 +106,10 @@
 </template>
 
 <template name="lessonsResults">
-  <ul style="overflow-y: auto">
+  <ul>
     {{#each res in results}}
       {{>lessonCard res}}
-    {{else}}
-      Aucun cours trouvé.
+
     {{/each}}
   </ul>
 </template>
@@ -66,10 +123,10 @@
 
                 <div class="card-title">
                   <div class="mt8" style="margin-left : 8px;">
-                    <a href="{{path}}">{{title}}</a>
+                    <a href="{{path}}" class="linkCard">{{title}}</a><br>
                     <div class="card-location card-elem-light">
                       <i class="material-icons" style="font-size: 14px;">update</i>
-                      {{duration}} min - 
+                      {{duration}} min -
                       <span>{{distance}}</span>
                     </div>
                   </div>

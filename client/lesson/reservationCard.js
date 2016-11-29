@@ -8,11 +8,7 @@ Template.reservationCard.events({
       FlowRouter.go('/login');
     }
     var userMail = Accounts.user().emails[0].address;
-    Meteor.subscribe("userProfileByMail", userMail);
 
-    var userProfile = UserProfiles.findOne({email:userMail});
-
-    var userProfileId = userProfile._id;
 
     var lessons = Lessons.find().fetch();
     var selection = Session.get('selectedDate');
@@ -20,15 +16,13 @@ Template.reservationCard.events({
     var lessonId = lesson._id;
     var coachId= lesson.coachId;
 
-    if(lesson && userId && userProfileId){
+    if(lesson && userId){
       var toInsert = {
         userId:userId,
-        userProfileId :userProfileId,
+        userEmail :userMail,
         lessonId : lessonId,
         lessonTitle:lesson.title,
         lessonDate:lesson.date,
-        lessonTime:lesson.time,
-        lessonMoment:lesson.moment,
         coachId : coachId,
         isComplete:false,
         isPaid:false,

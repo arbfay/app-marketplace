@@ -22,8 +22,8 @@ Template.coachingPanel.helpers({
   dateTime : function(){
     var lessonId = Session.get('lessonId');
     var lesson = Lessons.findOne(lessonId);
-
-    return lesson.moment.format("ddd D MMM à HH:mm");
+    var mom = moment(lesson.date);
+    return mom.format("ddd DD MMM, HH:mm");
   }
 });
 
@@ -31,7 +31,6 @@ Template.attendingListTemplate.helpers({
   users: function(){
     var lessonId=Session.get('lessonId');
     var aL = Lessons.findOne(lessonId).attendeesList;
-    console.log(aL);
     Meteor.subscribe('attendessListById', aL);
 
     var res = AttendeesList.findOne(aL).users;
@@ -43,15 +42,17 @@ Template.attendingListTemplate.helpers({
     }
   },
   firstName : function(){
-    var res = getNames();
-          console.log(res);
-          Session.set('firstName',res.firstName);
-          Session.set('lastName', res.lastName);
+    var email = this.email;
+    Meteor.subscribe('namesOfUser',email);
+    var user = UserProfiles.findOne({email:email});
 
-    return Session.get('firstName');
+    return user.firstName;
   },
   lastName : function(){
-    return Session.get('lastName');
+    var email = this.email;
+    var user = UserProfiles.findOne({email:email});
+
+    return user.lastName;
   }
 });
 
@@ -61,5 +62,12 @@ Template.coachingLessonItem.events({
     console.log('Before : ' +Session.get('lessonId'));
     Session.set('lessonId', this._id);
     console.log('After : ' +Session.get('lessonId'));
+  }
+});
+
+Template.coachingLessonItem.helpers({
+  dateForHuman : function(){
+    var mom = moment(this.date);
+    return mom.format("ddd DD MMM, HH:mm");
   }
 });

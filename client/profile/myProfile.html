@@ -33,7 +33,7 @@
 </template>
 
 <template name="myRes">
-  <h3>Mes réservations</h3>
+  <h3>Vos réservations</h3>
   <ul class="collection">
     {{#each reservation in reservationsList}}
       {{> myResItem reservation}}
@@ -43,11 +43,10 @@
 
 <template name="myResItem">
   <li class="collection-item">
-    <h2>{{lessonTitle}}</h2>
+    <h4>{{lessonTitle}}</h4>
     <p>
-      {{lessonDate}} à {{lessonTime}}
+      {{dateForHuman}}
     </p>
-    <a href="#!" class="secondary-content"><i class="material-icons">cancel</i></a>
   </li>
 </template>
 

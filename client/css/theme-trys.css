@@ -449,8 +449,7 @@ a:hover {
   outline: none;
 }
 a {
-  font-weight: 600;
-  color: #e5692c;
+
   transition: all 0.3s ease;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;

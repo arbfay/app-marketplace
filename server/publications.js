@@ -1,11 +1,32 @@
-Meteor.publish('nearLessons', function(loc,lim){
+Meteor.publish('nearLessons', function(loc,lim, now){
+  console.log(loc);
+
   check(lim, Number);
   check(loc.coordinates[0], Number);
   check(loc.coordinates[1], Number);
 
-  return Lessons.find({
-    geospatial:{$nearSphere: [loc.coordinates[0],loc.coordinates[1]]},
-    maxAttendeesLeft : {$gt : 0}});
+
+  var lessons=Lessons.find({
+    geospatial:
+      {$nearSphere: [loc.coordinates[0],loc.coordinates[1]]},
+    maxAttendeesLeft :
+      {$gt : 0},
+    date :
+      {$gt : now}
+    },
+    {
+     sort : {date : 1},
+     limit : lim,
+     fields : {
+       attendeesList:0,
+       commission:0
+     }});
+
+    return lessons;
+});
+
+Meteor.publish('searchLessons', function(query, options){
+  return Lessons.find(query,options);
 });
 
 Meteor.publish('matchingLesson', function(id){
@@ -13,11 +34,26 @@ Meteor.publish('matchingLesson', function(id){
   return Lessons.find(id);
 });
 
-Meteor.publish('matchingLessonsByFirstId', function(id){
+Meteor.publish('matchingLessonsByFirstId', function(id,now){
   var lesson = Lessons.findOne(id);
 
-  var title = lesson.title;
-  return Lessons.find({title : title});
+  var tit = lesson.title;
+  var lessons=Lessons.find({
+    title : tit,
+    maxAttendeesLeft :
+      {$gt : 0},
+    date :
+      {$gt : now}
+    },
+    {
+     sort : {date : 1},
+     limit : 3,
+     fields : {
+       attendeesList:0,
+       commission:0
+     }});
+
+  return lessons;
 });
 
 Meteor.publish('lessonsFromCoach', function(email){
@@ -46,3 +82,21 @@ Meteor.publish('userByMail', function(email){
 Meteor.publish('userProfileByMail', function(email){
   return UserProfiles.find({email : email});
 });
+
+Meteor.publish('namesOfUser', function(email){
+  return UserProfiles.find({email : email});
+});
+
+Meteor.publish('reservationById', function(id){
+  return Reservations.find({_id:id});
+});
+
+Meteor.publish('myReservations', function(id){
+  var res = Reservations.find({userId:id,
+                               isPaid:true,});
+  return res;
+});
+
+Meteor.publish('getCategories', function(){
+  return Categories.find();
+})

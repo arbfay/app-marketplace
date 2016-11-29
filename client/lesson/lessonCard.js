@@ -16,6 +16,7 @@ Template.lessonCard.helpers({
     return "/class/"+this._id;
   },
   euro:function(){
+    console.log(this);
     var res="€";
 
     if(this.price > 12){

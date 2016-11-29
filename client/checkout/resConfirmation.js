@@ -131,52 +131,88 @@ function getCurrentLesson(){
 }
 
 Template.lessonConfirmationCard.helpers({
-  lessonTitle : function(){
-    var lesson = getCurrentLesson();
-    if(lesson !==""){
-      return lesson.title;
-    }
+  title : function(){
+    var lessonId = FlowRouter.getParam('lessonId');
+    Meteor.subscribe("matchingLesson",lessonId);
+    var lesson = Lessons.findOne();
+
+    var coachEmail = lesson.coachEmail;
+    Meteor.subscribe('matchingCoachByMail', coachEmail);
+    var coach = Coaches.findOne();
+    Session.set("coach", coach);
+
+    var coachId = coach._id;
+    Meteor.subscribe('matchingUserProfileByCoachId', coachId);
+    Session.set("coachProfile", UserProfiles.findOne({email:coachEmail}));
+    var dateInMilli=lesson.date;
+
+    var mom = moment(dateInMilli);
+    var selection = {date: mom.date(),
+                     day: mom.format("ddd"),
+                     month:mom.format("MMM"),
+                     hour:mom.format("HH:mm"),
+                     duration:lesson.duration,
+                     price:lesson.price,
+                     select:0,
+                   };
+    Session.set('selectedDate', selection);
+
+    return lesson.title;
+
   },
-  lessonShortDesc : function(){
-    var lesson = getCurrentLesson();
-    if(lesson !==""){
+  imgUrl : function(){
+    var lesson = Session.get("lesson");
+    return lesson.imgUrl;
+  },
+  shortDesc : function(){
+    var lessonId = FlowRouter.getParam('lessonId');
+    var lesson = Lessons.findOne({_id:lessonId});
+    if (lesson){
       return lesson.shortDesc;
+    } else {
+      return "";
     }
   },
-  lessonDate : function(){
-    var lesson = getCurrentLesson();
-    if(lesson !==""){
-      return lesson.date;
-    }
+  coachName : function(){
+    var prof = Session.get("coachProfile");
+    return ""+prof.firstName+" "+prof.lastName;
   },
-  lessonTime: function(){
-    var lesson = getCurrentLesson();
-    if(lesson !==""){
-      return lesson.time;
-    }
+  coachShortDesc: function(){
+    var coach = Coaches.findOne();
+    return coach.shortDesc;
   },
-  lessonPrice: function(){
-    var lesson = getCurrentLesson();
-    if(lesson !==""){
-      var price = lesson.price;
-      if(Session.get('promoCode')){
-        var pC = Session.get('promoCode');
-        var rTA = new ReactiveVar(0);
+  coachImgUrl: function(){
+    var coach = Coaches.findOne();
+    return coach.imgUrl;
+  },
+  day : function(){
+    var selection= Session.get("selectedDate");
 
-        Meteor.call('applyPromoCode',pC, (err,res)=>{
-          if(res){
-              rTA.set(res.reductionToApply);
-          } else{
-            console.log(res);
-            console.log(err);
-          }
-        });
+    return selection.day;
+  },
+  date : function(){
+    var selection= Session.get("selectedDate");
 
-        price = price - rTA.get();
-      }
+    return selection.date;
+  },
+  month : function(){
+    var selection= Session.get("selectedDate");
 
-      return price;
-    }
+    return selection.month;
+  },
+  hour : function(){
+    var selection= Session.get("selectedDate");
+
+    return selection.hour;
+  },
+  duration : function(){
+    var selection = Session.get("selectedDate");
+    return selection.duration;
+  },
+  price : function(){
+    var selection= Session.get("selectedDate");
+
+    return selection.price;
   }
 });
 
@@ -185,90 +221,82 @@ Template.reservationConfirmation.events({
     event.preventDefault();
 
     var reservationId = FlowRouter.getParam('reservationId');
-    var lesson = getCurrentLesson();
+    var lesson = Lessons.findOne();
 
     var price;
+    var email = Accounts.user().emails[0].address;
+    if(UserProfiles.findOne({email:email}).firstName===""
+        || UserProfiles.findOne({email:email}).lastName===""
+        || UserProfiles.findOne({email:email}).address.street===""){
+          Materialize.toast("Veuillez modifier vos informations pour qu'elles soient correctes, merci.", 4000, "rounded");
+    } else {
+      /*if(lesson !==""){
+        price = lesson.price;
+        if(Session.get('promoCode')){
+          var pC = Session.get('promoCode');
+          var rTA = new ReactiveVar(0);
 
-    if(lesson !==""){
-      price = lesson.price;
-      if(Session.get('promoCode')){
-        var pC = Session.get('promoCode');
-        var rTA = new ReactiveVar(0);
+          Meteor.call('applyPromoCode',pC, (err,res)=>{
+            if(res){
+              if(res.maxUsage >0){
+                rTA.set(res.reductionToApply);
+                Meteor.call('addPromoCodeUsage',res, Accounts.user().emails[0].address,(error,results)=>{
+                  if(err){
+                    console.log('Attempt to add the usage of the promo code');
+                    console.log(error);
+                  }
+                });
 
-        Meteor.call('applyPromoCode',pC, (err,res)=>{
-          if(res){
-            if(res.maxUsage >0){
-              rTA.set(res.reductionToApply);
-              Meteor.call('addPromoCodeUsage',res, Accounts.user().emails[0].address,(error,results)=>{
-                if(err){
-                  console.log('Attempt to add the usage of the promo code');
-                  console.log(error);
-                }
-              });
-
+              }
+            } else{
+              console.log(res);
+              console.log(err);
             }
-          } else{
-            console.log(res);
-            console.log(err);
-          }
-        });
-
-        price = price - rTA.get();
-      }
-    } else {
-      alert('Mauvaise tentative');
-    }
-
-    if(lesson.maxAttendeesLeft > 0){
-      var email = Accounts.user().emails[0].address;
-      var priceInCents = price * 100;
-
-      var handler = StripeCheckout.configure({
-        key: 'pk_test_LqluwQNx3xv8VtbJwYme8XJc',
-        image : "http://res.cloudinary.com/trys/image/upload/v1479316560/logo-trys-2-v1_transp_cut_unyjvh.png",
-        token: function(token) {
-          var userMail = Accounts.user().emails[0].address;
-          var userProfile = UserProfiles.findOne({email:userMail});
-          var userProfileId = userProfile._id;
-          UserProfiles.update(userProfileId,{$set:{stripeToken : token.id}});
-          Lessons.update(lesson._id,{
-            $inc:{maxAttendeesLeft : -1},
-          });
-          Reservations.update(reservationId,{
-            $set:{isPaid:true},
           });
 
-          var attendeesList = lesson.attendeesList;
-          console.log(attendeesList);
-          var s = AttendeesList.update({_id:attendeesList},{
-            $push : {
-              users:
-                    {
-                      email:userMail,
-                      wasPresent:false,
-                    },
-                  },
-                }
-              );
-          console.log(s + ' update of AttendeesList');
-
-          FlowRouter.go('/reservation/:reservationId/confirmation',{reservationId:reservationId},{});
+          price = price - rTA.get();
         }
-      });
+      } else {
+        alert('Mauvaise tentative');
+      }
+      */
 
-      handler.open({
-        name:"trys",
-        description:lesson.title,
-        zipCode:false,
-        email:email,
-        currency:'eur',
-        amount:priceInCents,
-      });
+        if(lesson.maxAttendeesLeft > 0){
 
-    } else {
-      Materialize.toast("Zut ! Le cours est déjà complet :'(", 5000, 'rounded');
-      FlowRouter.go('/class/:lessonId',{lessonId:lesson.id},{});
-    }
+          var priceInCents = lesson.price * 100;
+
+          var handler = StripeCheckout.configure({
+            key: 'pk_test_LqluwQNx3xv8VtbJwYme8XJc',
+            image : "http://res.cloudinary.com/trys/image/upload/v1480159845/logo-trys-2-v1.2_b_w_transp_cut_icqbo8.png",
+            token: function(token) {
+              var userMail = Accounts.user().emails[0].address;
+              var userProfile = UserProfiles.findOne({email:userMail});
+              var userProfileId = userProfile._id;
+              Meteor.call("reservationPayment", token, userProfile._id,userMail,lesson._id,reservationId,priceInCents,
+                    function(err,res){
+                      if(err){
+                        Materialize.toast("Erreur lors du process du paiement " + err,4000,'rounded');
+                      } else{
+                        FlowRouter.go('/reservation/:reservationId/confirmation',{reservationId:reservationId},{});
+                      }
+                    });
+            }
+          });
+
+          handler.open({
+            name:"trys",
+            description:lesson.title,
+            zipCode:false,
+            email:email,
+            currency:'eur',
+            amount:priceInCents,
+          });
+
+        } else {
+          Materialize.toast("Zut ! Le cours est déjà complet :'(", 5000, 'rounded');
+          FlowRouter.go('/class/:lessonId',{lessonId:lesson.id},{});
+        }
+      }
 
   },
   "click .cancelBtn" (event){

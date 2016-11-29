@@ -13,58 +13,34 @@ Template.myProfile.events({
   },
   "click .logOut" (event){
     event.preventDefault();
-    Meteor.logout(function(){
-        FlowRouter.route('/');
-    });
+    Meteor.logout();
+    FlowRouter.go('/');
   },
 });
 
-function getNames (){
-
-  var userMail = "";
-  if(Accounts.user()){
-    var userMail = Accounts.user().emails[0].address;
-  }
-
-  var userProfile = UserProfiles.findOne({email:userMail});
-
-  if(userProfile){
-    var firstName = userProfile.firstName;
-    var lastName = userProfile.lastName;
-    return {
-      firstName : firstName,
-      lastName : lastName
-    };
-  } else{
-    return {
-      firstName : "Prénom",
-      lastName : "Nom"
-    };
-  }
-}
 Template.myProfile.helpers({
   firstName : function(){
-    var res = getNames();
-          console.log(res);
-          Session.set('firstName',res.firstName);
-          Session.set('lastName', res.lastName);
-          
-    return Session.get('firstName');
+    var email = Accounts.user().emails[0].address;
+    Meteor.subscribe('namesOfUser',email);
+    var user = UserProfiles.findOne({email:email});
+
+    return user.firstName;
   },
   lastName : function(){
-    return Session.get('lastName');
+    var email = Accounts.user().emails[0].address;
+    var user = UserProfiles.findOne({email:email});
+
+    return user.lastName;
   }
 });
 
 Template.myRes.helpers({
   reservationsList : function(){
     var userId = Meteor.userId();
+    Meteor.subscribe("myReservations", userId);
     var r1 = Reservations.find({userId:userId}).fetch();
-    var r2 = r1.filter(function(r){
-      return r.isPaid == true;
-    });
-    console.log(r2);
-    return r2;
+
+    return r1;
   },
 });
 
@@ -88,4 +64,12 @@ Template.changePass.events({
         Materialize.toast("Nouveau mot de passe vide.", 4000, 'rounded');
       }
   }
+});
+
+Template.myResItem.helpers({
+  dateForHuman:function(){
+    var mom = moment(this.lessonDate);
+    return mom.format("ddd DD MMM, HH:mm");
+  },
+
 });

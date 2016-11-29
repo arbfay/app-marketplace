@@ -49,9 +49,14 @@ Template.lessonMap.helpers({
 
 Template.lessonPage.helpers({
   title: function(){
+
+    var now = new Date();
+    var dateNow = now.getTime() + 2100000;
+
     var id = FlowRouter.getParam('lessonId');
-    Meteor.subscribe('matchingLessonsByFirstId', id);
+    Meteor.subscribe('matchingLessonsByFirstId', id, dateNow);
     Session.set("lesson",Lessons.findOne(id));
+  
 
     var lesson = Session.get("lesson");
     var coachEmail = lesson.coachEmail;

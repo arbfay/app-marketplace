@@ -1,17 +1,16 @@
 <template name="reservationConfirmation">
   <div class="container">
-    <div class="row">
-      <h2 class="center-align">Confirmation de réservation</h2>
-    </div>
 
     <div class="row">
       <div class="col m6">
-        {{> profileEditingCard}}
+        <div class="card">
+          {{> lessonConfirmationCard}}
+        </div>
       </div>
 
       <div class="col m6">
           <div class="row">
-            {{> lessonConfirmationCard}}
+              {{> profileEditingCard}}
           </div>
           <div class="row center-align">
             <button class="btn waves-effect waves-light payBtn red accent-2">Payer</button>
@@ -27,7 +26,7 @@
 <template name="profileEditingCard">
   <form>
     <div class="card">
-      <div class="card-title center-align"><h2>Mes infos</h2></div>
+      <div class="card-title center-align"><h2>Vos informations</h2></div>
       <div class="card-content">
         <div class="container profileInfo">
           <div class="row">
@@ -50,19 +49,16 @@
 
           <div class="row">
             <div class="input-field col s6">
-              <input id="city" type="text" class="validate" value="{{city}}">
-              <label class="active" for="city">Commune</label>
-            </div>
-            <div class="input-field col s6">
               <input id="zip" type="text" class="validate" value="{{zip}}">
               <label class="active" for="zip">Code Postal</label>
             </div>
+            <div class="input-field col s6">
+              <input id="city" type="text" class="validate" value="{{city}}">
+              <label class="active" for="city">Commune</label>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="card-action">
-        <button type="submit" class="waves-effect waves-light updateProfile">
+        <button type="submit" class="waves-effect waves-light updateProfile cyan darken-3" style="border:none !important;">
           Modifier
         </button>
       </div>
@@ -71,34 +67,69 @@
 </template>
 
 <template name="lessonConfirmationCard">
-  <div class="card">
-    <div class="card-title">
-      <div class="card-title center-align"><h2>Résumé du cours</h2></div>
-    </div>
-    <div class="card-content">
-      <div class="row">
-        <h5>{{lessonTitle}}</h5>
-      </div>
 
-      <div class="row">
-        <img src="http://res.cloudinary.com/trys/image/upload/v1479230217/blank-profile-picture_ognoje.png"
-        alt="" class="circle responsive-img" width="50px"/>
-        Patrick Taichi
-      </div>
+          <div class="section" style="
+          height:60vh;
+          width:100%;
+          background: -moz-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+          background: -webkit-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+          background: -o-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+          background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
 
-      <div class="row">
-        <p>{{lessonShortDesc}}</p>
-      </div>
+          ">
+            <div class="container v-align-transform">
+              <div class="row firstRow">
+                <div class="col m10 push-m1 s12 center-align">
+                  <h2 class="mb8" style="color:white;">{{title}}</h2>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      <div class="row">
-        <div class="col s6">
-          {{lessonDate}} à {{lessonTime}}
-        </div>
+          <div class="row">
+            <div class="container">
+              <div class="row">
+                <div style="padding-top:30px;">
+                    <img src="{{coachImgUrl}}" alt="" class="circle" width="52px;">
+                    <span class="title"><a href="#">{{coachName}}</a></span>
+                    <p>
+                      {{coachShortDesc}}
+                    </p>
+                </div>
 
-        <div class="col s6">
-          {{lessonPrice}} €
-        </div>
-      </div>
-    </div>
-  </div>
+              <div class="row">
+                <div class="col s12">
+                  <div class="row">
+                    <p class="flow-text">{{shortDesc}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-panel red accent-2" style="color:white; max-width:100%;">
+              <div class="" style="font-size:14px; padding:30px 7px;">
+                    <div class="col s3">
+                      {{day}} {{date}} {{month}}
+                    </div>
+                    <div class="col s3">
+                      {{hour}}
+                    </div>
+                    <div class="col s3">
+
+                      {{duration}} min
+                    </div>
+                    <div class="col s3 center-align">
+                      €
+                      <span style="font-size:28px;">{{price}}</span>
+                    </div>
+              </div>
+          </div>
+                </div>
+
+
 </template>

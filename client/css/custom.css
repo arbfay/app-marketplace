@@ -85,6 +85,19 @@ display:inline-block;
   margin-bottom: 0px !important;
 }
 
+.linkCard{
+  color:#FF5252;
+}
+
+.searchbarMain{
+  background-color:white !important;
+  border-radius:2px !important;
+}
+
+footer a {
+  color : white !important;
+}
+
 footer{
   margin-top:0px !important;
 }

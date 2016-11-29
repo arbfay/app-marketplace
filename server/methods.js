@@ -135,9 +135,37 @@ Meteor.methods({
    },
    insertReservation : function(data){
      check(data.lessonTitle,String);
-     check(isComplete, Boolean);
-     check(isPaid, Boolean);
+     check(data.isComplete, Boolean);
+     check(data.isPaid, Boolean);
 
-     return Reservation.insert(data);
+     return Reservations.insert(data);
+   },
+   reservationPayment : function(token,userProfileId,userMail,lessonId,reservationId,pricePaid){
+     check(pricePaid,Number);
+
+     var lesson = Lessons.findOne({_id: lessonId});
+     
+     UserProfiles.update(userProfileId,{$set:{stripeToken : token.id},
+                                        $inc:{points:50}});
+
+     Lessons.update(lesson._id,{
+       $inc:{maxAttendeesLeft : -1},
+     });
+     Reservations.update(reservationId,{
+       $set:{isPaid:true,
+            pricePaid:pricePaid},
+     });
+
+     AttendeesList.update({_id:lesson.attendeesList},{
+       $push : {
+         users:
+               {
+                 email:userMail,
+                 wasPresent:false,
+               },
+             },
+           }
+         );
+     return true;
    }
 });
