@@ -144,7 +144,7 @@ Meteor.methods({
      check(pricePaid,Number);
 
      var lesson = Lessons.findOne({_id: lessonId});
-     
+
      UserProfiles.update(userProfileId,{$set:{stripeToken : token.id},
                                         $inc:{points:50}});
 
@@ -166,6 +166,42 @@ Meteor.methods({
              },
            }
          );
+
+     var reservation = Reservations.findOne({_id:reservationId});
+     var userProfile = UserProfiles.findOne({_id:userProfileId});
+     var lesson = Lessons.findOne({_id:lessonId});
+
+     var coachProfile = UserProfiles.findOne({email : lesson.coachEmail});
+     var coachNames = coachProfile.firstName +" "+coachProfile.lastName;
+     var reservationDate = moment(reservation.createdAt);
+     reservationDate = reservationDate.format("dddd DD MMMM, HH:mm");
+     var lessonDate = moment(lesson.date);
+     lessonDate = lessonDate.format("dddd DD MMMM, HH:mm");
+     SSR.compileTemplate('htmlEmail', Assets.getText('billing-email.html'));
+
+     var data = {
+       coachName:coachNames,
+       firstName:userProfile.firstName,
+       lastName:userProfile.lastName,
+       street:userProfile.address.street,
+       zip:userProfile.address.zip,
+       city:userProfile.address.city,
+       reservationDate:reservationDate,
+       reservationId:reservationId,
+       title:lesson.title,
+       address:lesson.address,
+       lessonDate:lessonDate,
+       pricePaid:pricePaid/100,
+       duration:lesson.duration,
+     };
+
+     Email.send({
+        to: userProfile.email,
+        from: "Trys <faycal@trys.be>",
+        subject: "Votre réservation sur Trys",
+        html: SSR.render('htmlEmail',data),
+      });
+
      return true;
    }
 });

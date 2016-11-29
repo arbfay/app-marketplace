@@ -1,6 +1,7 @@
 Template.navbar.helpers({
   isCoach : function(id){
-    var userMail = Meteor.user().emails[0].address;
+      document.title="Trys | Yoga, Pilates et Tai Chi à Bruxelles";
+    var userMail =Accounts.user().emails[0].address;
 
     Meteor.subscribe("matchingCoachByMail", userMail);
     var coach = Coaches.findOne();
@@ -21,9 +22,19 @@ Template.navbar.helpers({
 
 Template.navbarUser.events({
   "click .logoutLink": function(event, template){
+      document.title="Trys | Yoga, Pilates et Tai Chi à Bruxelles";
      event.preventDefault();
 
      Meteor.logout();
      FlowRouter.go('/');
   }
 });
+
+Template.navbarCoach.events({
+  "click .logoutLink": function(event, template){
+     event.preventDefault();
+
+     Meteor.logout();
+     FlowRouter.go('/');
+  }
+})

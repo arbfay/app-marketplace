@@ -1,0 +1,17 @@
+<template name="adminLogin">
+
+  {{#if isAdmin}}
+    <div class="container">
+      <h3 class="center-align">Vous êtes bien administrateur.</h3>
+      <div class="center-align">
+        <a href="/admin/panel">
+          <button class="btn cyan darken-3">Vers le panel</button>
+        </a>
+      </div>
+    </div>
+  {{else}}
+    <div class="container">
+      <h3 class="center-align">Vous n'êtes pas administrateur !</h3>
+    </div>
+  {{/if}}
+</template>

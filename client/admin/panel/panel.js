@@ -69,6 +69,11 @@ Template.statCard.events({
 
 Template.buttonItems.events({
   "click .insertLesson" : function(event){
-
-  }
+    event.preventDefault();
+    FlowRouter.go('/admin/lessons/insert');
+  },
+  "click .insertCoach" : function(event){
+    event.preventDefault();
+    FlowRouter.go('/admin/coaches/insert');
+  },
 })
