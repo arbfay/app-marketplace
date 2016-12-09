@@ -1,23 +1,4 @@
-<!--s<template name="coachingPanel">
-  <div class="container">
-    <div class="row">
-      <h3 class="center-align">Coaching Panel</h3>
-    </div>
-    <div class="row">
-      <div class="col m4">
-        <ul class="collection">
-          {{#each lesson in coachLessons}}
-             {{> coachingLessonItem lesson}}
-          {{/each}}
-        </ul>
-      </div>
 
-      <div class="col m8">
-        {{> attendingListTemplate }}
-      </div>
-    </div>
-  </div>
-</template> -->
 
 <template name="coachingPanel">
   <div class="row firstRow" style="height:100vh;">
@@ -59,7 +40,7 @@
           <ul>
             <li>
               <button class="btn red accent-3 waves-effect probBtn">
-                Signaler un problème
+                Un problème ?
               </button>
             </li>
             <li>
@@ -86,7 +67,18 @@
         <ul class="collection">
           {{#each users}}
             <li class="collection-item">
-              <p class="flow-text" style="display:inline;">{{firstName}} {{lastName}}</p>
+              <div class="row">
+                <div class="col s8">
+                  <p class="flow-text" style="display:inline;">{{firstName}} {{lastName}}</p>
+                  <p>{{birthdate}}</p>
+                </div>
+                <div class="col s4">
+                  {{#if canGiveBonus}}
+                    <button class="btn green accent-3 giveBonus">+ 10</button>
+                  {{/if}}
+                </div>
+              </div>
+
             </li>
           {{/each}}
         </ul>

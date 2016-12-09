@@ -32,8 +32,12 @@ display:inline-block;
 
 }
 
+.btn {
+  min-width:10px !important;
+}
+
 .btn-border-2{
-  border-radius : 2px;
+  border-radius : 2px !important;
 }
 
 .btn-1
@@ -52,10 +56,10 @@ display:inline-block;
 .searchImg{
   height:90vh;
   width:100vw;
-  background: -moz-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
-  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
-  background: -o-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
+  background: -moz-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/q_50/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/q_50/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
+  background: -o-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/q_50/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/q_50/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

@@ -15,7 +15,6 @@ Template.navbar.helpers({
     if(userProfile){
       test = userProfile.coachId;
     }
-    console.log(test);
     return test;
   },
 });

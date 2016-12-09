@@ -71,5 +71,7 @@ Template.myResItem.helpers({
     var mom = moment(this.lessonDate);
     return mom.format("ddd DD MMM, HH:mm");
   },
-
+  address: function(){
+    return "Les détails se trouvent dans votre boîte mail.";
+  }
 });

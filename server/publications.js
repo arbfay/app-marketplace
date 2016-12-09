@@ -100,3 +100,8 @@ Meteor.publish('myReservations', function(id){
 Meteor.publish('getCategories', function(){
   return Categories.find();
 })
+
+Meteor.publish('promoCode', function(code){
+  check(code, String);
+  return PromoCodes.find({code:code},{fields:{code:1,reductionToApply:1}});
+})

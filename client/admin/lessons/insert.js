@@ -25,15 +25,19 @@ Template.insertLessonByAdmin.events({
 
      //Pricing
      var commission=2.0;
-     if(price<12.0){
-       commission=price*0.2;
-     } else if (price < 16.0) {
-       commission=price*0.25;
+     if(category ==="Tai Chi"){
+       commission=1.5;
+       if(price >= 10.0 && price < 15.0){
+         commission+= price*0.05;
+       } else if (price >= 15.0){
+         commission+= price*0.08;
+       }
      } else {
-       commission=price*0.28;
-     }
-     if(commission < 1.25){
-       commission=1.25;
+       if(price >= 12.0 && price < 16.0){
+         commission+= price*0.05;
+       } else if (price >= 16.0){
+         commission+= price*0.08;
+       }
      }
 
      var coord;

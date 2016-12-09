@@ -11,7 +11,7 @@
       </div>
 
     <div class="row">
-      <div class="col m4">
+      <div class="col m4 s12">
         <div class="collection">
           <a href="#!" class="collection-item myInfo">Mes infos</a>
           <a href="#!" class="collection-item myRes">Mes réservations</a>
@@ -19,7 +19,7 @@
           <a href="#!" class="collection-item logOut">Se déconnecter</a>
         </div>
       </div>
-      <div class="col m8">
+      <div class="col m8 s12">
         {{> Template.dynamic template=content}}
     </div>
   </div>
@@ -46,6 +46,9 @@
     <h4>{{lessonTitle}}</h4>
     <p>
       {{dateForHuman}}
+    </p>
+    <p>
+      {{address}}
     </p>
   </li>
 </template>

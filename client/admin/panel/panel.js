@@ -76,4 +76,8 @@ Template.buttonItems.events({
     event.preventDefault();
     FlowRouter.go('/admin/coaches/insert');
   },
+  "click .insertPromo" : function(event){
+    event.preventDefault();
+    FlowRouter.go('/admin/promo/insert');
+  },
 })

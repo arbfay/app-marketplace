@@ -46,17 +46,17 @@ Meteor.methods({
 
      if(pC){
        return {
-         code:pc.code,
-         maxUsage:pc.maxUsage,
-         maxPerUser:pc.maxPerUser,
-         reductionToApply:pc.reductionToApply
+         code:pC.code,
+         maxUsage:pC.maxUsage,
+         maxPerUser:pC.maxPerUser,
+         reductionToApply:pC.reductionToApply
        };
      } else {
        return false;
      }
    },
    addPromoCodeUsage : function(promoCode, userMail){
-     UserProfile.update({email:userMail},{
+     UserProfiles.update({email:userMail},{
        $push : {
          promoCodeUsage : {
            code : promoCode.code,
@@ -85,11 +85,14 @@ Meteor.methods({
      var lastName = data.lastName;
      var points = data.points;
      var zip = data.address.zip;
+     var birthdate = data.birthdate;
+     var phone = data.phone;
 
      check(firstName,String);
      check(lastName,String);
      check(points, Number);
      check(zip, String);
+     check(birthdate, Number);
 
      UserProfiles.insert(data);
 
@@ -114,7 +117,24 @@ Meteor.methods({
          }
        });
    },
-
+   addBonus : function(token,userEmail, lessonId){
+     if(token === "bonbon"){
+        var user = UserProfiles.findOne({email:userEmail});
+        UserProfiles.update(
+         {_id:user._id},
+         {$push : {
+           bonus : {
+             lessonId : lessonId,
+             gotIt : true,
+             createdAt : new Date(),
+           }},
+          $inc:{points:10}
+        });
+        return true;
+     } else{
+        return false;
+     }
+   },
    insertAttendeesList : function(s){
     if(s ==="ok"){
       return AttendeesList.insert({reservations:[],users:[]});

@@ -11,6 +11,7 @@
     "jquery": "^3.1.1",
     "materialize-clockpicker": "^1.0.1",
     "meteor-node-stubs": "~0.2.0",
-    "snazzy-info-window": "^1.0.0"
+    "snazzy-info-window": "^1.0.0",
+    "sweetalert": "^1.1.3"
   }
 }

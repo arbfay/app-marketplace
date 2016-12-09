@@ -27,6 +27,27 @@ Template.coachingPanel.helpers({
   }
 });
 
+Template.coachingPanel.events({
+  "click .probBtn" : function(event,template){
+    event.preventDefault();
+
+    swal("Pas encore disponible",
+    "Pour l'instant, vous pouvez utiliser notre formulaire de contact pour nous joindre");
+  },
+  "click .addBtn" : function(event,template){
+    event.preventDefault();
+
+    swal("Pas encore disponible",
+    "Pour l'instant, vous pouvez utiliser notre formulaire de contact pour nous joindre");
+  },
+  "click .editBtn" : function(event,template){
+    event.preventDefault();
+
+    swal("Pas encore disponible",
+    "Pour l'instant, vous pouvez utiliser notre formulaire de contact pour nous joindre");
+  }
+});
+
 Template.attendingListTemplate.helpers({
   users: function(){
     var lessonId=Session.get('lessonId');
@@ -53,6 +74,62 @@ Template.attendingListTemplate.helpers({
     var user = UserProfiles.findOne({email:email});
 
     return user.lastName;
+  },
+  birthdate : function(){
+    var email = this.email;
+    var user = UserProfiles.findOne({email:email});
+
+    var bd = user.birthdate;
+    var mom = moment(bd);
+    return mom.format("D/M/YYYY");
+  },
+  canGiveBonus: function(){
+    var email = this.email;
+    var user = UserProfiles.findOne({email:email});
+    var lessonId=Session.get('lessonId');
+    var lesson = Lessons.findOne(lessonId);
+    var lessonDate = lesson.date;
+    var date = moment();
+    var now = date.valueOf();
+
+    var alreadyHadThisBonus = false;
+    if(user.bonus){
+      function rightB (bonus){
+        if(bonus.lessonId === lesson._id && bonus.gotIt == true){
+          return true;
+        }else{
+          return false;
+        }
+      }
+      var t = user.bonus.find(rightB);
+      if(t){
+        alreadyHadThisBonus = true;
+      }
+    }
+    if(now <= (lessonDate + 3600000) && !alreadyHadThisBonus){
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+});
+
+Template.attendingListTemplate.events({
+  "click .giveBonus" : function(event){
+    event.preventDefault();
+    var email = this.email;
+    var user = UserProfiles.findOne({email:email});
+    var lessonId=Session.get('lessonId');
+
+    Meteor.call("addBonus","bonbon", user.email,lessonId, function(err,res){
+      if(err){
+        Materialize.toast("Il y a eu une erreur lors de l'octroi du bonus. Veuillez réessayer plus tard.", 5000,'rounded');
+      } else {
+        Materialize.toast("Bonus octroyé !", 4000,'rounded');
+      }
+    });
+
   }
 });
 

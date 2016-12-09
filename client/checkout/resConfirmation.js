@@ -75,6 +75,34 @@ Template.profileEditingCard.helpers({
       return "";
     }
   },
+  birthdate: function(){
+    if(Accounts.user()){
+      var userMail = Accounts.user().emails[0].address;
+    } else{
+      return "";
+    }
+    var userProfile = UserProfiles.findOne({email:userMail});
+
+    if(userProfile){
+      return userProfile.birthdate;
+    } else{
+      return "";
+    }
+  },
+  phoneNumber: function(){
+    if(Accounts.user()){
+      var userMail = Accounts.user().emails[0].address;
+    } else{
+      return "";
+    }
+    var userProfile = UserProfiles.findOne({email:userMail});
+
+    if(userProfile){
+      return userProfile.phone;
+    } else{
+      return "";
+    }
+  },
 });
 
 
@@ -87,6 +115,8 @@ Template.profileEditingCard.events({
     var street = $("#street").val();
     var city = $("#city").val();
     var zip = $("#zip").val();
+    var birthdate = $("#birthdate").val();
+    var phone = $("#phoneNumber").val();
 
     if(Accounts.user()){
       var userMail = Accounts.user().emails[0].address;
@@ -100,6 +130,9 @@ Template.profileEditingCard.events({
       FlowRouter.go('/login');
     }
 
+    var d = new Date(birthdate);
+    birthdate = d.getTime();
+
     var toUpdate = {
       firstName:firstName,
       lastName:lastName,
@@ -107,7 +140,9 @@ Template.profileEditingCard.events({
         street:street,
         city:city,
         zip:zip
-      }
+      },
+      birthdate : birthdate,
+      phone:phone,
     };
 
     Meteor.call('updateUserProfile', userProfileId, toUpdate, function(err){
@@ -216,6 +251,39 @@ Template.lessonConfirmationCard.helpers({
   }
 });
 
+Template.promoCodeForm.events({
+  "click .addPromoCode" : function(event){
+    event.preventDefault();
+    var insertedCode = $("#promoCode").val();
+
+    Session.set("promoCode", insertedCode);
+    Meteor.subscribe('promoCode', insertedCode);
+  }
+});
+
+Template.promoCodeForm.helpers({
+  insertedCode : function(){
+    return Session.get("promoCode");
+  },
+  whatCode : function(){
+    if(Session.get("promoCode")){
+      var code = Session.get("promoCode");
+      return code;
+    } else {
+      return "";
+    }
+  },
+  whatReduction : function(){
+    if(Session.get("promoCode")){
+      var code = Session.get("promoCode");
+      var promo = PromoCodes.findOne({code :code});
+      return promo.reductionToApply;
+    } else {
+      return "";
+    }
+  }
+});
+
 Template.reservationConfirmation.events({
   "click .payBtn" (event) {
     event.preventDefault();
@@ -230,40 +298,36 @@ Template.reservationConfirmation.events({
         || UserProfiles.findOne({email:email}).address.street===""){
           Materialize.toast("Veuillez modifier vos informations pour qu'elles soient correctes, merci.", 4000, "rounded");
     } else {
-      /*if(lesson !==""){
         price = lesson.price;
-        if(Session.get('promoCode')){
-          var pC = Session.get('promoCode');
-          var rTA = new ReactiveVar(0);
+        var promoCode = Session.get('promoCode');
+        if(!promoCode){promoCode="";}
 
-          Meteor.call('applyPromoCode',pC, (err,res)=>{
-            if(res){
-              if(res.maxUsage >0){
-                rTA.set(res.reductionToApply);
-                Meteor.call('addPromoCodeUsage',res, Accounts.user().emails[0].address,(error,results)=>{
-                  if(err){
-                    console.log('Attempt to add the usage of the promo code');
-                    console.log(error);
-                  }
-                });
+        Meteor.call('applyPromoCode',promoCode, (err,res)=>{
+          if(res){
+            if(res.maxUsage >0){
+              Meteor.call('addPromoCodeUsage',res, Accounts.user().emails[0].address,(error,results)=>{
+                if(error){
+                  console.log('Attempt to add the usage of the promo code');
+                  console.log(error);
+                } else {
+                  console.log(res);
+                  Meteor.subscribe('promoCode',promoCode);
+                }
+              });
 
-              }
-            } else{
-              console.log(res);
-              console.log(err);
             }
-          });
-
-          price = price - rTA.get();
-        }
-      } else {
-        alert('Mauvaise tentative');
-      }
-      */
+          } else{
+            console.log(res);
+            console.log(err);
+          }
+        });
+        var promo = PromoCodes.findOne({code:promoCode});
+        var rTA = promo.reductionToApply > 0 ? promo.reductionToApply : 0;
+        price -= rTA;
 
         if(lesson.maxAttendeesLeft > 0){
 
-          var priceInCents = lesson.price * 100;
+          var priceInCents = price * 100;
 
           var handler = StripeCheckout.configure({
             key: 'pk_test_LqluwQNx3xv8VtbJwYme8XJc',
@@ -277,6 +341,7 @@ Template.reservationConfirmation.events({
                       if(err){
                         Materialize.toast("Erreur lors du process du paiement " + err,4000,'rounded');
                       } else{
+                        Session.set("promoCode",false);
                         FlowRouter.go('/reservation/:reservationId/confirmation',{reservationId:reservationId},{});
                       }
                     });
@@ -294,6 +359,7 @@ Template.reservationConfirmation.events({
 
         } else {
           Materialize.toast("Zut ! Le cours est déjà complet :'(", 5000, 'rounded');
+          Session.set("promoCode",false);
           FlowRouter.go('/class/:lessonId',{lessonId:lesson.id},{});
         }
       }
