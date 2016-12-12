@@ -359,7 +359,7 @@ Template.reservationConfirmation.events({
           var priceInCents = price * 100;
 
           var handler = StripeCheckout.configure({
-            key: 'pk_test_LqluwQNx3xv8VtbJwYme8XJc',
+            key: 'pk_live_35CsmegR7Q0ww6wi8QupJ9rp',
             image : "http://res.cloudinary.com/trys/image/upload/v1480159845/logo-trys-2-v1.2_b_w_transp_cut_icqbo8.png",
             token: function(token) {
               var userMail = Accounts.user().emails[0].address;
