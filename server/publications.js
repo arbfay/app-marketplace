@@ -103,5 +103,5 @@ Meteor.publish('getCategories', function(){
 
 Meteor.publish('promoCode', function(code){
   check(code, String);
-  return PromoCodes.find({code:code},{fields:{code:1,reductionToApply:1}});
+  return PromoCodes.find({code:code},{fields:{code:1,reductionToApply:1,maxPerUser:1,maxUsage:1}});
 })

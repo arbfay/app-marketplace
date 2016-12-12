@@ -84,7 +84,8 @@ Template.profileEditingCard.helpers({
     var userProfile = UserProfiles.findOne({email:userMail});
 
     if(userProfile){
-      return userProfile.birthdate;
+      var mom = moment(userProfile.birthdate);
+      return mom.format("YYYY-MM-DD");
     } else{
       return "";
     }
@@ -258,6 +259,7 @@ Template.promoCodeForm.events({
 
     Session.set("promoCode", insertedCode);
     Meteor.subscribe('promoCode', insertedCode);
+    $("#promoCode").val('');
   }
 });
 
@@ -268,9 +270,38 @@ Template.promoCodeForm.helpers({
   whatCode : function(){
     if(Session.get("promoCode")){
       var code = Session.get("promoCode");
-      return code;
+
+      var email = Accounts.user().emails[0].address;
+      var profile = UserProfiles.findOne({email:email});
+      /*Vérification que le code n'a pas déjà été utilisé plus de fois
+      que permis*/
+      var codeUsed = [];
+      if(profile.promoCodeUsage){
+        var pCU = profile.promoCodeUsage;
+        for(var i = 0; i<pCU.length; i++){
+          codeUsed.push(pCU[i].code); //On recupère tous les codes déjà utilisés
+        }
+      }
+
+      if(codeUsed.indexOf(code) >=0){//Si le code est bien présent dans la liste
+        var times = 0;
+        for(var i = 0; i < codeUsed.length;i++){//Calcul le nombre de fois que le code a été utilisé
+          if(codeUsed[i] === code){
+            times++;
+          }
+        }
+        var pC = PromoCodes.findOne({code:code});
+        if(times >= pC.maxPerUser){ //Déjà utilisé un maximum de fois possible
+          Session.set("promoCode",false); //Pour que le reste sache que ce n'est plus possible de l'utiliser
+          return "Ce code ne peut plus être utilisé.";
+        } else {
+          return code;
+        }
+      } else {
+        return code;//Le code n'a pas encore été utilisé une seule fois et est valide.
+      }
     } else {
-      return "";
+      return "Ce code ne peut plus être utilisé.";
     }
   },
   whatReduction : function(){
@@ -303,11 +334,10 @@ Template.reservationConfirmation.events({
         if(!promoCode){promoCode="";}
 
         Meteor.call('applyPromoCode',promoCode, (err,res)=>{
-          if(res){
-            if(res.maxUsage >0){
+          if(res != false){
               Meteor.call('addPromoCodeUsage',res, Accounts.user().emails[0].address,(error,results)=>{
                 if(error){
-                  console.log('Attempt to add the usage of the promo code');
+                  console.log('Attempt to add the usage of the promo code failed');
                   console.log(error);
                 } else {
                   console.log(res);
@@ -315,7 +345,6 @@ Template.reservationConfirmation.events({
                 }
               });
 
-            }
           } else{
             console.log(res);
             console.log(err);

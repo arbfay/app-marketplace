@@ -45,12 +45,22 @@ Meteor.methods({
      var pC = PromoCodes.findOne({code:promoCode});
 
      if(pC){
-       return {
-         code:pC.code,
-         maxUsage:pC.maxUsage,
-         maxPerUser:pC.maxPerUser,
-         reductionToApply:pC.reductionToApply
-       };
+       //reducing maxUsage & send data only if possible to apply => meaning only if
+       //maxUsage is > 0
+       if(pC.maxUsage > 0){
+         PromoCodes.update({code:pC.code}, {
+           $inc : {maxUsage : -1}
+         });
+         pC.maxUsage -= 1;
+         return {
+           code:pC.code,
+           maxUsage:pC.maxUsage,
+           maxPerUser:pC.maxPerUser,
+           reductionToApply:pC.reductionToApply
+         };
+       } else {
+         return false;
+       }
      } else {
        return false;
      }
@@ -87,6 +97,9 @@ Meteor.methods({
      var zip = data.address.zip;
      var birthdate = data.birthdate;
      var phone = data.phone;
+
+     if(!points){points=0;}
+     if(!birthdate){birthdate=100;}
 
      check(firstName,String);
      check(lastName,String);
