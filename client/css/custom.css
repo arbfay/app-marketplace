@@ -112,6 +112,7 @@ display:inline-block;
     position: absolute;
     height: 100%;
     background-color: #9797A7;
+    border-radius:6px 6px 6px 6px;
 }
 #labelProgressBar {
     text-align: center;
