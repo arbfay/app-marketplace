@@ -5,8 +5,8 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "babel-runtime": "^6.18.0",
-    "cloudinary": "^1.4.4",
+    "babel-runtime": "^6.20.0",
+    "cloudinary": "^1.4.6",
     "hammerjs": "^2.0.8",
     "jquery": "^3.1.1",
     "materialize-clockpicker": "^1.0.1",

@@ -104,6 +104,54 @@ Template.profileEditingCard.helpers({
       return "";
     }
   },
+  isMale :function(){
+    if(Accounts.user()){
+      var userMail = Accounts.user().emails[0].address;
+    } else{
+      return "";
+    }
+    var userProfile = UserProfiles.findOne({email:userMail});
+
+    if(userProfile.gender === "male"){
+      return "checked";
+    } else{
+      return "";
+    }
+  },
+  isFemale :function(){
+    if(Accounts.user()){
+      var userMail = Accounts.user().emails[0].address;
+    } else{
+      return "";
+    }
+    var userProfile = UserProfiles.findOne({email:userMail});
+
+    if(userProfile.gender === "female"){
+      return "checked";
+    } else{
+      return "";
+    }
+  },
+  progressBar : function(){
+    if(Accounts.user()){
+      var userMail = Accounts.user().emails[0].address;
+    } else{
+      return "";
+    }
+    var userProfile = UserProfiles.findOne({email:userMail});
+
+    var i = 5;
+    if(userProfile.firstName.length >= 2){i += 10;}
+    if(userProfile.lastName.length >= 2){i += 10;}
+    if(userProfile.phone.length >= 4){i += 15;}
+    if(userProfile.birthdate){i += 15;}
+    if(userProfile.address.zip.length >= 4){i += 15;}
+    if(userProfile.address.street.length >= 2){i += 10;}
+    if(userProfile.address.city.length >= 3){i += 10;}
+    if(userProfile.gender.length >= 2){i += 10;}
+
+    return i+'%';
+  },
 });
 
 
@@ -118,6 +166,7 @@ Template.profileEditingCard.events({
     var zip = $("#zip").val();
     var birthdate = $("#birthdate").val();
     var phone = $("#phoneNumber").val();
+    var gender = $('input[name=gender]:checked').val();
 
     if(Accounts.user()){
       var userMail = Accounts.user().emails[0].address;
@@ -144,6 +193,7 @@ Template.profileEditingCard.events({
       },
       birthdate : birthdate,
       phone:phone,
+      gender:gender,
     };
 
     Meteor.call('updateUserProfile', userProfileId, toUpdate, function(err){

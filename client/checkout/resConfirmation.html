@@ -34,6 +34,13 @@
       <div class="card-content">
         <div class="container profileInfo">
           <div class="row">
+            <div id="myProgress">
+              <div id="myBar" style="width:{{progressBar}}">
+                <div id="labelProgressBar">{{progressBar}}</div>
+              </div>
+          </div>
+        </div>
+          <div class="row">
             <div class="input-field col s6">
               <input id="lastName" type="text" class="validate-required" value="{{firstName}}">
               <label class="active" for="lastName">Nom</label>
@@ -41,6 +48,15 @@
             <div class="input-field col s6">
               <input id="firstName" type="text" class="validate-required" value="{{lastName}}">
               <label class="active" for="firstName">Prénom</label>
+            </div>
+          </div>
+          <div class="row" >
+            <div class="input-field col s12" style="margin-top:0px !important;">
+              <input name="gender" type="radio" id="male" value="male" {{isMale}}/>
+              <label for="male"><i class="fa fa-mars" aria-hidden="true"></i></label>
+              <span style="margin-right:20%;">&nbsp;</span>
+              <input name="gender" type="radio" id="female" value="female" {{isFemale}}/>
+              <label for="female"><i class="fa fa-venus" aria-hidden="true"></i></label>
             </div>
           </div>
 

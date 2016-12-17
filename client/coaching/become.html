@@ -1,4 +1,4 @@
-<template name="becomeCoach">
+<!--<template name="becomeCoach">
   <div class="" style="
     height:90vh;
     width:100vw;
@@ -135,6 +135,283 @@
               <label for="category2">Pilates</label>
               <input name="cat" type="radio" id="category3" value="Tai Chi" />
               <label for="category3">Tai Chi</label>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="comments" class="materialize-textarea"></textarea>
+                <label for="comments">Commentaires</label>
+              </div>
+            </div>
+          <button type="submit" class="btn-1 btn-border-2">Envoyer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</template> -->
+
+<template name="becomeCoach">
+  <div class="" style="
+    height:90vh;
+    width:100vw;
+    background: -moz-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/q_90/v1479316560/yoga-teacher_vprjtx.jpg) no-repeat center center;
+    background: -webkit-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/q_90/v1479316560/yoga-teacher_vprjtx.jpg) no-repeat center center;
+    background: -o-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/q_90/v1479316560/yoga-teacher_vprjtx.jpg) no-repeat center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/q_90/v1479316560/yoga-teacher_vprjtx.jpg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;">
+
+    <div class="container v-align-transform">
+      <div class="row">
+        <div class="col l5 m6 s12">
+          <div class="card-panel cyan darken-2 white-text">
+            <h3 style="font-weight:bold;color:white !important;">Enseignez à<br>
+              plus de personnes<br>
+              encore</h3>
+              <p style="font-size:18px;">
+                Que ce soit pour étendre durablement ses activités,
+                pour expérimenter une nouvelle formule ou encore
+                pour proposer des ateliers et autres évènements,
+                trouvez des participants et élèves avec Trys.
+              </p>
+              <a href="#join">
+                <button class="btn red accent-3">
+                  Commencer à enseigner
+                </button>
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row" style="margin-top:5%;padding-right:0px !important;color:#424242; background-color:#fafafa;font-family:'Roboto',sans serif;">
+    <h3 class="center-align uppercase" style="padding:15px 0px 30px 0px;font-weight:100;">Comment ça marche ?</h3>
+    <div class="row container">
+      <div class="col s12">
+        <h3 style="font-weight:bold;"><span style="font-size: 200%; font-weight: 500;vertical-align:middle;">
+          &#9312;
+        </span> Inscrivez-vous pour devenir coach</h3>
+        <div class="row">
+          <div class="col s12 m6">
+            <h5><i class="material-icons" style="color:#757575;font-size:30px;vertical-align:middle;">verified_user</i>
+              Quand l'inscription sera-t-elle confirmée ?
+            </h5>
+            <p>
+              Pour protéger la réputation de tous les enseignants sur la plateforme, nous
+              procédons à un entretien individuel afin d'évaluer votre expérience et
+              votre sérieux. Une fois l'entretien terminée avec succès, les séances
+              pourront être ajoutées immédiatement si vous êtes d'accord de poursuivre.
+            </p>
+          </div>
+          <div class="col s12 m6">
+            <h5><i class="material-icons" style="color:#757575;font-size:30px;vertical-align:middle;">format_list_bulleted</i>
+              Quelles sont les conditions de participation ?
+            </h5>
+            <p>
+              La participation à la plateforme est gratuite et sans risque. Une commission
+              est prélevée à chaque réservation. Le montant des commissions, les questions
+              d'assurance et le fonctionnement pratique de la plateforme seront expliqués
+              lors de l'entretien individuel. Si vous avez des doutes ou souhaitez en savoir plus,
+              vous pouvez toujours nous contacter.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row container">
+      <div class="col s12">
+        <h3 style="font-weight:bold;">
+          <span style="font-size: 200%; font-weight: 500;vertical-align:middle;">
+            &#9313;
+          </span>
+          Les utilisateurs trouvent votre séance et effectuent une réservation</h3>
+        <div class="row">
+          <div class="col s12 m6">
+            <h5><i class="material-icons" style="color:#757575;font-size:30px;vertical-align:middle;">poll</i>
+              Vous voyez immédiatement les inscrits
+            </h5>
+            <p>
+              Sur votre "Coach Panel", vous pourrez retrouver notamment en direct les
+              noms des personnes inscrites à vos cours.
+            </p>
+          </div>
+          <div class="col s12 m6">
+            <h5><i class="material-icons" style="color:#757575;font-size:30px;vertical-align:middle;">credit_card</i>
+              Comment les utilisateurs paient ?
+            </h5>
+            <p>
+              Vous n'avez pas besoin de vous inquiéter : les utilisateurs paient au moment
+              de la réservation et aucune réservation n'est acceptée sans que le paiement
+              ne soit validé.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row container">
+      <div class="col s12">
+        <h3 style="font-weight:bold;">
+          <span style="font-size: 200%; font-weight: 500;vertical-align:middle;">
+            &#9314;
+          </span>
+          Donnez votre cours</h3>
+        <div class="row">
+          <div class="col s12 m6">
+            <h5><i class="material-icons" style="color:#757575;font-size:30px;vertical-align:middle;">assignment_turned_in</i>
+              Commencez par la base
+            </h5>
+            <p>
+              Pour un nouveau participant, il est parfois difficile de s'intégrer dans un groupe habitué.
+              N'hésitez à vous présenter et à expliquer le fonctionnement de vos cours. Cela
+              améliorera l'expérience, et augmente les chances que
+              le participant prenne une carte dans votre établissement.
+            </p>
+          </div>
+          <div class="col s12 m6">
+            <h5><i class="material-icons" style="color:#757575;font-size:30px;vertical-align:middle;">account_balance</i>
+              Comment se fait votre versement ?
+            </h5>
+            <p>
+              Nous effectuons un transfert bancaire sur votre compte tous les 15 jours de la
+              totalité de la somme qui vous est dûe.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row container">
+    <h4 class="center-align uppercase" style="padding:15px 0px 30px 0px;font-weight:100;">Nous sommes là pour vous aider</h4>
+    <div class="col m4 s12">
+      <div class=" center-align">
+          <div class="center-align">
+              <i class="material-icons" style="font-size:350%;">group_work</i>
+              <h5 class="uppercase">Achats groupés</h5>
+          </div>
+          <p style="text-align: justify;text-justify: inter-word;">
+              Nous rassemblons un nombre important
+              de professionnels, ce qui permet d'effectuer
+              des achats groupés afin de réduire les coûts
+              pour tous les participants à l'achat.
+          </p>
+      </div>
+    </div>
+    <div class="col m4 s12">
+      <div class="center-align">
+            <div class="center-align">
+                <i class="material-icons" style="font-size:350%;">share</i>
+                <h5 class="uppercase">Réseau</h5>
+            </div>
+            <p style="text-align: justify;text-justify: inter-word;">
+              Nous organisons des rencontres
+              entre enseignants afin de vous
+              donner l'opportunités de rencontrer
+              d'autres passionés et de partager vos
+               bonnes pratiques.
+            </p>
+        </div>
+    </div>
+    <div class="col m4 s12">
+      <div class="center-align">
+          <div class="center-align">
+              <i class="material-icons" style="font-size:350%;">help_outline</i>
+              <h5 class="uppercase">Soutien</h5>
+          </div>
+          <p style="text-align: justify;text-justify: inter-word;">
+              Si vous rencontrez des difficultés
+              dans votre activité, nous pourrons
+              vous soutenir et vous aider à les surmonter
+              grâce à notre réseau notamment.
+          </p>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="padding-right:0px !important; margin-left:0px !important;">
+    <div class="col m12 s12 white-text" style="padding-right:0px !important;padding-left:0px !important;">
+      <div style="padding-top:30px;
+      width:100vw;
+      height:40vh;
+      background: -moz-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(http://res.cloudinary.com/trys/image/upload/q_50/v1480440533/modern-night_ltvk63.jpg) no-repeat center center;
+      background: -webkit-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(http://res.cloudinary.com/trys/image/upload/q_50/v1480440533/modern-night_ltvk63.jpg) no-repeat center center;
+      background: -o-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(http://res.cloudinary.com/trys/image/upload/q_50/v1480440533/modern-night_ltvk63.jpg) no-repeat center center;
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(http://res.cloudinary.com/trys/image/upload/q_50/v1480440533/modern-night_ltvk63.jpg) no-repeat center center;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      ">
+      <div class="container" style="vertical-align:middle;">
+        <h4 class="uppercase white-text">Nous participons à la construction d'un monde meilleur</h4>
+        <p  class="hide-on-small-only" style="font-size:18px;">
+          Nous le savons, une activité physique régulière fait de nous une personne meilleure sur le plan de la santé, mais sur le plan humain aussi.
+          En aidant un maximum de personnes à excercer régulièrement une activité physique, c'est le monde entier que nous aidons !
+        </p>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" id="join" style="margin-top:10%;">
+    <div class="col m6 hide-on-small-only">
+      <div class="container">
+        <h4 class="uppercase">Contactez-nous</h4>
+        <p>
+          Vous pouvez nous joindre directement à nos bureaux ou par e-mail.
+        </p>
+        <hr>
+        <p>
+            Rue de la Science 23
+            <br> 1000 Bruxelles
+        </p>
+        <hr>
+        <p>
+            <strong>E-mail:</strong> vincent@trys.be
+            <br>
+        </p>
+      </div>
+    </div>
+    <div class="col m6 s12">
+      <div class="container">
+        <h4 class="center-align uppercase">Commencer à enseigner</h4>
+        <form class="form-email" id="form" data-success="Merci d'avoir rempli ce formulaire, nous rentrerons en contact très prochainement"
+            data-error="Veuillez remplir l'ensemble des champs correctement, s'il vous plaît.">
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="lastName" type="text" class="validate">
+                <label for="lastName">Nom</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="firstName" type="text" class="validate">
+                <label for="firstName">Prénom</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="email" type="email" class="validate">
+                <label for="email">Adresse e-mail</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="phone" type="text" class="validate">
+                <label for="phone">Téléphone</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="city" type="text" class="validate">
+                <label for="city">Commune où vous excercez</label>
+              </div>
+            </div>
+            <div class="row">
+              <input name="cat" type="radio" id="category1" value="Yoga" />
+              <label for="category1">Yoga &nbsp;</label>
+              <input name="cat" type="radio" id="category2" value="Pilates"/>
+              <label for="category2">Pilates &nbsp;</label>
+              <input name="cat" type="radio" id="category3" value="Tai Chi" />
+              <label for="category3">Tai Chi &nbsp;</label>
             </div>
             <div class="row">
               <div class="input-field col s12">

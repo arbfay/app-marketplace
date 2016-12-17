@@ -236,5 +236,50 @@ Meteor.methods({
       });
 
      return true;
-   }
+   },
+   sendResPasswordEmail : function(email){
+     check(email,String);
+
+     var user = Accounts.findUserByEmail(email);
+     var userId = user._id;
+     if (!user)
+      throw new Error("Ne trouve pas l'utilisateur.");
+      // pick the first email if we weren't passed an email.
+     if (!email && user.emails && user.emails[0])
+      email = user.emails[0].address;
+      // make sure we have a valid email
+     if (!email || !_.contains(_.pluck(user.emails || [], 'address'), email))
+      throw new Error("Adresse e-mail incorrecte.");
+
+      var token = Random.secret();
+      var when = new Date();
+      var tokenRecord = {
+        token: token,
+        email: email,
+        when: when
+      };
+      Meteor.users.update(userId, {$set: {
+        "services.password.reset": tokenRecord
+      }});
+      // before passing to template, update user object with new token
+      Meteor._ensure(user, 'services', 'password').reset = tokenRecord;
+
+      var relUrl = "reset-password/"+token;
+      var resetPasswordUrl = Meteor.absoluteUrl(relUrl);
+
+      SSR.compileTemplate('htmlEmail', Assets.getText('reset-password-email.html'));
+
+      var data = {
+        resetPasswordUrl:resetPasswordUrl,
+        email:email,
+      };
+
+      Email.send({
+         to: email,
+         from: "Trys <contact@trys.be>",
+         subject: "Mot de passe oublié ?",
+         html: SSR.render('htmlEmail',data),
+       });
+
+    },
 });
