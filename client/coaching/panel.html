@@ -78,9 +78,53 @@
                   {{/if}}
                 </div>
               </div>
-
             </li>
           {{/each}}
+          {{#each nonUsers}}
+            <li class="collection-item">
+              <div class="row">
+                <div class="col s8">
+                  <p class="flow-text" style="display:inline;">{{firstNameNonUser}} {{lastNameNonUser}}</p>
+                  <p>{{emailNonUser}}</p>
+                  <p>{{commentNonUser}}</p>
+                </div>
+              </div>
+            </li>
+          {{/each}}
+
+          <div class="center-align" style="margin-top:10px;">
+            <a href="#modalFormNewAttendee" class="waves-effect waves-light btn blue darken-3 addAttendeeModalButton">Ajouter</a>
+          </div>
+          <form id="modalFormNewAttendee" class="modal">
+              <div class="modal-content">
+                <h4>Ajouter un participant non-membre</h4>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="lastName" type="text" class="validate-required">
+                    <label for="lastName">Nom</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="firstName" type="text" class="validate-required">
+                    <label  for="firstName">Prénom</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="email" type="email" class="validate">
+                    <label  for="email">Adresse e-mail</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="comment" type="text" class="validate">
+                    <label  for="comment">Commentaire</label>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btnModal modal-action modal-close waves-effect waves-green btn-flat" type="submit">Ajouter</button>
+              </div>
+          </form>
         </ul>
       </div>
     </form>

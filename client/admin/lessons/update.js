@@ -1,8 +1,8 @@
-
-Template.insertLessonByAdmin.events({
+Template.updateLessonByAdmin.events({
   "submit form": function(event){
      event.preventDefault();
      var t=event.target;
+     var lessonId = FlowRouter.getParam('id');
 
      var title=t.title.value;
      var shortDesc=t.shortDesc.value;
@@ -83,7 +83,7 @@ Template.insertLessonByAdmin.events({
      Session.setDefault("loc", loc);
      var l = Session.get('loc');
 
-     var toInsert={
+     var toUpdate={
        imgUrl:imgUrl,
        title:title,
        shortDesc:shortDesc,
@@ -99,23 +99,72 @@ Template.insertLessonByAdmin.events({
        commission:commission,
        date:dateInMilli,
        attendeesList:attendeesList,
-       createdAt: new Date(),
        updatedAt: new Date(),
      };
 
-     Meteor.call("insertLessonByAdmin", toInsert, (err,res)=>{
+     Meteor.call("updateLessonByAdmin",lessonId, toUpdate, (err,res)=>{
       if(res){
-        Materialize.toast('Cours enregistré avec succès !', 4000,'rounded');
+        Materialize.toast('Cours mis à jour avec succès !', 4000,'rounded');
       } else {
-        Materialize.toast("Erreur lors de l'insertion: "+err, 4000,'rounded');
+        Materialize.toast("Erreur lors de la modification: "+err, 4000,'rounded');
       }
      });
 
-
-     t.maxAttendees='';
-     t.price.value='';
-     t.date.value='';
-     t.time.value='';
-
   }
 });
+
+Template.updateLessonByAdmin.helpers({
+  lesson : function(){
+    var id = FlowRouter.getParam("id");
+    Meteor.subscribe("matchingLesson", id);
+    return Lessons.findOne({_id:id});
+  },
+  title : function(){
+    return this.title;
+  },
+  shortDesc : function(){
+    return this.shortDesc;
+  },
+  longDesc : function(){
+    return this.longDesc;
+  },
+  coachEmail : function(){
+    return this.coachEmail
+  },
+  address : function(){
+    return this.address;
+  },
+  instructions : function(){
+    return this.instructions;
+  },
+  maxAttendeesLeft : function(){
+    return this.maxAttendeesLeft;
+  },
+  price : function(){
+    return this.price;
+  },
+  duration : function(){
+    return this.duration;
+  },
+  dateDay : function(){
+    var mom = moment(this.date);
+    return mom.format("YYYY-MM-DD");
+  },
+  dateTime : function(){
+    var mom = moment(this.date);
+    return mom.format("HH:MM");
+  },
+  imgUrl : function(){
+    return this.imgUrl;
+  },
+});
+
+Template.findLessonByAdmin.events({
+  "submit form" : function(event){
+    event.preventDefault();
+
+    var id = event.target.lessonId.value;
+    var path='/admin/lessons/update/'+id;
+    FlowRouter.go(path);
+  },
+})

@@ -55,11 +55,20 @@ Template.attendingListTemplate.helpers({
     Meteor.subscribe('attendessListById', aL);
 
     var res = AttendeesList.findOne(aL).users;
-    console.log(res);
     if(res){
       return res;
     } else {
       return {};
+    }
+  },
+  nonUsers : function() {
+    var lessonId=Session.get('lessonId');
+    var aLId = Lessons.findOne(lessonId).attendeesList;
+    var res = AttendeesList.findOne(aLId).nonUsers;
+    if(res){
+      return res;
+    } else {
+      return [];
     }
   },
   firstName : function(){
@@ -69,11 +78,17 @@ Template.attendingListTemplate.helpers({
 
     return user.firstName;
   },
+  firstNameNonUser : function(){
+    return this.firstName;
+  },
   lastName : function(){
     var email = this.email;
     var user = UserProfiles.findOne({email:email});
 
     return user.lastName;
+  },
+  lastNameNonUser : function(){
+    return this.lastName;
   },
   birthdate : function(){
     var email = this.email;
@@ -112,6 +127,12 @@ Template.attendingListTemplate.helpers({
       return false;
     }
 
+  },
+  emailNonUser : function(){
+    return this.email;
+  },
+  commentNonUser : function(){
+    return this.comment;
   }
 });
 
@@ -129,7 +150,91 @@ Template.attendingListTemplate.events({
         Materialize.toast("Bonus octroyé !", 4000,'rounded');
       }
     });
+  },
+  "click .addAttendeeModalButton" : function(event){
+    event.preventDefault();
+    $('#modalFormNewAttendee').openModal();
 
+  },
+  "click .btnModal":function(event){
+    event.preventDefault();
+    var lessonId=Session.get('lessonId');
+    var aL = Lessons.findOne(lessonId).attendeesList;
+
+    var firstName = $("#firstName").val();
+    var lastName = $("#lastName").val();
+    var email = $("#email").val();
+    var comment = $("#comment").val();
+
+    if(!email){
+      email ="";
+    }
+
+    if(!comment){
+      comment="";
+    }
+
+    var data={
+      firstName:firstName,
+      lastName:lastName,
+      email:email,
+      comment:comment,
+      createdAt:new Date()
+    };
+
+    Meteor.call('addNonUserAttendee', lessonId, aL, data, function(err){
+      if(err){
+        Materialize.toast("Il y a eu une erreur lors de l'insertion. Veuillez réessayer plus tard.", 5000, 'rounded');
+      } else {
+        Materialize.toast("Participant ajouté !",5000,'rounded');
+      }
+    });
+
+    $("#firstName").val('');
+    $("#lastName").val('');
+    $("#email").val('');
+    $("#comment").val('');
+  },
+  "submit form" : function(event){
+    event.preventDefault();
+    Materialize.toast("OK", 5000, 'rounded');
+
+    var lessonId=Session.get('lessonId');
+    var aL = Lessons.findOne(lessonId).attendeesList;
+
+    var firstName = event.target.firstName.value;
+    var lastName = event.target.lastName.value;
+    var email = event.target.email.value;
+    var comment = event.target.comment.value;
+
+    if(!email){
+      email ="";
+    }
+
+    if(!comment){
+      comment="";
+    }
+
+    var data={
+      firstName:firstName,
+      lastName:lastName,
+      email:email,
+      comment:comment,
+    };
+
+    Meteor.call('addNonUserAttendee', lessonId, aL, data, function(err){
+      if(err){
+        Materialize.toast("Il y a eu une erreur lors de l'insertion. Veuillez réessayer plus tard.", 5000, 'rounded');
+      } else {
+        Materialize.toast("Participant ajouté !",5000,'rounded');
+      }
+    });
+
+    event.target.firstName.value = '';
+    event.target.lastName.value = '';
+    event.target.email.value='';
+    event.target.comment.value='';
+    $('#modalFormNewAttendee').closeModal();
   }
 });
 

@@ -166,6 +166,43 @@ Meteor.methods({
 
      return Lessons.insert(data);
    },
+   updateLessonByAdmin : function(id,data){
+     check(data.title,String);
+     check(data.shortDesc,String);
+     check(data.longDesc, String);
+     check(data.coachEmail, String);
+     check(data.address, String);
+     check(data.updatedAt, Date);
+
+     Lessons.update(
+       {_id:id},
+       {$set : data},
+       function(err){
+         if(err){
+           console.log(err);
+         }
+       });
+   },
+   addNonUserAttendee : function(lessonId,aLId,data){
+     check(data.firstName,String);
+     check(data.lastName,String);
+     check(data.comment,String);
+
+     AttendeesList.update(
+       {_id:aLId},
+       {
+         $push : {
+           nonUsers:
+                 {
+                   firstName:data.firstName,
+                   lastName:data.lastName,
+                   email:data.email,
+                   comment:data.comment,
+                 },
+               },
+             }
+           );
+   },
    insertReservation : function(data){
      check(data.lessonTitle,String);
      check(data.isComplete, Boolean);

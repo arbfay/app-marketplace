@@ -21,7 +21,6 @@ Template.footer.events({
                 swal("Envoyé", "Merci de participer à la construction d'un meilleur service !", "success");
             }
           });
-
         });
   }
 });

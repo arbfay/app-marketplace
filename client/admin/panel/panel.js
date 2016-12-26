@@ -80,4 +80,8 @@ Template.buttonItems.events({
     event.preventDefault();
     FlowRouter.go('/admin/promo/insert');
   },
+  "click .updateLesson" : function(event){
+    event.preventDefault();
+    FlowRouter.go('/admin/lessons/update/find');
+  }
 })

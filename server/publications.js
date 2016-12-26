@@ -5,7 +5,6 @@ Meteor.publish('nearLessons', function(loc,lim, now){
   check(loc.coordinates[0], Number);
   check(loc.coordinates[1], Number);
 
-
   var lessons=Lessons.find({
     geospatial:
       {$nearSphere: [loc.coordinates[0],loc.coordinates[1]]},
@@ -26,6 +25,7 @@ Meteor.publish('nearLessons', function(loc,lim, now){
 });
 
 Meteor.publish('searchLessons', function(query, options){
+  console.log(Lessons.findOne(query,options));
   return Lessons.find(query,options);
 });
 
