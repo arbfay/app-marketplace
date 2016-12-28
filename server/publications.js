@@ -110,3 +110,7 @@ Meteor.publish('coachCards',function(coachId){
 
   return CoachCards.find({coachId:coachId});
 });
+
+Meteor.publish('coachClients',function(coachId){
+  return Clients.find({coachId:coachId});
+});

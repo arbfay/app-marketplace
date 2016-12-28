@@ -90,6 +90,16 @@ Meteor.methods({
      });
 
    },
+   updateCoach : function(coachId,data){
+     Coaches.update(
+       {_id:coachId},
+       {$set : data},
+       function(err){
+         if(err){
+           console.log(err);
+         }
+       });
+   },
    insertUserProfile : function(data){
      var firstName = data.firstName;
      var lastName = data.lastName;
@@ -129,6 +139,68 @@ Meteor.methods({
            console.log(err);
          }
        });
+   },
+   insertClient : function(data){
+     check(data.firstName,String);
+     check(data.lastName,String);
+     check(data.tel,String);
+
+     var card = {};
+     var cards = [];
+     if(data.card != '0' || data.card != ''){
+       card = CoachCards.findOne({_id : data.card});
+
+       var dateOfCreation = data.createdAt.getTime();
+       var expDate = dateOfCreation + (card.duration * 2629746000);
+       cards = [
+         {
+           name:card.name,
+           maxAttendings:card.maxAttendings,
+           attendingsLeft:card.maxAttendings,
+           expirationDate:expDate,
+         }
+       ];
+     }
+
+     var d = {
+       isUser:false,
+       firstName:data.firstName,
+       lastName:data.lastName,
+       email:data.email,
+       tel:data.tel,
+       coachId:data.coachId,
+       reservations:[],
+       cards:cards,
+       createdAt:data.createdAt,
+       updatedAt:data.updatedAt,
+     };
+
+     if(Accounts.findUserByEmail(data.email)){
+       d.isUser=true;
+       d.userId = Accounts.findUserByEmail(data.email)._id;
+     }
+
+     var clientId = Clients.insert(d);
+
+     Coaches.update({_id:data.coachId},
+       { $push : {
+            clients: clientId
+       }
+     });
+   },
+   updateClient : function(clientId, data){
+     check(data.firstName,String);
+     check(data.lastName,String);
+     check(data.tel,String);
+
+     Clients.update({_id:clientId}, {
+        $set:data
+     });
+   },
+   removeClient : function(clientId){
+     Clients.update({_id:clientId}, {
+        $set:{coachId:"0"}
+     });
    },
    addBonus : function(token,userEmail, lessonId){
      if(token === "bonbon"){

@@ -1,4 +1,24 @@
 Template.coachingPanel.helpers({
+  coachProfile:function(){
+    var coach = Coaches.findOne();
+
+    var up = UserProfiles.findOne({email:coach.email});
+    var address = up.address.street+ "," + up.address.zip + " " + up.address.city;
+    var imgUrl = coach.imgUrl;
+    if(coach.imgUrl==""){
+      imgUrl="http://placehold.it/300/9e9e9e/000000?text=Photo";
+    }
+
+    return {
+      firstName:up.firstName,
+      lastName:up.lastName,
+      address:address,
+      email:coach.email,
+      description:coach.description,
+      imgUrl:imgUrl,
+    };
+  }
+
 /*
   coachLessons : function(){
     //partant du principe que celui qui arrive sur cette page est forcement un coach
@@ -260,6 +280,54 @@ Template.coachingLessonItem.helpers({
 });
 */
 
+Template.coachingProfile.events({
+  "submit #updateCoachProfile" : function(event,template){
+    event.preventDefault();
+
+    var t = event.target;
+    var firstName = t.firstName.value;
+    var lastName = t.lastName.value;
+    var street = t.street.value;
+    var zip = t.zip.value;
+    var city = t.city.value;
+
+    var upData = {
+      firstName :firstName,
+      lastName : lastName,
+      address : {
+        street : street,
+        zip : zip,
+        city : city,
+      },
+      updatedAt: new Date()
+    };
+    var coach = Coaches.findOne();
+    var up = UserProfiles.findOne({email:coach.email});
+
+    Meteor.call("updateUserProfile", up._id, upData, function(error, result){
+      if(error){
+        console.log("error", error);
+      }
+    });
+
+    var description = t.description.value;
+
+    var coachData = {
+      description :description,
+      updatedAt : new Date()
+    };
+
+    Meteor.call("updateCoach", coach._id, coachData, function(error, result){
+      if(error){
+        console.log("error", error);
+      } else {
+        Materialize.toast('Modifications enregistrées !', 4000, 'rounded');
+      }
+    });
+
+  }
+});
+
 Template.pastLessons.helpers({
     lessons:function(){
       if(!Accounts.user()){ return [];}
@@ -311,7 +379,21 @@ Template.futureLessons.helpers({
 
 Template.coachingClients.helpers({
   clients : function(){
-    return [];
+
+    var coach = Coaches.findOne();
+    var coachId="";
+    if(coach){coachId = coach._id;}
+
+    Meteor.subscribe('coachClients',coachId,
+      function(err,res){
+        if(err){
+          Materialize.toast('Erreur avec les cartes');
+          console.log(err);
+        }
+      }
+    );
+
+    return Clients.find();
   },
   coachCards : function(){
     var coach = Coaches.findOne();
@@ -334,17 +416,137 @@ Template.coachingClients.helpers({
         for(var i = 0; i<res.length;i++){
           html += '<option value="'+res[i]._id+'">'+res[i].name+'</option>';
         }
-        console.log(html);
+
         $('#selectCoachCards').append(html);
         $('#selectCoachCards').material_select();
       }
-    }
-
+    },
 });
 
 Template.coachingClients.events({
   "submit #addCoachingClient" : function(event){
     event.preventDefault();
+
+    var t = event.target;
+
+    var firstName = t.firstName.value;
+    var lastName = t.lastName.value;
+    var email = t.email.value;
+    var tel = t.tel.value;
+    var cardId = t.card.value;
+
+    var coachId = Coaches.findOne()._id;
+
+    var data = {
+      firstName:firstName,
+      lastName:lastName,
+      email : email,
+      tel : tel,
+      coachId : coachId,
+      card : cardId,
+      createdAt : new Date (),
+      updatedAt : new Date(),
+    };
+
+    Meteor.call('insertClient', data , function(err,res){
+      if(err){
+        console.log("erreur lors de l'insert d'un nouveau client : ",err);
+      } else {
+        Materialize.toast('Nouveau client ajouté',4000,'rounded');
+      }
+    });
+
+    t.firstName.value ="";
+    t.lastName.value='';
+    t.email.value='';
+    t.tel.value='';
+    t.tel.value='0';
+  },
+  "submit .updateClientForm" : function(event,template){
+    event.preventDefault();
+
+    var t = event.target;
+
+    var firstName = t.firstName.value;
+    var lastName = t.lastName.value;
+    var email = t.email.value;
+    var tel = t.tel.value;
+
+    var coachId = Coaches.findOne()._id;
+
+    var data = {
+      firstName:firstName,
+      lastName:lastName,
+      email : email,
+      tel : tel,
+      coachId : coachId,
+      updatedAt : new Date()
+    };
+
+    var clientId = this._id;
+
+    Meteor.call('updateClient',clientId, data, function(err,res){
+      if(err){
+        console.log(err);
+      } else {
+        Materialize.toast('Client mis à jour.', 4000, 'rounded');
+      }
+    });
+  },
+  "click .deleteClient" : function(event, template){
+    event.preventDefault();
+    var clientId=this._id;
+    swal({
+      title: "Êtes-vous certain(e) ?",
+      text: "",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Effacer",
+      cancelButtonText: "Annuler",
+      closeOnConfirm: false,
+    },
+    function(){
+        swal("Effacé!", "Le client a été effacé", "success");
+        Meteor.call('removeClient', clientId);
+    });
+  },
+  "click .addCardToClient" : function(event){
+    event.preventDefault();
+
+    var clientId=this._id;
+    var res = CoachCards.find().fetch();
+    var r1; var r2;
+
+    if(res){
+      var options= {};
+      for(var i = 0; i<res.length;i++){
+        r1 = res[i]._id;
+        r2 = res[i].name;
+        options[r1]=r2;
+      }
+
+            
+      swal({
+      title: 'Input something',
+      input: 'text',
+      showCancelButton: true,
+      inputValidator: function (value) {
+        return new Promise(function (resolve, reject) {
+          if (value) {
+            resolve()
+          } else {
+            reject('You need to write something!')
+          }
+        })
+      }
+      }).then(function (result) {
+      swal({
+        type: 'success',
+        html: 'You entered: ' + result
+      })
+      })
+    }
   }
 });
 
@@ -365,6 +567,13 @@ Template.coachingCards.helpers({
 
     return CoachCards.find();
   },
+});
+
+Template.clientCard.helpers({
+  dateTime:function(){
+      var mom = moment(this.expirationDate);
+      return mom.format("ddd DD MMM YYYY");
+  }
 });
 
 Template.coachingCards.events({
