@@ -1,5 +1,5 @@
 Template.coachingPanel.helpers({
-
+/*
   coachLessons : function(){
     //partant du principe que celui qui arrive sur cette page est forcement un coach
     var coachEmail =Accounts.user().emails[0].address;
@@ -25,9 +25,11 @@ Template.coachingPanel.helpers({
     var mom = moment(lesson.date);
     return mom.format("ddd DD MMM, HH:mm");
   }
+  */
 });
 
 Template.coachingPanel.events({
+  /*
   "click .probBtn" : function(event,template){
     event.preventDefault();
 
@@ -46,8 +48,10 @@ Template.coachingPanel.events({
     swal("Pas encore disponible",
     "Pour l'instant, vous pouvez utiliser notre formulaire de contact pour nous joindre");
   }
+  */
 });
 
+/*
 Template.attendingListTemplate.helpers({
   users: function(){
     var lessonId=Session.get('lessonId');
@@ -236,8 +240,9 @@ Template.attendingListTemplate.events({
     event.target.comment.value='';
     $('#modalFormNewAttendee').closeModal();
   }
-});
+}); */
 
+/*
 Template.coachingLessonItem.events({
   "click a" : function(event){
     event.preventDefault();
@@ -251,5 +256,146 @@ Template.coachingLessonItem.helpers({
   dateForHuman : function(){
     var mom = moment(this.date);
     return mom.format("ddd DD MMM, HH:mm");
+  }
+});
+*/
+
+Template.pastLessons.helpers({
+    lessons:function(){
+      if(!Accounts.user()){ return [];}
+      var coachEmail =Accounts.user().emails[0].address;
+      Meteor.subscribe("lessonsFromCoach",coachEmail, function(err,res){
+        if(err){Materialize.toast("Une erreur s'est produite dans le serveur.", 4000, 'rounded');}
+      });
+      var dateNow = new Date();
+      var now = dateNow.getTime() - 5000;
+      var l = Lessons.find({coachEmail:coachEmail,
+                            date:{$lt:now}
+                          },{sort : {date : 1}});
+      if(l){
+        return l;
+      }
+      else {
+        return [];
+      }
+    },
+    dateTime:function(){
+
+        var mom = moment(this.date);
+        return mom.format("ddd DD MMM, HH:mm");
+    }
+});
+
+Template.futureLessons.helpers({
+    lessons:function(){
+      if(!Accounts.user()){ return [];}
+      var coachEmail =Accounts.user().emails[0].address;
+      var dateNow = new Date();
+      var now = dateNow.getTime();
+      var l = Lessons.find({coachEmail:coachEmail,
+                            date:{$gt:now}
+                          },{sort : {date : -1}});
+      if(l){
+        return l;
+      }
+      else {
+        return [];
+      }
+    },
+    dateTime:function(){
+
+        var mom = moment(this.date);
+        return mom.format("ddd DD MMM, HH:mm");
+    }
+});
+
+Template.coachingClients.helpers({
+  clients : function(){
+    return [];
+  },
+  coachCards : function(){
+    var coach = Coaches.findOne();
+    var coachId="";
+    if(coach){coachId = coach._id;}
+
+
+    Meteor.subscribe('coachCards',coachId,
+      function(err,res){
+        if(err){
+          Materialize.toast('Erreur avec les cartes');
+          console.log(err);
+        }
+      }
+    );
+
+      var res = CoachCards.find().fetch();
+      if(res){
+        var html= '';
+        for(var i = 0; i<res.length;i++){
+          html += '<option value="'+res[i]._id+'">'+res[i].name+'</option>';
+        }
+        console.log(html);
+        $('#selectCoachCards').append(html);
+        $('#selectCoachCards').material_select();
+      }
+    }
+
+});
+
+Template.coachingClients.events({
+  "submit #addCoachingClient" : function(event){
+    event.preventDefault();
+  }
+});
+
+Template.coachingCards.helpers({
+  cards : function(){
+    var coach = Coaches.findOne();
+    var coachId="";
+    if(coach){coachId = coach._id;}
+
+    Meteor.subscribe('coachCards',coachId,
+      function(err,res){
+        if(err){
+          Materialize.toast('Erreur avec les cartes');
+          console.log(err);
+        }
+      }
+    );
+
+    return CoachCards.find();
+  },
+});
+
+Template.coachingCards.events({
+  "submit #addCoachingCard" : function(event,template){
+    event.preventDefault();
+    var t = event.target;
+
+    var name = t.name.value;
+    var maxAttendings = t.maxAttendings.value;
+    var duration = t.duration.value;
+    var price = t.price.value;
+
+    var coach = Coaches.findOne();
+    var coachId=coach._id;
+
+    if(CoachCards.findOne({name:name})){
+      Materialize.toast('Il y a déjà une carte avec ce nom !', 4000, 'rounded');
+    }
+    else {
+      CoachCards.insert({
+          name:name,
+          duration:duration,
+          price:price,
+          maxAttendings:maxAttendings,
+          coachId:coachId,
+      });
+
+      t.name.value='';
+      t.maxAttendings.value='';
+      t.duration.value='';
+      t.price.value='';
+    }
   }
 });

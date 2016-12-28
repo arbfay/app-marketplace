@@ -11,14 +11,14 @@ Template.coachInsert.events({
 
     var userCoach = Meteor.users.findOne({'emails.address':coachMail});
     console.log(userCoach);
-    
+
     var toInsert = {
       createdAt:new Date(),
       updatedAt: new Date(),
       userId:userCoach._id,
       email:coachMail,
       imgUrl:imgUrl,
-      shortDesc : shortDesc,
+      description : shortDesc,
     };
 
     var coachId = Meteor.call("insertCoach",toInsert,function(err,res){
