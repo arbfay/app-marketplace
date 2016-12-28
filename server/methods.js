@@ -197,6 +197,25 @@ Meteor.methods({
         $set:data
      });
    },
+   addCardToClient : function(clientId, data){
+     var card = {};
+
+     if(data.card != '0' || data.card != ''){
+       card = CoachCards.findOne({_id : data.card});
+
+       var dateOfCreation = data.createdAt.getTime();
+       var expDate = dateOfCreation + (card.duration * 2629746000);
+
+       Clients.update({_id:clientId},{
+         $push : {cards: {
+           name:card.name,
+           maxAttendings:card.maxAttendings,
+           attendingsLeft:card.maxAttendings,
+           expirationDate:expDate,
+         }}
+       });
+     }
+   },
    removeClient : function(clientId){
      Clients.update({_id:clientId}, {
         $set:{coachId:"0"}

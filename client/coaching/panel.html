@@ -429,7 +429,8 @@
                               {{> clientCard card}}
                             {{/each}}
                             <div class="col s6 m6">
-                            <a class="btn-floating btn-large waves-effect waves-light blue darken-2 addCardToClient center-align" style="margin-top:35%;">
+
+                              <a href="modalAddCardToClient" class="modal-trigger btn-floating btn-large waves-effect waves-light blue darken-2 addCardToClient center-align" style="margin-top:35%;">
                               <i class="material-icons">add</i></a>
                             </div>
                           </td>
@@ -439,7 +440,7 @@
                   </form>
                     <div class="row">
                       <div class="col s6 m3">
-                        <button type="submit" form="updateClient-{{_id}}" class="modal-action modal-close">
+                        <button type="submit" form="updateClient-{{_id}}">
                         Modifier le profil</button>
                       </div>
                       <div class="col s6 m3"><button class="btn-flat deleteClient">Supprimer</button></div>
@@ -475,9 +476,29 @@
           </ul>
        </div>
        <div class="col s6 m2">
-         <a href="#modalAddClientForm" class="modal-trigger btn blue darken-2">
+         <a href="#modalAddClientForm" class="modal-trigger-2 btn blue darken-2">
            Ajouter</a>
        </div>
+    </div>
+
+    <div id="modalAddCardToClient" class="modal">
+        <div class="modal-content">
+          <h3>Ajouter une carte à un client</h3>
+          <form id="addCardToClient" >
+            <div class="row">
+              <div class="input-field col s8">
+                <select id="selectCoachCards" name="card">
+                  <option value="" disabled selected>Quelle carte ?</option>
+                  {{coachCards}}
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" form="addCardToClient" class="modal-action modal-close">
+            Enregistrer</button>
+        </div>
     </div>
 
     <div id="modalAddClientForm" class="modal">
@@ -523,6 +544,7 @@
     <script>
       $(document).ready(function(){
         $('.modal-trigger').leanModal();
+        $('.modal-trigger-2').leanModal();
         $("#selectCoachCards").on('change', function() {
             $('#selectCoachCards').material_select();
         });

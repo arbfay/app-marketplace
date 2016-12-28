@@ -513,40 +513,26 @@ Template.coachingClients.events({
   },
   "click .addCardToClient" : function(event){
     event.preventDefault();
+    Session.set("clientId",this._id);
+    $('#modalAddCardToClient').openModal();
+  },
+  "submit #addCardToClient" : function(event){
+    event.preventDefault();
+    var cardId = event.target.selectCoachCards.value;
 
-    var clientId=this._id;
-    var res = CoachCards.find().fetch();
-    var r1; var r2;
-
-    if(res){
-      var options= {};
-      for(var i = 0; i<res.length;i++){
-        r1 = res[i]._id;
-        r2 = res[i].name;
-        options[r1]=r2;
+    var clientId = Session.get("clientId");
+    var data = {
+      card : cardId,
+      createdAt : new Date()
+    };
+    Meteor.call('addCardToClient', clientId, data, function(err,res){
+      if(err){
+        console.log(err);
+      } else {
+        Materialize.toast('Carte octroyée !',4000,'rounded');
       }
+    });
 
-            
-      swal({
-      title: 'Input something',
-      input: 'text',
-      showCancelButton: true,
-      inputValidator: function (value) {
-        return new Promise(function (resolve, reject) {
-          if (value) {
-            resolve()
-          } else {
-            reject('You need to write something!')
-          }
-        })
-      }
-      }).then(function (result) {
-      swal({
-        type: 'success',
-        html: 'You entered: ' + result
-      })
-      })
-    }
   }
 });
 
