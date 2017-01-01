@@ -1,7 +1,7 @@
-geocodeAddress = function(address){
+geocode = function(address){
   if(GoogleMaps.loaded()){
       var geocoder = new google.maps.Geocoder();
-      geocoder.geocode({'address': address}, function(results, status){
+      var results = geocoder.geocode({'address': address}, function(results, status){
         if(status === google.maps.GeocoderStatus.OK){
             coord=results[0].geometry.location;
             lat = coord.lat();
@@ -20,6 +20,14 @@ geocodeAddress = function(address){
         });
   } else {
     console.log("error with GoogleMaps");
+    loc = {
+      type:"Point",
+      coordinates:[
+        4.371,
+        50.843
+      ]
+    };
+    Session.set('loc',loc);
   }
 };
 
@@ -533,15 +541,17 @@ Template.coachingPanelLesson.events({
   },
   "click .btnCancel" : function(event){
     event.preventDefault();
-    BlazeLayout.render('coachingPanel', {content:'coachingPanelLessons'});
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelContact'});
+    swal("Pas encore disponible !", "Cette fonctionnalité n'est pas encore disponible. Vous pouvez nous contacter afin que nous procédions à une annulation manuelle.");
   },
   "click .btnUpdate" : function(event){
     event.preventDefault();
-    BlazeLayout.render('coachingPanel', {content:'coachingPanelLessons'});
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelContact'});
+    swal("Pas encore disponible !", "Cette fonctionnalité n'est pas encore disponible. Vous pouvez nous contacter afin que nous procédions à une modification manuelle.");
   },
   "click .btnDuplicate" : function(event){
     event.preventDefault();
-    BlazeLayout.render('coachingPanel', {content:'coachingPanelLessons'});
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelLessonDuplicate'});
   }
 });
 
@@ -823,17 +833,21 @@ Template.coachingPanelLessonInsert.events({
      var longDesc = t.longDesc.value;
      var duration = t.duration.value;
      var category = t.category.value;
-     var coachEmail = t.userEmail.value;
-     var address = t.address.value;
+     var coachEmail = Coaches.findOne().email;
+     var street = t.street.value;
+     var zip = t.zip.value;
+     var city = t.city.value;
      var instructions = t.instructions.value;
      var maxAttendees = t.maxAttendees.value;
      var price=t.price.value;
      var date = t.date.value;
      var time = t.time.value;
-     var imgUrl = t.imgUrl.value;
+     var repeat = t.recurrent.checked;
 
      var attendeesList = "";
 
+     //Composition of the address
+     var address = street+" , "+zip+" "+city;
      //Date in milliseconds since 1st january 1970
      var d = new Date(date+" "+time);
      var dateInMilli = d.getTime();
@@ -855,55 +869,141 @@ Template.coachingPanelLessonInsert.events({
        }
      }
 
-     var coord;
-     var lat=50.843;
-     var lng=4.371;
-
-     var loc = {
-       type:"Point",
-       coordinates:[
-         4.371,
-         50.843
-       ]
-     };
-
      maxAttendees= parseInt(maxAttendees);
 
-     Session.setDefault("loc", loc);
-     var l = Session.get('loc');
+     if(GoogleMaps.loaded()){
+         var geocoder = new google.maps.Geocoder();
+         var results = geocoder.geocode({'address': address}, function(results, status){
+           if(status === google.maps.GeocoderStatus.OK){
+               coord=results[0].geometry.location;
+               lat = coord.lat();
+               lng = coord.lng();
+               loc = {
+                 type:"Point",
+                 coordinates:[
+                   lng,
+                   lat
+                 ]
+               };
+               Session.set('loc',loc);
+             } else {
+               console.log("Problem with the geocoder : " + status);
+             }
+           });
+     } else {
+       console.log("error with GoogleMaps");
+       loc = {
+         type:"Point",
+         coordinates:[
+           4.371,
+           50.843
+         ]
+       };
+       Session.set('loc',loc);
+     }
 
-     var toInsert={
-       imgUrl:imgUrl,
-       title:title,
-       shortDesc:shortDesc,
-       longDesc:longDesc,
-       duration:duration,
-       category:category,
-       coachEmail:coachEmail,
-       address:address,
-       instructions:instructions,
-       geospatial:l,
-       maxAttendeesLeft:maxAttendees,
-       price:price,
-       commission:commission,
-       date:dateInMilli,
-       attendeesList:attendeesList,
-       createdAt: new Date(),
-       updatedAt: new Date(),
-     };
+     var r=0;
+     if(repeat){
+       r=5;
+     }
 
-     Meteor.call("insertLessonByCoach", toInsert, (err,res)=>{
-      if(res){
-        Materialize.toast('Cours enregistré avec succès !', 4000,'rounded');
-      } else {
-        Materialize.toast("Erreur lors de l'insertion: "+err, 4000,'rounded');
-      }
+     var image = document.getElementById('photo').files[0];
+     var reader = new FileReader();
+
+     var imgUrl = "";
+     if(image){
+     reader.onloadend=function(e){
+       const data = new FormData();
+       data.append('file', e.target.result);
+       data.append('upload_preset', "el9jd7os");
+       var url ="https://api.cloudinary.com/v1_1/trys/image/upload";
+       var xhr = new XMLHttpRequest();
+
+       //var params="file="+ e.target.result +"&upload_preset=el9jd7os";//This preset automatically add the image in Lessons folder & reduce the quality
+       xhr.open("POST", url, true);
+       xhr.onreadystatechange=function(){
+         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+           var response = JSON.parse(xhr.responseText);
+           console.log("response :", response);
+           imgUrl=response.secure_url;
+           console.log(response);
+
+               var location = Session.get('loc');
+                for(var i = 0; i<=r;i++){
+                  dateInMilli += 604800000;
+                  var toInsert={
+                    imgUrl:imgUrl,
+                    title:title,
+                    shortDesc:shortDesc,
+                    longDesc:longDesc,
+                    duration:duration,
+                    category:category,
+                    coachEmail:coachEmail,
+                    address:address,
+                    instructions:instructions,
+                    geospatial:location,
+                    maxAttendeesLeft:maxAttendees,
+                    price:price,
+                    commission:commission,
+                    date:dateInMilli,
+                    attendeesList:attendeesList,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                  };
+
+                  Meteor.call("insertLessonByCoach", toInsert, (err,res)=>{
+                   if(res){
+                     Materialize.toast('Cours enregistré avec succès !', 4000,'rounded');
+                   } else {
+                     Materialize.toast("Erreur lors de l'insertion: "+err, 4000,'rounded');
+                   }
+                  });
+                }
+
+
+                t.maxAttendees='';
+                t.price.value='';
+                t.date.value='';
+                t.time.value='';
+         }
+
+       };
+       xhr.send(data);
+
+     }
+     reader.readAsDataURL(image);
+   } else {
+     Materialize.toast("Informations incomplètes, veuillez réessayer.", 4000, 'rounded');
+   }
+  }
+});
+
+
+Template.coachingPanelContact.events({
+  "submit form": function(event, template){
+     event.preventDefault();
+     var t=event.target;
+     var email = Coaches.findOne().email;
+     var firstName = UserProfiles.findOne({email:email}).firstName;
+     var lastName = UserProfiles.findOne({email:email}).lastName;
+     var subject = "[COACH]" + t.subject.value;
+     var message = t.comments.value;
+
+     var mail =  "Nom : "+lastName+"<br>"
+               +"Prénom : "+firstName+"<br>"
+               +"Email : "+email+"<br>"
+               +"Message : "+message+"<br>";
+
+     Meteor.call('sendMail', 'contact@trys.be', email, subject, mail,(err,res)=>{
+       if(res){
+         t.subject.value='';
+         t.comments.value='';
+
+         Materialize.toast("Message envoyé ! Nous vous recontacterons le plus vite possible.", 4000, 'rounded');
+       }
+       else {
+         Materialize.toast("Il y a un problème avec le serveur. Réessayez plus tard.", 4000, 'rounded');
+       }
      });
-
-
-     t.maxAttendees='';
-     t.price.value='';
-     t.date.value='';
-     t.time.value='';
   }
 });

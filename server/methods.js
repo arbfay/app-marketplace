@@ -263,6 +263,18 @@ Meteor.methods({
     }
    },
 
+   insertLessonByCoach:function(data){
+     check(data.title,String);
+     check(data.shortDesc,String);
+     check(data.longDesc, String);
+     check(data.coachEmail, String);
+     check(data.address, String);
+     check(data.updatedAt, Date);
+
+     data.attendeesList = AttendeesList.insert({reservations:[],users:[]});
+
+     return SubmittedLessons.insert(data);
+   },
    insertLessonByAdmin : function(data){
      check(data.title,String);
      check(data.shortDesc,String);
