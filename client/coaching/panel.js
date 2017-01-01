@@ -1,286 +1,174 @@
+geocodeAddress = function(address){
+  if(GoogleMaps.loaded()){
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({'address': address}, function(results, status){
+        if(status === google.maps.GeocoderStatus.OK){
+            coord=results[0].geometry.location;
+            lat = coord.lat();
+            lng = coord.lng();
+            loc = {
+              type:"Point",
+              coordinates:[
+                lng,
+                lat
+              ]
+            };
+            Session.set('loc',loc);
+          } else {
+            console.log("Problem with the geocoder : " + status);
+          }
+        });
+  } else {
+    console.log("error with GoogleMaps");
+  }
+};
+
 Template.coachingPanel.helpers({
   coachProfile:function(){
+    var coachEmail = Accounts.user().emails[0].address;
+    Meteor.subscribe("lessonsFromCoach",coachEmail, function(err,res){
+      if(err){Materialize.toast("Une erreur s'est produite dans le serveur.", 4000, 'rounded');}
+    });
+
+
     var coach = Coaches.findOne();
 
     var up = UserProfiles.findOne({email:coach.email});
-    var address = up.address.street+ "," + up.address.zip + " " + up.address.city;
+
     var imgUrl = coach.imgUrl;
     if(coach.imgUrl==""){
       imgUrl="http://placehold.it/300/9e9e9e/000000?text=Photo";
     }
 
+    var coach = Coaches.findOne();
+    var coachId="";
+    if(coach){coachId = coach._id;}
+
+    Meteor.subscribe('coachClients',coachId,
+      function(err,res){
+        if(err){
+          Materialize.toast('Erreur avec les clients.');
+          console.log(err);
+        }
+      }
+    );
+
+    Meteor.subscribe('coachCards',coachId,
+      function(err,res){
+        if(err){
+          Materialize.toast('Erreur avec les cartes.');
+          console.log(err);
+        }
+      }
+    );
+
     return {
       firstName:up.firstName,
       lastName:up.lastName,
-      address:address,
-      email:coach.email,
-      description:coach.description,
       imgUrl:imgUrl,
     };
-  }
+  },
 
-/*
-  coachLessons : function(){
-    //partant du principe que celui qui arrive sur cette page est forcement un coach
+});
+
+
+Template.coachingPanel.events({
+
+  "click .cpHome" : function(event,template){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelHome'});
+  },
+  "click .cpProfile" : function(event,template){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelProfile'});
+  },
+  "click .cpLessons" : function(event,template){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelLessons'});
+  },
+  "click .cpClients" : function(event,template){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelClients'});
+  },
+  "click .cpContact" : function(event,template){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelContact'});
+  },
+
+});
+
+Template.coachingPanelHome.helpers({
+  nextLessons : function(){
+    if(!Accounts.user()){ return [];}
     var coachEmail =Accounts.user().emails[0].address;
-    Meteor.subscribe("lessonsFromCoach",coachEmail)
-    var l = Lessons.find({coachEmail:coachEmail}).fetch();
-
+    var dateNow = new Date();
+    var now = dateNow.getTime();
+    var l = Lessons.find({coachEmail:coachEmail,
+                          date:{$gt:now}
+                        },{sort : {date : 1},
+                          limit : 3});
     if(l){
       return l;
     }
     else {
-      return {};
-    }
-  },
-  title : function(){
-    var lessonId = Session.get('lessonId');
-    var lesson = Lessons.findOne(lessonId);
-
-    return lesson.title;
-  },
-  dateTime : function(){
-    var lessonId = Session.get('lessonId');
-    var lesson = Lessons.findOne(lessonId);
-    var mom = moment(lesson.date);
-    return mom.format("ddd DD MMM, HH:mm");
-  }
-  */
-});
-
-Template.coachingPanel.events({
-  /*
-  "click .probBtn" : function(event,template){
-    event.preventDefault();
-
-    swal("Pas encore disponible",
-    "Pour l'instant, vous pouvez utiliser notre formulaire de contact pour nous joindre");
-  },
-  "click .addBtn" : function(event,template){
-    event.preventDefault();
-
-    swal("Pas encore disponible",
-    "Pour l'instant, vous pouvez utiliser notre formulaire de contact pour nous joindre");
-  },
-  "click .editBtn" : function(event,template){
-    event.preventDefault();
-
-    swal("Pas encore disponible",
-    "Pour l'instant, vous pouvez utiliser notre formulaire de contact pour nous joindre");
-  }
-  */
-});
-
-/*
-Template.attendingListTemplate.helpers({
-  users: function(){
-    var lessonId=Session.get('lessonId');
-    var aL = Lessons.findOne(lessonId).attendeesList;
-    Meteor.subscribe('attendessListById', aL);
-
-    var res = AttendeesList.findOne(aL).users;
-    if(res){
-      return res;
-    } else {
-      return {};
-    }
-  },
-  nonUsers : function() {
-    var lessonId=Session.get('lessonId');
-    var aLId = Lessons.findOne(lessonId).attendeesList;
-    var res = AttendeesList.findOne(aLId).nonUsers;
-    if(res){
-      return res;
-    } else {
       return [];
     }
   },
-  firstName : function(){
-    var email = this.email;
-    Meteor.subscribe('namesOfUser',email);
-    var user = UserProfiles.findOne({email:email});
+  stats : function(){
+    var clients=0;
+    var trysReservations=0;
+    var comingLessons=0;
+    return {clients:clients,
+       trysReservations:trysReservations,
+       comingLessons : comingLessons};
+  },
+  infoCards : function(){
+    var infos = [{content:"Toutes les séances sur votre Panneau de Gestion sont automatiquement référencées sur le site web pour que les utilisateurs puissent réserver leur place."},
+      {content:"A chaque fois que vous inscrivez un client à l'une de vos séances, le nombre de place est automatiquement diminué."},
+      {content:"Seules les personnes s'étant inscrites par le site web peuvent participer au concours mensuel et espérer gagner un cadeau."},
+      {content:"Pour des raisons de sécurité, vos informations bancaires ne peuvent être modifiées qu'en contactant directement notre équipe."}];
 
-    return user.firstName;
-  },
-  firstNameNonUser : function(){
-    return this.firstName;
-  },
-  lastName : function(){
-    var email = this.email;
-    var user = UserProfiles.findOne({email:email});
-
-    return user.lastName;
-  },
-  lastNameNonUser : function(){
-    return this.lastName;
-  },
-  birthdate : function(){
-    var email = this.email;
-    var user = UserProfiles.findOne({email:email});
-
-    var bd = user.birthdate;
-    var mom = moment(bd);
-    return mom.format("D/M/YYYY");
-  },
-  canGiveBonus: function(){
-    var email = this.email;
-    var user = UserProfiles.findOne({email:email});
-    var lessonId=Session.get('lessonId');
-    var lesson = Lessons.findOne(lessonId);
-    var lessonDate = lesson.date;
-    var date = moment();
-    var now = date.valueOf();
-
-    var alreadyHadThisBonus = false;
-    if(user.bonus){
-      function rightB (bonus){
-        if(bonus.lessonId === lesson._id && bonus.gotIt == true){
-          return true;
-        }else{
-          return false;
-        }
-      }
-      var t = user.bonus.find(rightB);
-      if(t){
-        alreadyHadThisBonus = true;
-      }
-    }
-    if(now <= (lessonDate + 3600000) && !alreadyHadThisBonus){
-      return true;
-    } else {
-      return false;
-    }
-
-  },
-  emailNonUser : function(){
-    return this.email;
-  },
-  commentNonUser : function(){
-    return this.comment;
+    return infos;
   }
 });
 
-Template.attendingListTemplate.events({
-  "click .giveBonus" : function(event){
-    event.preventDefault();
-    var email = this.email;
-    var user = UserProfiles.findOne({email:email});
-    var lessonId=Session.get('lessonId');
+Template.basicCoachLessonCard.helpers({
+ dateTime:function(){
+   var mom = moment(this.date);
+   return mom.format("ddd DD MMM, HH:mm");
+ }
+});
 
-    Meteor.call("addBonus","bonbon", user.email,lessonId, function(err,res){
-      if(err){
-        Materialize.toast("Il y a eu une erreur lors de l'octroi du bonus. Veuillez réessayer plus tard.", 5000,'rounded');
-      } else {
-        Materialize.toast("Bonus octroyé !", 4000,'rounded');
-      }
-    });
-  },
-  "click .addAttendeeModalButton" : function(event){
-    event.preventDefault();
-    $('#modalFormNewAttendee').openModal();
+Template.basicCoachLessonCard.events({
+  "click .cpLesson" : function(){
+    Session.set("lessonId", this._id);
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelLesson'});
+  }
+});
 
-  },
-  "click .btnModal":function(event){
-    event.preventDefault();
-    var lessonId=Session.get('lessonId');
-    var aL = Lessons.findOne(lessonId).attendeesList;
-
-    var firstName = $("#firstName").val();
-    var lastName = $("#lastName").val();
-    var email = $("#email").val();
-    var comment = $("#comment").val();
-
-    if(!email){
-      email ="";
+Template.coachingPanelProfile.helpers({
+  coachProfile : function(){
+    var coach = Coaches.findOne();
+    var up = UserProfiles.findOne({email:coach.email});
+    var imgUrl = coach.imgUrl;
+    if(coach.imgUrl==""){
+      imgUrl="http://placehold.it/300/9e9e9e/000000?text=Photo";
     }
+    var ad = up.address.street + "," + up.address.zip + " " + up.address.city;
 
-    if(!comment){
-      comment="";
-    }
-
-    var data={
-      firstName:firstName,
-      lastName:lastName,
-      email:email,
-      comment:comment,
-      createdAt:new Date()
+    return {
+      firstName:up.firstName,
+      lastName:up.lastName,
+      imgUrl:imgUrl,
+      address : ad,
+      email : coach.email,
+      tel : up.tel,
+      description : coach.description,
     };
-
-    Meteor.call('addNonUserAttendee', lessonId, aL, data, function(err){
-      if(err){
-        Materialize.toast("Il y a eu une erreur lors de l'insertion. Veuillez réessayer plus tard.", 5000, 'rounded');
-      } else {
-        Materialize.toast("Participant ajouté !",5000,'rounded');
-      }
-    });
-
-    $("#firstName").val('');
-    $("#lastName").val('');
-    $("#email").val('');
-    $("#comment").val('');
-  },
-  "submit form" : function(event){
-    event.preventDefault();
-    Materialize.toast("OK", 5000, 'rounded');
-
-    var lessonId=Session.get('lessonId');
-    var aL = Lessons.findOne(lessonId).attendeesList;
-
-    var firstName = event.target.firstName.value;
-    var lastName = event.target.lastName.value;
-    var email = event.target.email.value;
-    var comment = event.target.comment.value;
-
-    if(!email){
-      email ="";
-    }
-
-    if(!comment){
-      comment="";
-    }
-
-    var data={
-      firstName:firstName,
-      lastName:lastName,
-      email:email,
-      comment:comment,
-    };
-
-    Meteor.call('addNonUserAttendee', lessonId, aL, data, function(err){
-      if(err){
-        Materialize.toast("Il y a eu une erreur lors de l'insertion. Veuillez réessayer plus tard.", 5000, 'rounded');
-      } else {
-        Materialize.toast("Participant ajouté !",5000,'rounded');
-      }
-    });
-
-    event.target.firstName.value = '';
-    event.target.lastName.value = '';
-    event.target.email.value='';
-    event.target.comment.value='';
-    $('#modalFormNewAttendee').closeModal();
-  }
-}); */
-
-/*
-Template.coachingLessonItem.events({
-  "click a" : function(event){
-    event.preventDefault();
-    console.log('Before : ' +Session.get('lessonId'));
-    Session.set('lessonId', this._id);
-    console.log('After : ' +Session.get('lessonId'));
   }
 });
 
-Template.coachingLessonItem.helpers({
-  dateForHuman : function(){
-    var mom = moment(this.date);
-    return mom.format("ddd DD MMM, HH:mm");
-  }
-});
-*/
-
-Template.coachingProfile.events({
+Template.coachingPanelProfile.events({
   "submit #updateCoachProfile" : function(event,template){
     event.preventDefault();
 
@@ -290,10 +178,32 @@ Template.coachingProfile.events({
     var street = t.street.value;
     var zip = t.zip.value;
     var city = t.city.value;
+    var tel = t.tel.value;
 
+    var coach = Coaches.findOne();
+    var up = UserProfiles.findOne({email:coach.email});
+    if(firstName==""){
+      firstName=up.firstName;
+    }
+    if(lastName==""){
+      lastName=up.lastName;
+    }
+    if(tel==""){
+      tel=up.tel;
+    }
+    if(zip==""){
+      zip=up.address.zip;
+    }
+    if(street==""){
+      street=up.address.street;
+    }
+    if(city==""){
+      city=up.address.city;
+    }
     var upData = {
       firstName :firstName,
       lastName : lastName,
+      tel:tel,
       address : {
         street : street,
         zip : zip,
@@ -301,8 +211,6 @@ Template.coachingProfile.events({
       },
       updatedAt: new Date()
     };
-    var coach = Coaches.findOne();
-    var up = UserProfiles.findOne({email:coach.email});
 
     Meteor.call("updateUserProfile", up._id, upData, function(error, result){
       if(error){
@@ -311,6 +219,9 @@ Template.coachingProfile.events({
     });
 
     var description = t.description.value;
+    if(description==""){
+      description=coach.description;
+    }
 
     var coachData = {
       description :description,
@@ -328,177 +239,40 @@ Template.coachingProfile.events({
   }
 });
 
-Template.pastLessons.helpers({
-    lessons:function(){
-      if(!Accounts.user()){ return [];}
-      var coachEmail =Accounts.user().emails[0].address;
-      Meteor.subscribe("lessonsFromCoach",coachEmail, function(err,res){
-        if(err){Materialize.toast("Une erreur s'est produite dans le serveur.", 4000, 'rounded');}
-      });
-      var dateNow = new Date();
-      var now = dateNow.getTime() - 5000;
-      var l = Lessons.find({coachEmail:coachEmail,
-                            date:{$lt:now}
-                          },{sort : {date : 1}});
-      if(l){
-        return l;
-      }
-      else {
-        return [];
-      }
-    },
-    dateTime:function(){
-
-        var mom = moment(this.date);
-        return mom.format("ddd DD MMM, HH:mm");
-    }
-});
-
-Template.futureLessons.helpers({
-    lessons:function(){
-      if(!Accounts.user()){ return [];}
-      var coachEmail =Accounts.user().emails[0].address;
-      var dateNow = new Date();
-      var now = dateNow.getTime();
-      var l = Lessons.find({coachEmail:coachEmail,
-                            date:{$gt:now}
-                          },{sort : {date : -1}});
-      if(l){
-        return l;
-      }
-      else {
-        return [];
-      }
-    },
-    dateTime:function(){
-
-        var mom = moment(this.date);
-        return mom.format("ddd DD MMM, HH:mm");
-    }
-});
-
-Template.coachingClients.helpers({
+Template.coachingPanelClients.helpers({
   clients : function(){
-
-    var coach = Coaches.findOne();
-    var coachId="";
-    if(coach){coachId = coach._id;}
-
-    Meteor.subscribe('coachClients',coachId,
-      function(err,res){
-        if(err){
-          Materialize.toast('Erreur avec les cartes');
-          console.log(err);
-        }
-      }
-    );
-
     return Clients.find();
   },
   coachCards : function(){
-    var coach = Coaches.findOne();
-    var coachId="";
-    if(coach){coachId = coach._id;}
-
-
-    Meteor.subscribe('coachCards',coachId,
-      function(err,res){
-        if(err){
-          Materialize.toast('Erreur avec les cartes');
-          console.log(err);
-        }
-      }
-    );
-
-      var res = CoachCards.find().fetch();
-      if(res){
-        var html= '';
-        for(var i = 0; i<res.length;i++){
-          html += '<option value="'+res[i]._id+'">'+res[i].name+'</option>';
-        }
-
-        $('#selectCoachCards').append(html);
-        $('#selectCoachCards').material_select();
-      }
-    },
+    return CoachCards.find();
+  },
 });
 
-Template.coachingClients.events({
-  "submit #addCoachingClient" : function(event){
+Template.coachingPanelClients.events({
+  "click .newClient":function(event){
     event.preventDefault();
-
-    var t = event.target;
-
-    var firstName = t.firstName.value;
-    var lastName = t.lastName.value;
-    var email = t.email.value;
-    var tel = t.tel.value;
-    var cardId = t.card.value;
-
-    var coachId = Coaches.findOne()._id;
-
-    var data = {
-      firstName:firstName,
-      lastName:lastName,
-      email : email,
-      tel : tel,
-      coachId : coachId,
-      card : cardId,
-      createdAt : new Date (),
-      updatedAt : new Date(),
-    };
-
-    Meteor.call('insertClient', data , function(err,res){
-      if(err){
-        console.log("erreur lors de l'insert d'un nouveau client : ",err);
-      } else {
-        Materialize.toast('Nouveau client ajouté',4000,'rounded');
-      }
-    });
-
-    t.firstName.value ="";
-    t.lastName.value='';
-    t.email.value='';
-    t.tel.value='';
-    t.tel.value='0';
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelClientInsert'});
   },
-  "submit .updateClientForm" : function(event,template){
+  "click .newCard":function(event){
     event.preventDefault();
-
-    var t = event.target;
-
-    var firstName = t.firstName.value;
-    var lastName = t.lastName.value;
-    var email = t.email.value;
-    var tel = t.tel.value;
-
-    var coachId = Coaches.findOne()._id;
-
-    var data = {
-      firstName:firstName,
-      lastName:lastName,
-      email : email,
-      tel : tel,
-      coachId : coachId,
-      updatedAt : new Date()
-    };
-
-    var clientId = this._id;
-
-    Meteor.call('updateClient',clientId, data, function(err,res){
-      if(err){
-        console.log(err);
-      } else {
-        Materialize.toast('Client mis à jour.', 4000, 'rounded');
-      }
-    });
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelCardInsert'});
   },
-  "click .deleteClient" : function(event, template){
+  "click .clickable": function(event){
+    event.preventDefault();
+    Session.set("clientId", this._id);
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelClient'});
+  },
+  "click .editClient":function(event){
+    event.preventDefault();
+    Session.set("clientId", this._id);
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelClientUpdate'});
+  },
+  "click .deleteClient":function(event){
     event.preventDefault();
     var clientId=this._id;
     swal({
       title: "Êtes-vous certain(e) ?",
-      text: "",
+      text: "Suppression du client.",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#DD6B55",
@@ -511,9 +285,73 @@ Template.coachingClients.events({
         Meteor.call('removeClient', clientId);
     });
   },
+});
+
+
+Template.coachingPanelClient.helpers({
+  client : function(){
+    var clientId = Session.get("clientId");
+    if(!clientId){
+      return [];
+    }
+    return Clients.findOne({_id:clientId});
+  },
+  cards : function(){
+    var clientId = Session.get("clientId");
+    if(!clientId){
+      return [];
+    }
+    return Clients.findOne({_id:clientId}).cards;
+  },
+  expDate : function(){
+    var mom = moment(this.expirationDate);
+    return mom.format("DD MMM YYYY");
+  },
+  reservations : function(){
+    var clientId = Session.get("clientId");
+    if(!clientId){
+      return [];
+    }
+    var client = Clients.findOne({_id:clientId});
+    return client.reservations;
+  },
+  selectCards : function(){
+    var coach = Coaches.findOne();
+    var coachId="";
+    if(coach){coachId = coach._id;}
+    return CoachCards.find().fetch();
+  }
+});
+
+Template.coachingPanelClient.events({
+  "click .btnReturn" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelClients'});
+  },
+  "click #deleteClient":function(event){
+    event.preventDefault();
+    var clientId=this._id;
+    swal({
+      title: "Êtes-vous certain(e) ?",
+      text: "Suppression du client.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Effacer",
+      cancelButtonText: "Annuler",
+      closeOnConfirm: false,
+    },
+    function(){
+        swal("Effacé!", "Le client a été effacé", "success");
+        Meteor.call('removeClient', clientId);
+    });
+  },
+  "click #updateClient" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelClientUpdate'});
+  },
   "click .addCardToClient" : function(event){
     event.preventDefault();
-    Session.set("clientId",this._id);
     $('#modalAddCardToClient').openModal();
   },
   "submit #addCardToClient" : function(event){
@@ -532,37 +370,14 @@ Template.coachingClients.events({
         Materialize.toast('Carte octroyée !',4000,'rounded');
       }
     });
-
-  }
-});
-
-Template.coachingCards.helpers({
-  cards : function(){
-    var coach = Coaches.findOne();
-    var coachId="";
-    if(coach){coachId = coach._id;}
-
-    Meteor.subscribe('coachCards',coachId,
-      function(err,res){
-        if(err){
-          Materialize.toast('Erreur avec les cartes');
-          console.log(err);
-        }
-      }
-    );
-
-    return CoachCards.find();
   },
 });
 
-Template.clientCard.helpers({
-  dateTime:function(){
-      var mom = moment(this.expirationDate);
-      return mom.format("ddd DD MMM YYYY");
-  }
-});
-
-Template.coachingCards.events({
+Template.coachingPanelCardInsert.events({
+  "click .btnReturn" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelClients'});
+  },
   "submit #addCoachingCard" : function(event,template){
     event.preventDefault();
     var t = event.target;
@@ -583,7 +398,7 @@ Template.coachingCards.events({
           name:name,
           duration:duration,
           price:price,
-          maxAttendings:maxAttendings,
+          maxAttendings:parseInt(maxAttendings),
           coachId:coachId,
       });
 
@@ -591,6 +406,504 @@ Template.coachingCards.events({
       t.maxAttendings.value='';
       t.duration.value='';
       t.price.value='';
+      BlazeLayout.render('coachingPanel', {content:'coachingPanelClients'});
     }
+  },
+});
+
+Template.clientReservation.helpers({
+  dateTime: function() {
+    var lessonId = this.lessonId;
+    var date = Lessons.findOne(lessonId).date;
+    var mom = moment(date);
+    return mom.format("ddd DD MMM, HH:mm");
+  },
+  title : function(){
+    var lessonId = this.lessonId;
+    var title = Lessons.findOne(lessonId).title;
+    return title;
+  }
+});
+
+Template.coachingPanelClientInsert.events({
+  "submit #addCoachingClient" : function(event){
+    event.preventDefault();
+
+    var t = event.target;
+
+    var firstName = t.firstName.value;
+    var lastName = t.lastName.value;
+    var email = t.email.value;
+    var tel = t.tel.value;
+    var coachId = Coaches.findOne()._id;
+
+    var data = {
+      firstName:firstName,
+      lastName:lastName,
+      email : email,
+      tel : tel,
+      coachId : coachId,
+      createdAt : new Date (),
+      updatedAt : new Date(),
+    };
+
+    Meteor.call('insertClient', data , function(err,res){
+      if(err){
+        console.log("erreur lors de l'insert d'un nouveau client : ",err);
+      } else {
+        Materialize.toast('Nouveau client ajouté',4000,'rounded');
+        Session.set('clientId',res);
+      }
+    });
+
+    t.firstName.value ="";
+    t.lastName.value='';
+    t.email.value='';
+    t.tel.value='';
+
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelClients'});
+  },
+});
+
+Template.coachingPanelClientUpdate.helpers({
+  client : function(){
+    var clientId = Session.get("clientId");
+    if(!clientId){
+      return [];
+    }
+    return Clients.findOne({_id:clientId});
+  },
+});
+
+Template.coachingPanelClientUpdate.events({
+  "click .btnReturn" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelClient'});
+  },
+  "submit #updateClientForm" : function(event,template){
+    event.preventDefault();
+
+    var t = event.target;
+
+    var firstName = t.firstName.value;
+    var lastName = t.lastName.value;
+    var email = t.email.value;
+    var tel = t.tel.value;
+
+    var coachId = Coaches.findOne()._id;
+
+    var data = {
+      firstName:firstName,
+      lastName:lastName,
+      email : email,
+      tel : tel,
+      coachId : coachId,
+      updatedAt : new Date()
+    };
+
+    var clientId = Session.get("clientId");
+
+    Meteor.call('updateClient',clientId, data, function(err,res){
+      if(err){
+        console.log(err);
+      } else {
+        Materialize.toast('Client mis à jour.', 4000, 'rounded');
+      }
+    });
+
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelClient'});
+  },
+});
+
+Template.coachingPanelLesson.helpers({
+  lesson : function(){
+    var lessonId = Session.get("lessonId");
+    return Lessons.findOne({_id:lessonId});
+  },
+  dateTime: function(){
+    var mom = moment(this.date);
+    return mom.format("ddd DD MMM, HH:mm");
+  }
+});
+
+Template.coachingPanelLesson.events({
+  "click .btnReturn" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelLessons'});
+  },
+  "click .btnCancel" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelLessons'});
+  },
+  "click .btnUpdate" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelLessons'});
+  },
+  "click .btnDuplicate" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelLessons'});
+  }
+});
+
+
+Template.coachingPanelAttendingList.helpers({
+  attendees : function(){
+    var lessonId = Session.get('lessonId');
+    var lesson = Lessons.findOne({_id:lessonId});
+    Meteor.subscribe('attendessListById',lesson.attendeesList);
+
+    var aL = AttendeesList.findOne();
+    var list = [];
+    var b;
+    for(var i = 0; i< aL.users.length; i++){
+      if(aL.users[i].birthday){
+        b=moment(aL.users[i].birthday);
+        b=b.format("DD dddd YYYY");
+      } else {
+        b="Pas de date.";
+      }
+
+      list.push({
+        type:"T",
+        firstName:aL.users[i].firstName,
+        lastName:aL.users[i].lastName,
+        secondaryInfo:b,
+        pricePaid:aL.users[i].pricePaid,
+        createdAt:aL.users[i].createdAt,
+      });
+    }
+
+    for(var i = 0; i< aL.nonUsers.length; i++){
+      b=aL.nonUsers[i].email;
+      list.push({
+        type:"C",
+        firstName:aL.nonUsers[i].firstName,
+        lastName:aL.nonUsers[i].lastName,
+        secondaryInfo:b,
+        createdAt:aL.nonUsers[i].createdAt,
+      });
+    }
+    return list;
+  },
+  isClient : function(){
+    if(this.type==="C"){
+      return true;
+    } else {
+      return false;
+    }
+  },
+  isComing : function(){
+    var lessonId = Session.get("lessonId");
+    var lesson = Lessons.findOne({_id:lessonId});
+    var date = new Date();
+    var now = date.getTime() - 900000;
+    if(lesson.date > now){
+      return true;
+    } else {
+      return false;
+    }
+  }
+});
+
+Template.coachingPanelAttendingList.events({
+  "click .cancelAttendee":function(event){
+    event.preventDefault();
+    var client = Clients.findOne({email:this.secondaryInfo});
+    var clientId = client._id;
+    var lessonId = Session.get("lessonId");
+    var date = this.createdAt;
+
+    var cards = client.cards;
+    cards.sort(function(ca,cb){
+      return ca.attendingsLeft-cb.attendingsLeft;
+    });
+
+    var fromCard=false;
+    for(var i = 0; i<client.reservations.length;i++){
+      if(client.reservations[i].lessonId == lessonId && client.reservations[i].createdAt.getTime() === date.getTime()){
+        fromCard=client.reservations[i].fromCard;
+      }
+    }
+    if(cards[0]){
+      var cardData = {
+        fromCard:fromCard,
+        cardName:cards[0].name,
+        expDate:cards[0].expirationDate,
+      };
+    } else {
+      var cardData = {fromCard:fromCard};
+    }
+
+    swal({
+      title: "Êtes-vous certain(e) ?",
+      text: "Suppression de l'inscription.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Effacer",
+      cancelButtonText: "Annuler",
+      closeOnConfirm: true,
+    },
+    function(){
+        Meteor.call('cancelNonUserAttendee',clientId,lessonId,date,cardData,function(err,res){
+          if(err){console.log(err);}
+        });
+    });
+  },
+  "click .newAttendee" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelLessonInsertAttendees'});
+  }
+});
+
+Template.coachingPanelLessonInsertAttendees.helpers({
+
+});
+
+Template.coachingPanelLessonInsertAttendees.events({
+  "click .btnReturn" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelLesson'});
+  },
+  "submit #newAttendee": function(event){
+    event.preventDefault();
+
+    var lastName=$("#autocomplete-input").val();
+    var fromCard = event.target.fromCard.checked;
+    var client = Clients.findOne({lastName:lastName});
+
+    if(!client){
+        Materialize.toast("Ce client n'existe pas.",4000,'rounded');
+    } else {
+      var data = {
+                  clientId : client._id,
+                  firstName : client.firstName,
+                  lastName : client.lastName,
+                  email : client.email,
+                  fromCard : fromCard,
+                  createdAt : new Date()
+                };
+        var lessonId = Session.get("lessonId");
+        var lesson = Lessons.findOne({_id:lessonId});
+        var aLId = lesson.attendeesList;
+        Meteor.call('addNonUserAttendee',lessonId, aLId, data, function(err,res){
+          if(err){
+            console.log(err);
+          } else {
+            Materialize.toast('Client inscrit au cours.', 4000, 'rounded');
+          }
+        });
+
+        if(fromCard){
+          var cards = client.cards;
+          cards.sort(function(ca,cb){
+            return cb.attendingsLeft-ca.attendingsLeft;
+          });
+          if(cards[0]){
+              if(parseInt(cards[0].attendingsLeft) > 0){
+                Meteor.call('incrementCardOfClient', client._id, cards[0].name, cards[0].expirationDate, -1, function(err,res){
+                  if(err){
+                    console.log(err);
+                  } else {
+                    Materialize.toast('Carte du client mise à jour.', 4000, 'rounded');
+                  }
+                });
+              } else {
+                Materialize.toast('Aucune place restante sur les cartes du client', 4000, 'rounded');
+              }
+          } else {
+            Materialize.toast("Ce client n'a aucune carte !", 4000, 'rounded');
+          }
+        }
+
+      }
+  },
+});
+
+Template.coachingPanelLessons.onRendered(function(){
+  Session.set('limitCoachLessons', 3);
+});
+
+Template.coachingPanelLessons.helpers({
+  comingLess: function(){
+    var lim = Session.get('limitCoachLessons');
+    if(!Accounts.user()){ return [];}
+    var coachEmail =Accounts.user().emails[0].address;
+    var dateNow = new Date();
+    var now = dateNow.getTime();
+    var l = Lessons.find({coachEmail:coachEmail,
+                          date:{$gt:now}
+                        },{sort : {date : 1},
+                          limit : lim});
+    if(l){
+      return l;
+    }
+    else {
+      return [];
+    }
+  },
+  pastLess: function(){
+    var lim = Session.get('limitCoachLessons');
+    if(!Accounts.user()){ return [];}
+    var coachEmail =Accounts.user().emails[0].address;
+    var dateNow = new Date();
+    var now = dateNow.getTime();
+    var l = Lessons.find({coachEmail:coachEmail,
+                          date:{$lt:now}
+                        },{sort : {date : 1},
+                          limit : lim});
+    if(l){
+      return l;
+    }
+    else {
+      return [];
+    }
+  },
+  moreComingLess: function(){
+    var lim = Session.get('limitCoachLessons');
+    if(!Accounts.user()){ return false;}
+    var coachEmail=Accounts.user().emails[0].address;
+    var dateNow = new Date();
+    var now = dateNow.getTime();
+    var l = Lessons.findOne({coachEmail:coachEmail,
+                          date:{$gt:now}
+                        },{sort : {date : 1},
+                          skip : lim});
+    if(l){
+      return true;
+    } else {
+      return false;
+    }
+  },
+  morePastLess: function(){
+    var lim = Session.get('limitCoachLessons');
+    if(!Accounts.user()){ return false;}
+    var coachEmail =Accounts.user().emails[0].address;
+    var dateNow = new Date();
+    var now = dateNow.getTime();
+    var l = Lessons.findOne({coachEmail:coachEmail,
+                          date:{$lt:now}
+                        },{sort : {date : 1},
+                          skip : lim});
+    if(l){
+      return true;
+    } else {
+      return false;
+    }
+  }
+});
+
+Template.coachingPanelLessons.events({
+  "click .loadMore" : function(event){
+    event.preventDefault();
+    var i = Session.get("limitCoachLessons");
+    Session.set('limitCoachLessons',i+3 );
+  },
+  "click .newLesson" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelLessonInsert'});
+  },
+  "click .btnProblem" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelContact'});
+  }
+});
+
+Template.coachingPanelLessonInsert.events({
+  "click .btnReturn" : function(event){
+    event.preventDefault();
+    BlazeLayout.render('coachingPanel', {content:'coachingPanelLessons'});
+  },
+  "submit #insertLessonByCoach" : function(event){
+    event.preventDefault();
+     var t=event.target;
+
+     var title=t.title.value;
+     var shortDesc=t.shortDesc.value;
+     var longDesc = t.longDesc.value;
+     var duration = t.duration.value;
+     var category = t.category.value;
+     var coachEmail = t.userEmail.value;
+     var address = t.address.value;
+     var instructions = t.instructions.value;
+     var maxAttendees = t.maxAttendees.value;
+     var price=t.price.value;
+     var date = t.date.value;
+     var time = t.time.value;
+     var imgUrl = t.imgUrl.value;
+
+     var attendeesList = "";
+
+     //Date in milliseconds since 1st january 1970
+     var d = new Date(date+" "+time);
+     var dateInMilli = d.getTime();
+
+     //Pricing
+     var commission=2.0;
+     if(category ==="Tai Chi"){
+       commission=1.5;
+       if(price >= 10.0 && price < 15.0){
+         commission+= price*0.05;
+       } else if (price >= 15.0){
+         commission+= price*0.08;
+       }
+     } else {
+       if(price >= 12.0 && price < 16.0){
+         commission+= price*0.05;
+       } else if (price >= 16.0){
+         commission+= price*0.08;
+       }
+     }
+
+     var coord;
+     var lat=50.843;
+     var lng=4.371;
+
+     var loc = {
+       type:"Point",
+       coordinates:[
+         4.371,
+         50.843
+       ]
+     };
+
+     maxAttendees= parseInt(maxAttendees);
+
+     Session.setDefault("loc", loc);
+     var l = Session.get('loc');
+
+     var toInsert={
+       imgUrl:imgUrl,
+       title:title,
+       shortDesc:shortDesc,
+       longDesc:longDesc,
+       duration:duration,
+       category:category,
+       coachEmail:coachEmail,
+       address:address,
+       instructions:instructions,
+       geospatial:l,
+       maxAttendeesLeft:maxAttendees,
+       price:price,
+       commission:commission,
+       date:dateInMilli,
+       attendeesList:attendeesList,
+       createdAt: new Date(),
+       updatedAt: new Date(),
+     };
+
+     Meteor.call("insertLessonByCoach", toInsert, (err,res)=>{
+      if(res){
+        Materialize.toast('Cours enregistré avec succès !', 4000,'rounded');
+      } else {
+        Materialize.toast("Erreur lors de l'insertion: "+err, 4000,'rounded');
+      }
+     });
+
+
+     t.maxAttendees='';
+     t.price.value='';
+     t.date.value='';
+     t.time.value='';
   }
 });

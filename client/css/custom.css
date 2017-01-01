@@ -1,5 +1,36 @@
 /****** PLACE YOUR CUSTOM STYLES HERE ******/
 
+.menu-item-panel{
+  font-size:3vh;
+  padding-top:5px;
+  padding-bottom:3px;
+}
+.menu-coach-panel{
+  background-color:#292929 !important;
+  color:#ffffff !important;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.clickable:hover{
+  background-color:#f5f5f5;
+}
+
+.letter-circle{
+  border-radius: 18px;
+  behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  font-weight: 800;
+  background: #0097A7;
+  color: #ffffff;
+  text-align: center;
+}
+
 #leftPanel{
 
     text-align: center;

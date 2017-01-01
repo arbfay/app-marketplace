@@ -147,20 +147,20 @@ Meteor.methods({
 
      var card = {};
      var cards = [];
-     if(data.card != '0' || data.card != ''){
+     if(this.userId){
        card = CoachCards.findOne({_id : data.card});
-
-       var dateOfCreation = data.createdAt.getTime();
-       var expDate = dateOfCreation + (card.duration * 2629746000);
-       cards = [
-         {
-           name:card.name,
-           maxAttendings:card.maxAttendings,
-           attendingsLeft:card.maxAttendings,
-           expirationDate:expDate,
-         }
-       ];
-     }
+       if(card){
+         var dateOfCreation = data.createdAt.getTime();
+         var expDate = dateOfCreation + (card.duration * 2629746000);
+         cards = [
+           {
+             name:card.name,
+             maxAttendings:card.maxAttendings,
+             attendingsLeft:card.maxAttendings,
+             expirationDate:expDate,
+           }
+         ];
+       }
 
      var d = {
        isUser:false,
@@ -187,6 +187,8 @@ Meteor.methods({
             clients: clientId
        }
      });
+     return clientId;
+   }
    },
    updateClient : function(clientId, data){
      check(data.firstName,String);
@@ -207,18 +209,34 @@ Meteor.methods({
        var expDate = dateOfCreation + (card.duration * 2629746000);
 
        Clients.update({_id:clientId},{
-         $push : {cards: {
-           name:card.name,
-           maxAttendings:card.maxAttendings,
-           attendingsLeft:card.maxAttendings,
-           expirationDate:expDate,
-         }}
+         $push:{
+           cards:{
+           $each:[{
+             name:card.name,
+             maxAttendings:parseInt(card.maxAttendings),
+             attendingsLeft:parseInt(card.maxAttendings),
+             expirationDate:expDate,
+             createdAt:data.createdAt,
+                }],
+           $sort:{attendingsLeft:1}
+         }
+       }
        });
      }
    },
+   incrementCardOfClient : function(clientId,cardName, expDate,val){
+     check(val, Number);
+     Clients.update(
+       {_id:clientId,
+       "cards.expirationDate":expDate},
+       {$inc:{"cards.$.attendingsLeft" : val}}
+     );
+   },
    removeClient : function(clientId){
+     var cId = Clients.findOne(clientId).coachId;
      Clients.update({_id:clientId}, {
-        $set:{coachId:"0"}
+        $set:{coachId:"0",
+              secretCoachId:cId,}
      });
    },
    addBonus : function(token,userEmail, lessonId){
@@ -277,7 +295,7 @@ Meteor.methods({
    addNonUserAttendee : function(lessonId,aLId,data){
      check(data.firstName,String);
      check(data.lastName,String);
-     check(data.comment,String);
+     check(data.createdAt,Date);
 
      AttendeesList.update(
        {_id:aLId},
@@ -288,11 +306,67 @@ Meteor.methods({
                    firstName:data.firstName,
                    lastName:data.lastName,
                    email:data.email,
-                   comment:data.comment,
+                   createdAt:data.createdAt,
                  },
                },
              }
-           );
+      );
+
+      Clients.update({_id:data.clientId},
+          {
+            $push : {
+              reservations : {
+                lessonId : lessonId,
+                fromCard : data.fromCard,
+                createdAt : data.createdAt,
+              }
+            }
+          }
+      );
+
+      Lessons.update({_id:lessonId},{
+        $inc:{maxAttendeesLeft : -1},
+      });
+   },
+   cancelNonUserAttendee : function(clientId,lessonId,date,cardData){
+     var client = Clients.findOne(clientId);
+     var lesson = Lessons.findOne(lessonId);
+     var aL = AttendeesList.findOne(lesson.attendeesList);
+     var toMatch = {
+       firstName:client.firstName,
+       lastName:client.lastName,
+       email:client.email,
+       createdAt:date
+     };
+
+     AttendeesList.update(aL._id,
+       {
+         $pull : {nonUsers : toMatch}
+       }
+     );
+
+     Clients.update({_id:clientId},
+         {
+           $pull : {
+             reservations : {
+               createdAt : date,
+             }
+           }
+         }
+     );
+
+    if(cardData.fromCard){
+       Clients.update(
+         {_id:clientId,
+         "cards.name":cardData.cardName,
+         "cards.expirationDate":cardData.expDate},
+         {$inc:{"cards.$.attendingsLeft" : 1}}
+       );
+    }
+     Lessons.update({_id:lessonId},{
+       $inc:{maxAttendeesLeft : 1},
+     });
+
    },
    insertReservation : function(data){
      check(data.lessonTitle,String);
@@ -316,13 +390,23 @@ Meteor.methods({
        $set:{isPaid:true,
             pricePaid:pricePaid},
      });
+     var userProfile = UserProfiles.findOne({_id:userProfileId});
+     var birthday = "";
+     if(userProfile.birthday){
+       birthday=userProfile.birthday;
+     }
 
      AttendeesList.update({_id:lesson.attendeesList},{
        $push : {
          users:
                {
+                 firstName:userProfile.firstName,
+                 lastName:userProfile.lastName,
                  email:userMail,
                  wasPresent:false,
+                 birthday:birthday,
+                 pricePaid:pricePaid,
+                 createdAt:new Date()
                },
              },
            }

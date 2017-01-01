@@ -1,333 +1,310 @@
-<!--<template name="coachingPanel">
-  <div class="row firstRow" style="height:100vh;">
-    <div class="col m3" style="background-color : #292929; color:white;height:100%;">
-
-      <ul class="tabs tabs-transparent">
-        <li class="tab">
-          <a href="#pastLessons">Passés</a>
-        </li>
-        <li class="tab">
-          <a href="#comingLessons">Mes cours</a>
-        </li>
-      </ul>
-      <ul class="collection" id="pastLessons">
-        {{#each lesson in coachLessons}}
-           {{> coachingLessonItem lesson}}
-        {{/each}}
-      </ul>
-      <ul class="collection" id="comingLessons">
-        {{#each lesson in coachLessons}}
-           {{> coachingLessonItem lesson}}
-        {{/each}}
-      </ul>
-    </div>
-
-    <div class="col m9">
-      <div class="row" style="margin-top:40px;">
-        <div class="col m9">
-          <div class="row">
-            <h4>{{title}}</h4>
-            <h5>{{dateTime}}</h5>
-          </div>
-          <div class="row">
-            {{> attendingListTemplate }}
-          </div>
-        </div>
-
-        <div class="col m3">
-          <ul>
-            <li>
-              <button class="btn red accent-3 waves-effect probBtn">
-                Un problème ?
-              </button>
-            </li>
-            <li>
-              <button class="btn cyan darken-2 waves-effect addBtn">
-                Ajouter un cours
-              </button>
-            </li>
-            <li>
-              <button class="btn light-green waves-effect editBtn">
-                Modifier un cours
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</template> -->
-
-<!--<template name="attendingListTemplate">
-  <div class="card">
-    <form>
-      <div class="card-content">
-        <ul class="collection">
-          {{#each users}}
-            <li class="collection-item">
-              <div class="row">
-                <div class="col s8">
-                  <p class="flow-text" style="display:inline;">{{firstName}} {{lastName}}</p>
-                  <p>{{birthdate}}</p>
-                </div>
-                <div class="col s4">
-                  {{#if canGiveBonus}}
-                    <button class="btn green accent-3 giveBonus">+ 10</button>
-                  {{/if}}
-                </div>
-              </div>
-            </li>
-          {{/each}}
-          {{#each nonUsers}}
-            <li class="collection-item">
-              <div class="row">
-                <div class="col s8">
-                  <p class="flow-text" style="display:inline;">{{firstNameNonUser}} {{lastNameNonUser}}</p>
-                  <p>{{emailNonUser}}</p>
-                  <p>{{commentNonUser}}</p>
-                </div>
-              </div>
-            </li>
-          {{/each}}
-
-          <div class="center-align" style="margin-top:10px;">
-            <a href="#modalFormNewAttendee" class="waves-effect waves-light btn blue darken-3 addAttendeeModalButton">Ajouter</a>
-          </div>
-          <form id="modalFormNewAttendee" class="modal">
-              <div class="modal-content">
-                <h4>Ajouter un participant non-membre</h4>
-                <div class="row">
-                  <div class="input-field col s6">
-                    <input id="lastName" type="text" class="validate-required">
-                    <label for="lastName">Nom</label>
-                  </div>
-                  <div class="input-field col s6">
-                    <input id="firstName" type="text" class="validate-required">
-                    <label  for="firstName">Prénom</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input id="email" type="email" class="validate">
-                    <label  for="email">Adresse e-mail</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input id="comment" type="text" class="validate">
-                    <label  for="comment">Commentaire</label>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btnModal modal-action modal-close waves-effect waves-green btn-flat" type="submit">Ajouter</button>
-              </div>
-          </form>
-        </ul>
-      </div>
-    </form>
-  </div>
-</template>-->
-
-<!-- <template name="coachingLessonItem">
-  <li class="collection-item"><a href='#!'>
-    <div class="">
-      {{title}}
-    </div>
-    <div class="">
-      {{dateForHuman}}
-    </div>
-  </a></li>
-</template> -->
 
 <template name="coachingPanel">
-<div class="grey lighten-4">
-  <div class="row">
-    <div class="col s12">
-      <h3 class="card-panel center-align">Panneau de gestion</h3>
-    </div>
-  </div>
-  {{#if Template.subscriptionsReady}}
-  <div class="row">
-    <div class="container col m9 s12">
-      <div class="card-panel">
-        <ul class="tabs">
-          <li class="tab col m3">
-            <a href="#coachingProfile">Mon profil</a>
-          </li>
-          <li class="tab col m3">
-            <a href="#coachingLessons">Mes cours</a>
-          </li>
-          <li class="tab col m3">
-            <a href="#coachingClients">Mes clients</a>
-          </li>
-          <li class="tab col m3">
-            <a href="#coachingCards">Mes cartes</a>
-          </li>
-        </ul>
-        <div id="coachingProfile">
-          {{> coachingProfile coachProfile}}
+  {{>navbar}}
+
+  <div class="row firstRow" style="background-color : #292929;">
+    <div class="col m3 s12" style="color:white;">
+      <div class="row">
+        <div class="col s12 center-align" style="padding-top:10px;">
+          {{#with coachProfile}}
+            <img src="{{imgUrl}}" alt="Photo de profil" class="circle" width="156px;">
+            <h4 class="white-text">{{lastName}} {{firstName}}</h4>
+          {{/with}}
         </div>
-        <div id="coachingLessons">
-          {{> coachingLessons}}
-        </div>
-        <div id="coachingClients">
-          {{> coachingClients}}
-        </div>
-        <div id="coachingCards">
-          {{> coachingCards}}
+      </div>
+      <div class="row">
+        <div class="collection menu-coach-panel">
+          <a href="#!" class="collection-item cpHome">
+            <i class="material-icons menu-item-panel">home</i>
+            <span class="menu-item-panel">Accueil</span>
+          </a>
+          <a href="#!" class="collection-item cpProfile">
+            <i class="material-icons menu-item-panel">perm_identity</i>
+            <span class="menu-item-panel">Profil coach</span>
+          </a>
+          <a href="#!" class="collection-item cpLessons">
+            <i class="material-icons menu-item-panel">event</i>
+            <span class="menu-item-panel">Cours</span>
+          </a>
+          <a href="#!" class="collection-item cpClients">
+            <i class="material-icons menu-item-panel">list</i>
+            <span class="menu-item-panel">Clients</span>
+          </a>
+          <a href="#!" class="collection-item cpContact">
+            <i class="material-icons menu-item-panel">question_answer</i>
+            <span class="menu-item-panel">Contactez-nous</span>
+          </a>
         </div>
       </div>
     </div>
 
-    <div class="col m3 hide-on-small-only">
+    <div class="col m9 s12" style="background-color:#f5f5f5; height:100%;">
+      {{> Template.dynamic template=content}}
+    </div>
+  </div>
+
+  {{>footer}}
+</template>
+
+<template name="coachingPanelHome">
+  <h2>Bienvenue,</h2>
+  <h4>Vos prochains cours</h4>
+  <div class="row">
+    {{#each lesson in nextLessons}}
+      {{> basicCoachLessonCard lesson}}
+    {{else}}
+      <p>Aucun cours à venir. Vous devriez en ajouter !</p>
+    {{/each}}
+  </div>
+  <h4>Statistiques</h4>
+  <div class="row">
+    {{#with stats}}
+        <div class="col s3">
+          <div class="card">
+            <div class="card">
+              <div class="card-content">
+                <h3 class="center-align">{{clients}}</h3>
+                <p class="center-align">clients</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s3">
+          <div class="card">
+            <div class="card">
+              <div class="card-content">
+                <h3 class="center-align">{{trysReservations}}</h3>
+                <p class="center-align">réservations Trys</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s3">
+          <div class="card">
+            <div class="card">
+              <div class="card-content">
+                <h3 class="center-align">{{comingLessons}}</h3>
+                <p class="center-align">cours à venir</p>
+              </div>
+            </div>
+          </div>
+        </div>
+    {{else}}
+      <p>Rien à afficher</p>
+    {{/with}}
+  </div>
+  <h4>Il vaut mieux le savoir</h4>
+  <div class="row">
+    {{#each info in infoCards}}
+      {{> basicInfoCard info}}
+    {{else}}
+    <div class="col s6 m3">
       <div class="card-panel">
         Toutes les séances sur votre Panneau de Gestion
         sont automatiquement référencées sur le site web
         pour que les utilisateurs puissent réserver
         leur place.
       </div>
-      <div class="card-panel">
-        A chaque fois que vous inscrivez un client
-        à l'une de vos séances, le nombre de place
-        est automatiquement diminué.
+    </div>
+    {{/each}}
+  </div>
+</template>
+
+<template name="basicInfoCard">
+  <div class="col s6 m3">
+    <div class="card-panel">
+      {{content}}
+    </div>
+  </div>
+</template>
+
+<template name="basicCoachLessonCard">
+  <div class="col s6 m4">
+    <div class="card">
+      <div class="card-image waves-effect waves-block waves-light">
+        <div class="section" style="
+        height:100%;
+        width:100%;
+        background: -moz-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+        background: -webkit-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+        background: -o-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        ">
+          <div class="container">
+            <div class="row firstRow">
+              <div class="col m10 push-m1 s12 center-align">
+                <h4 class="mb8" style="color:white;">{{title}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="card-panel">
-        Seul les personnes s'étant inscrites par le site
-        web peuvent participer au concours mensuel et espérer
-        gagner un cadeau.
+      <div class="card-content">
+        <span>{{dateTime}}<i class="material-icons right" >more_vert</i></span>
       </div>
-      <div class="card-panel">
-        Pour des raisons de sécurité, vos informations
-        bancaires ne peuvent être modifiées qu'en contactant
-        directement notre équipe.
-      </div>
-      <div class="card-panel">
-        Pour pouvoir aider les individus à pratiquer
-        une activité physique régulière, nous devons
-        travailler avec toutes les parties prenantes.
-        Cela signifie que nous devons travailler avec
-        les professionnels qui enseignent leur passion
-        au quotidien. Ainsi, l'outil de gestion est
-        gratuit dans son utilisation, pour que vous
-        n'ayez plus d'excuses pour ne pas nous rejoindre
-        dans cette mission.
+      <div class="card-action">
+        <a href="#" class="cpLesson">Voir</a>
       </div>
     </div>
   </div>
-  {{else}}
-  <div class="center-align" style="margin-top:20vh; margin-bottom:20vh;">
-    {{> loading}}
-  </div>
-  {{/if}}
-</div>
-  <script>
-    $(document).ready(function(){
-    $('ul.tabs').tabs();
-    });
-  </script>
 </template>
 
-<template name="coachingProfile">
+<template name="coachingPanelProfile">
   <br>
-  	<div class="row" id="main">
-          <div class="col m6 well" id="leftPanel">
-              <div class="row">
-                  <div class="col m12">
-                  	<div>
-      				        <img src="{{imgUrl}}" alt="Photo de profil" class="circle" width="156px;">
-  				            <h3>{{lastName}} {{firstName}}</h3>
-                      <p style="color:#757575;">
-                        <i class="material-icons" style="color:#757575;">location_on</i>
-                        {{address}}
-                      </p>
-                      <p>
-                        {{email}}
-                      </p>
-  				            <p>
-                        {{description}}
-                      </p>
-                      <p>
-
-                      </p>
-                    </div>
-          			  </div>
-          		</div>
-            </div>
-            <div class="col m6 well" id="rightPanel">
-              <div class="row">
+  <div class="row" id="main">
+        <div class="col m6 s12 well" id="leftPanel">
+            <div class="row">
                 <div class="col m12">
-      	           <form id="updateCoachProfile">
-  			              <h3>Modifier vos informations<small></small></h3>
-                  			<div class="row">
-                          <div class="input-field col s6">
-                            <input id="lastName" type="text" class="validate-required">
-                            <label for="lastName">Nom</label>
-                          </div>
-                          <div class="input-field col s6">
-                            <input id="firstName" type="text" class="validate-required">
-                            <label for="firstName">Prénom</label>
-                          </div>
-                  			</div>
-                        <div class="row">
-                          <div class="input-field col s12">
-                            <input id="street" type="text" class="validate-required">
-                            <label for="street">Rue</label>
-                          </div>
-                        </div>
+                  <div class="card-panel">
+                    {{#with coachProfile}}
+                    <img src="{{imgUrl}}" alt="Photo de profil" class="circle" width="156px;">
 
-                        <div class="row">
-                          <div class="input-field col s6">
-                            <input id="zip" type="text" class="validate-required" >
-                            <label for="zip">Code Postal</label>
-                          </div>
-                          <div class="input-field col s6">
-                            <input id="city" type="text" class="validate-required" >
-                            <label for="city">Commune</label>
-                          </div>
+                      <table class="bordered">
+                        <tbody>
+                          <tr>
+                            <td>Nom</td>
+                            <td><b>{{lastName}}</b></td>
+                          </tr>
+                          <tr>
+                            <td>Prénom</td>
+                            <td><b>{{firstName}}</b></td>
+                          </tr>
+                          <tr>
+                            <td>E-mail</td>
+                            <td><b>{{email}}</b></td>
+                          </tr>
+                          <tr>
+                            <td>Téléphone</td>
+                            <td><b>{{tel}}</b></td>
+                          </tr>
+                          <tr>
+                            <td>Adresse</td>
+                            <td><b>{{address}}</b></td>
+                          </tr>
+                          <tr>
+                            <td>Description</td>
+                            <td><b>{{description}}</b></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    {{/with}}
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="col m6 well" id="rightPanel">
+            <div class="row">
+              <div class="col m12">
+                <div class="card-panel">
+                 <form id="updateCoachProfile">
+                    <h3>Modifier vos informations<small></small></h3>
+                      <div class="row">
+                        <div class="input-field col s6">
+                          <input id="lastName" type="text" class="validate-required">
+                          <label for="lastName">Nom</label>
                         </div>
-                        <div class="row">
-                          <div class="input-field col s12">
-                            <textarea id="description" length="300" class="materialize-textarea"></textarea>
-                            <label for="description">Description (max. 300 lettres)</label>
-                          </div>
+                        <div class="input-field col s6">
+                          <input id="firstName" type="text" class="validate-required">
+                          <label for="firstName">Prénom</label>
                         </div>
-              			<div class="row">
-              				<div class="col xs12 col m6">
-                        <button type="submit" form="updateCoachProfile" class="btn red accent-3">
-                          Enregistrer</button>
                       </div>
-              			</div>
-              		</form>
-  	</div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input id="tel" type="text" class="validate-required">
+                          <label for="tel">Téléphone</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input id="street" type="text" class="validate-required">
+                          <label for="street">Rue</label>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="input-field col s6">
+                          <input id="zip" type="text" class="validate-required" >
+                          <label for="zip">Code Postal</label>
+                        </div>
+                        <div class="input-field col s6">
+                          <input id="city" type="text" class="validate-required" >
+                          <label for="city">Commune</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <textarea id="description" length="300" class="materialize-textarea"></textarea>
+                          <label for="description">Description (max. 300 lettres)</label>
+                        </div>
+                      </div>
+                  <div class="row">
+                    <div class="col xs12 col m6">
+                      <button type="submit" form="updateCoachProfile" class="btn red accent-3">
+                        Enregistrer</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
   </div>
-</div>
-</div>
+  </div>
+  </div>
+  </div>
 </template>
 
-<template name="coachingLessons">
+<template name="coachingPanelLessons">
+  <div class="row">
+  <div class="col s12">
+    <p></p>
+    <button class="btn blue darken-2 newLesson"><i class="material-icons left">event</i>Créer un cours</button>
+    <button class="btn red accent-2 btnProblem"><i class="material-icons left">warning</i>Signaler un problème</button>
+  </div>
   <div class="row">
     <div class="col s12 m10">
-      <ul class="tabs">
-        <li class="tab col m6">
-          <a href="#pastLessons">Passé</a>
-        </li>
-        <li class="tab col m6">
-          <a href="#futureLessons">À venir</a>
-        </li>
-      </ul>
-      <div id="pastLessons">
-        {{> pastLessons}}
+      <div class="card-panel">
+        <ul class="tabs">
+          <li class="tab col m6">
+            <a href="#futureLessons">À venir</a>
+          </li>
+          <li class="tab col m6">
+            <a href="#pastLessons">Passés</a>
+          </li>
+        </ul>
+        <div id="futureLessons">
+          <div class="row">
+          {{#each lesson in comingLess}}
+            {{> basicCoachLessonCard lesson}}
+          {{else}}
+            <p>Aucun cours à venir. Ajoutez-en un !</p>
+          {{/each}}
+          </div>
+          {{#if moreComingLess}}
+          <div class="row firstRow center-align">
+            <button class="btn-flat btn-lg loadMore" >Voir plus</button>
+          </div>
+          {{/if}}
+        </div>
+        <div id="pastLessons">
+          <div class="row">
+          {{#each lesson in pastLess}}
+            {{> basicCoachLessonCard lesson}}
+          {{else}}
+            <p>Aucun cours passé.</p>
+          {{/each}}
+          </div>
+          {{#if morePastLess}}
+          <div class="row firstRow center-align">
+            <button class="btn-flat btn-lg loadMore" >Voir plus</button>
+          </div>
+          {{/if}}
+        </div>
       </div>
-      <div id="futureLessons">
-        {{> futureLessons}}
-      </div>
-    </div>
-    <div class="col m2 s12">
-      <button class="btn blue darken-2" style="margin-top:30px;">Ajouter</button>
-      <button class="btn red accent-2">Signaler</button>
     </div>
   </div>
+</div>
   <script>
     $(document).ready(function(){
       $('ul.tabs').tabs();
@@ -335,319 +312,617 @@
   </script>
 </template>
 
-<template name="pastLessons">
-  <ul class="collapsible popout" data-collapsible="accordion">
-    {{#each lessons}}
-    <li>
-      <div class="collapsible-header">
-        <i class="material-icons" style="font-size:40px;">arrow_drop_down</i>
-        <b style="font-size:24px;">{{title}}</b>
-        {{dateTime}}
+<template name="coachingPanelLesson">
+  <div class="row">
+    <div class="row firstRow" style="padding-top:30px;">
+      <button class="btn-flat btnReturn">
+        <i class="material-icons left">keyboard_arrow_left</i>
+        Retour</button>
+      <button class="btn red accent-2 btnCancel">
+        <i class="material-icons left">event_busy</i>Annuler le cours</button>
+      <button class="btn cyan darken-3 btnUpdate">
+        <i class="material-icons left">edit</i>Modifier le cours</button>
+      <button class="btn blue darken-2 btnUpdate">
+        <i class="material-icons left">content_copy</i>Dupliquer le cours</button>
+    </div>
+    <div class="row">
+      <div class="card-panel">
+      {{#with lesson}}
+      <div class="section" style="
+      height:40vh;
+      width:100%;
+      background: -moz-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+      background: -webkit-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+      background: -o-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+
+      ">
+        <div class="container v-align-transform">
+          <div class="row firstRow">
+            <div class="col m10 push-m1 s12 center-align">
+              <h2 class="mb8" style="color:white;">{{title}}</h2>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="collapsible-body"><p>{{shortDesc}}</p></div>
+      <div class="card-panel red accent-2" style="color:white; max-width:100%;">
+          <div class="row firstRow" style="font-size:14px;">
+                <div class="col s3">
+                  {{dateTime}}
+                </div>
+                <div class="col s3">
+                </div>
+                <div class="col s3">
+                  {{duration}} min
+                </div>
+                <div class="col s3 center-align">
+                  €
+                  <span style="font-size:28px;">{{price}}</span>
+                </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="card-panel">
+            <table class="bordered">
+              <tbody>
+                <tr>
+                  <td>Courte description</td>
+                  <td><b>{{shortDesc}}</b></td>
+                </tr>
+                <tr>
+                  <td>Longue description</td>
+                  <td><b>{{longDesc}}</b></td>
+                </tr>
+                <tr>
+                  <td>Lieu</td>
+                  <td><b>{{address}}</b></td>
+                </tr>
+                <tr>
+                  <td>Instructions supplémentaires</td>
+                  <td><b>{{instructions}}</b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="card-panel">
+            <h4>Liste des inscrits</h4>
+            <span class="letter-circle">T</span> = utilisateur Trys &nbsp; &nbsp;
+             <span class="letter-circle">C</span> = votre client
+            {{> coachingPanelAttendingList attendeesList}}
+          </div>
+        </div>
+      </div>
+      {{/with}}
+    </div>
+    </div>
+  </div>
+</template>
+
+<template name="coachingPanelAttendingList">
+  <ul class="collection">
+    {{#each attendees}}
+    <li class="collection-item avatar">
+      <span class="circle letter-circle">{{type}}</span>
+      <span class="title">{{firstName}} {{lastName}}</span>
+      <p>{{secondaryInfo}}
+      </p>
+      {{#if isClient}}
+        <span class="secondary-content"><a href="#" class="cancelAttendee"><i class="material-icons">cancel</i></a></span>
+      {{else}}
+        <span class="secondary-content"><b style="font-size:18px;">{{pricePaid}} €</b></span>
+      {{/if}}
     </li>
     {{else}}
-      Aucun cours passé.
+      Aucun inscrit.
     {{/each}}
   </ul>
-  <script>
-    $(document).ready(function(){
-      $('.collapsible').collapsible();
-    });
-  </script>
+  <div class="row">
+    <button class="btn blue darken-2 newAttendee"><i class="material-icons left">person_add</i>
+      Inscrire un client</button>
+  </div>
 </template>
 
-<template name="futureLessons">
-  <ul class="collapsible popout" data-collapsible="accordion">
-    {{#each lessons}}
-      <li>
-        <div class="collapsible-header">
-          <i class="material-icons" style="font-size:40px;">arrow_drop_down</i>
-          <b style="font-size:24px;">{{title}}</b>
-          {{dateTime}}
-        </div>
-        <div class="collapsible-body">
+<template name="coachingPanelLessonUpdate">
 
-          <p>{{shortDesc}}</p>
+</template>
 
-        </div>
-      </li>
-    {{else}}
-      Aucun cours à venir.
-    {{/each}}
-  </ul>
-  <script>
-    $(document).ready(function(){
-      $('.collapsible').collapsible();
-    });
-  </script>
+<template name="coachingPanelLessonInsert">
+  <div class="row">
+    <div class="row firstRow" style="padding-top:30px;">
+      <button class="btn-flat btnReturn">
+        <i class="material-icons left">keyboard_arrow_left</i>
+        Annuler</button>
+    </div>
+    <div class="card-panel">
+      <h4>Nouveau cours</h4>
+      <div class="row">
+        <form id="insertLessonByCoach">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">title</i>
+            <input id="title" type="text" class="validate" required>
+            <label for="title">Titre du cours (ex: XIntense Accro Yoga)</label>
+          </div>
+          <div class="input-field col s12 m6">
+            <i class="material-icons prefix">drag_handle</i>
+            <input id="shortDesc" type="text" length="150" class="validate" required>
+            <label for="shortDesc">Courte description (max. 150 lettres)</label>
+          </div>
+          <div class="input-field col s12 m6">
+            <i class="material-icons prefix">view_headline</i>
+            <textarea id="longDesc" length="1000" class="materialize-textarea" required></textarea>
+            <label for="longDesc">Longue description (max. 1000 lettres)</label>
+          </div>
+          <div class="input-field col s12 m4">
+            <p>
+              <input name="category" type="radio" id="yoga" value="Yoga"/>
+              <label for="yoga">Yoga</label>
+            </p>
+            <p>
+              <input name="category" type="radio" id="pilates" value="Pilates" />
+              <label for="pilates">Pilates</label>
+            </p>
+            <p>
+              <input name="category" type="radio" id="taiChi" value="Tai Chi" />
+              <label for="taiChi">Tai Chi</label>
+            </p>
+          </div>
+          <div class="col s12 m8">
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">location_on</i>
+                <input id="street" type="text" class="validate" length="150" required >
+                <label for="street">Rue et N°</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <i class="material-icons prefix">location_city</i>
+                <input id="zip" type="text" class="validate" length="5">
+                <label for="zip">Code postal</label>
+              </div>
+              <div class="input-field col s6">
+                <i class="material-icons prefix">location_city</i>
+                <input id="city" type="text" class="validate" length="150" required>
+                <label for="city">Commune</label>
+              </div>
+            </div>
+          </div>
+          <div class="input-field col s3">
+            <i class="material-icons prefix">euro_symbol</i>
+            <input id="price" type="number" max="100" min="5" step="0.1" class="validate baseCalculation" required>
+            <label for="price">Prix par participant</label>
+          </div>
+          <div class="input-field col s3">
+            <i class="material-icons prefix">people</i>
+            <input id="maxAttendees" type="number" max="30" min="0" class="validate" required>
+            <label for="maxAttendees">Nombre de participants</label>
+          </div>
+          <div class="input-field col s3">
+            <i class="material-icons prefix">update</i>
+            <input id="duration" type="number" min="0">
+            <label for="duration">Durée (en minutes)</label>
+          </div>
+          <div class="input-field col s3">
+            Commission par réservation : <span class="commissionValue">2</span>€
+          </div>
+          <div class="input-field col s6 m4">
+            <i class="material-icons prefix">today</i>
+            <input id="date" type="date" class="datepicker">
+            <label for="date"></label>
+          </div>
+          <div class="input-field col s6 m4 center-align">
+            <input type="checkbox" id="recurrent" />
+            <label for="recurrent">
+              <i class="material-icons">replay_5</i>Répéter 5 fois</label>
+          </div>
+          <div class="input-field col s6 m4">
+            <i class="material-icons prefix">schedule</i>
+            <input id="time" class="timepicker" type="time">
+            <label for="time"></label>
+          </div>
+          <div class="input-field col s12">
+            <i class="material-icons prefix">add</i>
+            <input id="instructions" type="text" class="validate" length="350">
+            <label for="instructions">Instructions</label>
+          </div>
+          <div class="input-field col s12">
+            <div class="file-field input-field">
+              <div class="btn cyan darken-3">
+                <i class="material-icons left">insert_photo</i>
+                <span>Photo</span>
+                <input type="file" id="photo" required>
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="Télécharger 1 photo pour illustrer votre cours.">
+              </div>
+            </div>
+          </div>
+          <div class="input-field col m4 s6">
+            <button type="submit" form="insertLessonByCoach" class="red accent-3">
+              <i class="material-icons">done</i>
+              Confirmer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="coachingPanelLessonInsertAttendees">
+<div class="row">
+  <div class="row">
+    <div class="row firstRow" style="padding-top:30px;">
+      <button class="btn-flat btnReturn">
+        <i class="material-icons left">keyboard_arrow_left</i>
+        Retour</button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card-panel">
+      <h4>Inscrire un client au cours</h4>
+      <div class="row">
+       <div class="col s12">
+         <form id="newAttendee">
+           <div class="input-field col s12">
+             <i class="material-icons prefix">person</i>
+             <input type="text" id="autocomplete-input" class="autocomplete">
+             <label for="autocomplete-input">Nom du client</label>
+           </div>
+           <div class="input-field col s12">
+              <input type="checkbox" name="fromCard" value="true" id="fromCard" />
+              <label for="fromCard">
+                Retirer 1 place sur une carte du client</label>
+           </div>
+           <div class="input-field col s6 m3">
+             <button type="submit" form="newAttendee" class="btn red accent-3">
+               Inscrire
+             </button>
+           </div>
+         </form>
+       </div>
+     </div>
+   </div>
+  </div>
+</div>
+<script>
+  var data={};
+  var clients= Clients.find().fetch();
+  for (var i =0;i<clients.length;i++){
+    var lastName=clients[i].lastName;
+    data[lastName]=null;
+  }
+  $('input.autocomplete').autocomplete({
+    data:data
+});
+</script>
 </template>
 
 
-<template name="coachingClients">
+
+<template name="coachingPanelClients">
   <br style="margin-top:20px;">
   <p class="flow-text">Vous pouvez gérer vos clients qui n'utilisent pas Trys en
      les enregistrant ici gratuitement.</p>
-     <div class="row">
-       <div class="col s12 m10">
-         <ul class="collapsible" data-collapsible="accordion">
-             {{#each clients}}
-             <li>
-               <div class="collapsible-header"><b>{{lastName}} {{firstName}}</b></div>
-               <div class="collapsible-body">
-                 <form id="updateClient-{{_id}}" class="updateClientForm">
-                   <table class="bordered">
-                      <tbody>
-                        <tr>
-                          <td>Nom : </td>
-                          <td>
-                            <input id="lastName" name="lastName" type="text" class="validate-required" value="{{lastName}}">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Prénom : </td>
-                          <td>
-                            <input id="firstName" name="firstName" type="text" class="validate-required" value="{{firstName}}">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>E-mail : </td>
-                          <td>
-                            <input id="email" name="email" type="email" class="validate-required" value="{{email}}">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Téléphone : </td>
-                          <td>
-                              <input id="tel" name="tel" type="text" class="validate-required" value="{{tel}}">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Cartes : </td>
-                          <td>
-                            {{#each card in cards}}
-                              {{> clientCard card}}
-                            {{/each}}
-                            <div class="col s6 m6">
-
-                              <a href="modalAddCardToClient" class="modal-trigger btn-floating btn-large waves-effect waves-light blue darken-2 addCardToClient center-align" style="margin-top:35%;">
-                              <i class="material-icons">add</i></a>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </form>
-                    <div class="row">
-                      <div class="col s6 m3">
-                        <button type="submit" form="updateClient-{{_id}}">
-                        Modifier le profil</button>
-                      </div>
-                      <div class="col s6 m3"><button class="btn-flat deleteClient">Supprimer</button></div>
-                    </div>
-               </div>
-             </li>
-             {{else}}
-             <li>
-               <div class="collapsible-header">Aucun client pour le moment.</div>
-               <div class="collapsible-body">
-                <p>Cliquer sur le bouton "Ajouter" à droite pour pouvoir ajouter
-                un client non-membre de Trys. Cela vous permettera d'organiser vos propres étudiants et les
-                inscrire à vos séances.
-                </p>
-                <p><b>Pourquoi les inscrire à vos séances ?</b> Pour 3 raisons principalement. </p>
-                <p>
-                  La première, c'est que cela nous permet de calculer le nombre
-                  de places restantes dans une séance et savoir ainsi jusque quand les
-                  utilisateurs de la plateforme peuvent s'inscrire à vos séances.
-                </p>
-                <p>
-                  La seconde raison est que cela vous permet d'avoir un seul endroit
-                  où vous pouvez gérez votre activité et avoir une liste de présence unique.
-                </p>
-                <p>
-                  Dernièrement, cela nous permettera dans le futur de vous offrir des
-                  statistiques sur votre activité. Vous aurez ainsi un outil puissant d'analyse
-                  de votre activité.
-                </p>
-              </div>
-             </li>
-             {{/each}}
-          </ul>
-       </div>
-       <div class="col s6 m2">
-         <a href="#modalAddClientForm" class="modal-trigger-2 btn blue darken-2">
-           Ajouter</a>
-       </div>
+  <div class="row">
+    <div class="col m8 s12">
+      <button class="btn blue darken-2 newClient"><i class="material-icons left">person_add</i>
+        Nouveau client</button>
+      <div class="row">
+        <div class="card-panel">
+          <table class="bordered">
+          <thead>
+            <tr>
+                <th data-field="firstName">Nom</th>
+                <th data-field="lastName">Prénom</th>
+                <th data-field="email">E-mail</th>
+                <th data-field="tel">Téléphone</th>
+                <th data-field="actions">Actions</th>
+                <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each clients}}
+              <tr class="clickable">
+                <td>{{lastName}}</td>
+                <td>{{firstName}}</td>
+                <td>{{email}}</td>
+                <td>{{tel}}</td>
+                <td><a class="editClient">
+                      <i class="material-icons">edit</i></a>
+                    <a class="deleteClient">
+                      <i class="material-icons">delete</i></a>
+                </td>
+              </tr>
+              {{else}}
+              <tr >
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      </div>
     </div>
+    <div class="col m4 s12">
+      <button class="btn blue darken-2 newCard"><i class="material-icons left">add_to_photos</i>
+        Créer une carte</button>
+      <div class="card-panel">
+          <h4>Vos cartes</h4>
+          {{#each coachCards}}
+            <div class="card-panel cyan darken-3 white-text">
+              <b style="font-size:18px;">{{name}}</b> <br>
+              Validité : {{duration}} mois <br>
+              Place : {{maxAttendings}} <br>
+              <b>{{price}}</b> €
+            </div>
+          {{/each}}
+      </div>
+    </div>
+  </div>
+</template>
 
-    <div id="modalAddCardToClient" class="modal">
-        <div class="modal-content">
-          <h3>Ajouter une carte à un client</h3>
-          <form id="addCardToClient" >
+<template name="coachingPanelCardInsert">
+  <br>
+    <div class="row">
+        <div class="col m6 s12">
+          <button class="btn-flat btnReturn">
+            <i class="material-icons left">keyboard_arrow_left</i>
+            Retour</button>
+        </div>
+        <div class="col s12 m6">
+          <div class="card-panel">
+          <h3>Créer une nouvelle carte</h3>
+          <form id="addCoachingCard" >
             <div class="row">
-              <div class="input-field col s8">
-                <select id="selectCoachCards" name="card">
-                  <option value="" disabled selected>Quelle carte ?</option>
-                  {{coachCards}}
-                </select>
+              <div class="input-field col s12">
+                <input id="name" type="text" class="validate-required">
+                <label for="name">Nom de la carte</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="maxAttendings" type="number" min="0" class="validate-required">
+                <label for="maxAttendings">Nombre de places</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="duration" type="number" min="0" class="validate-required">
+                <label for="duration">Durée de validité (en mois)</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="price" type="number" min="0" class="validate-required">
+                <label for="price">Prix de la carte</label>
               </div>
             </div>
           </form>
+          <div class="row">
+            <div class="col s6">
+              <button type="submit" form="addCoachingCard">
+                Enregistrer</button>
+            </div>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button type="submit" form="addCardToClient" class="modal-action modal-close">
-            Enregistrer</button>
+    </div>
+  </div>
+</template>
+
+<template name="coachingPanelClient">
+  <br>
+  <div class="row">
+    <div class="col s3 m3">
+      <button class="btn-flat btnReturn">
+        <i class="material-icons left">keyboard_arrow_left</i>
+        Retour</button>
+    </div>
+    <div class="col s6 m6">
+      <button class="btn cyan darken-2" id="updateClient"><i class="material-icons left">edit</i>
+        Modifier</button>
+      <button class="btn red accent-2" id='deleteClient'><i class="material-icons left">delete</i>
+        Supprimer</button>
+    </div>
+  </div>
+  <div class="row" id="main">
+    <div class="col m6 s12 well" id="leftPanel">
+        <div class="row">
+            <div class="col m12">
+              <div class="card-panel">
+                {{#with client}}
+                  <table class="bordered">
+                    <tbody>
+                      <tr>
+                        <td>Nom</td>
+                        <td><b>{{lastName}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Prénom</td>
+                        <td><b>{{firstName}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>E-mail</td>
+                        <td><b>{{email}}</b></td>
+                      </tr>
+                      <tr>
+                        <td>Téléphone</td>
+                        <td><b>{{tel}}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                {{/with}}
+              </div>
+            </div>
         </div>
+        <div class="row">
+          <div class="card-panel">
+            <h4>Ses cartes</h4>
+            {{#each cards}}
+              <div class="card-panel cyan darken-3 white-text">
+                <b style="font-size:18px;">{{name}}</b> <br>
+                Valide jusqu'au {{expDate}} <br>
+                {{attendingsLeft}} places restantes<br>
+              </div>
+            {{/each}}
+            <div class="row">
+              <form id="addCardToClient" >
+                <div class="row">
+                  <div class="input-field col s8">
+                    <select id="selectCoachCards" >
+                      <option value="" disabled selected>Quelle carte ?</option>
+                      {{#each selectCards}}
+                        <option value="{{_id}}">{{name}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+                  <div class="col s4">
+                    <button class="btn red accent-3 addCardTwo" type="submit" form="addCardToClient" onclick="showSelect()">Ajouter</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col m6 s12" id="rightPanel">
+        <div class="row">
+          <div class="col m12 s12">
+            <div class="card-panel">
+              <h4>Inscriptions</h4>
+              {{#each reservation in reservations}}
+                {{> clientReservation reservation}}
+              {{else}}
+                Aucune inscription.
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div id="modalAddClientForm" class="modal">
-        <div class="modal-content">
-          <h3>Ajouter un client</h3>
-          <form id="addCoachingClient" >
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="firstName" name="firstName" type="text" class="validate-required">
-                <label for="firstName">Prénom</label>
-              </div>
-              <div class="input-field col s6">
-                <input id="lastName" name="lastName" type="text" class="validate-required">
-                <label for="lastName">Nom</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="email" type="email" name="email" class="validate-required">
-                <label for="email">E-mail</label>
-              </div>
-              <div class="input-field col s6">
-                <input id="tel" type="text" name="tel" class="validate">
-                <label for="tel">Téléphone</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s8">
-                <select id="selectCoachCards" name="card">
-                  <option value="" disabled selected>Dispose d'une carte ?</option>
-                  <option value="0">Pas de carte</option>
-                  {{coachCards}}
-                </select>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" form="addCoachingClient" class="modal-action modal-close">
-            Enregistrer</button>
-        </div>
-    </div>
     <script>
-      $(document).ready(function(){
-        $('.modal-trigger').leanModal();
-        $('.modal-trigger-2').leanModal();
-        $("#selectCoachCards").on('change', function() {
-            $('#selectCoachCards').material_select();
-        });
-      });
-      showCards = function(cards){
-
+      showSelect = function(){
+        $('#selectCoachCards').material_select();
+        $(".addCardTwo").show();
       }
     </script>
 </template>
 
-<template name="coachingCards">
-  <br>
-  <div id="modalAddCardForm" class="modal">
-      <div class="modal-content">
-        <h3>Créer une nouvelle carte</h3>
-        <form id="addCoachingCard" >
+<template name="coachingPanelClientInsert">
+  <div class="row">
+    <div class="col m3 hide-on-small-only">
+
+    </div>
+    <div class="col m6 s12">
+      <div class="card-panel">
+        <h4>Ajouter un client</h4>
+        <form id="addCoachingClient" >
           <div class="row">
-            <div class="input-field col s12">
-              <input id="name" type="text" class="validate-required">
-              <label for="name">Nom de la carte</label>
+            <div class="input-field col s6">
+              <input id="firstName" name="firstName" type="text" class="validate-required">
+              <label for="firstName">Prénom</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="lastName" name="lastName" type="text" class="validate-required">
+              <label for="lastName">Nom</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6">
-              <input id="maxAttendings" type="number" minimum="0" class="validate-required">
-              <label for="maxAttendings">Nombre de places</label>
+              <input id="email" type="email" name="email" class="validate-required">
+              <label for="email">E-mail</label>
             </div>
             <div class="input-field col s6">
-              <input id="duration" type="number" class="validate-required">
-              <label for="duration">Durée de validité (en mois)</label>
+              <input id="tel" type="text" name="tel" class="validate">
+              <label for="tel">Téléphone</label>
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s6">
-              <input id="price" type="number" minimum="0" class="validate-required">
-              <label for="price">Prix de la carte</label>
+            <div class="col s6">
+              <button class="btn red accent-3" type="submit" form="addCoachingClient">Ajouter</button>
             </div>
           </div>
         </form>
       </div>
-      <button type="submit" form="addCoachingCard" class="modal-action modal-close">
-        Enregistrer</button>
+    </div>
   </div>
+
+</template>
+
+<template name="coachingPanelClientUpdate">
+  <br>
   <div class="row">
-    <div class="row">
-      <div class="col m5 s10">
-        <a href="#modalAddCardForm" class="modal-trigger btn red blue darken-2">
-          Créer une nouvelle carte</a>
-      </div>
+    <div class="col s3 m3">
+      <button class="btn-flat btnReturn">
+        <i class="material-icons left">keyboard_arrow_left</i>
+        Annuler</button>
     </div>
-
-    <div class="row">
-      <div class="container col s12">
-        {{#each cards}}
-          {{> coachingCard}}
-        {{else}}
-          Aucune carte enregistrée.
-        {{/each}}
-      </div>
+    <div class="col s6 m6">
     </div>
   </div>
-  <script>
-    $(document).ready(function(){
-      $('.modal-trigger').leanModal();
-    });
-  </script>
+  <div class="row" id="main">
+    <div class="col m6 s12 well" id="leftPanel">
+        <div class="row">
+            <div class="col m12">
+              <div class="card-panel">
+                <form id="updateClientForm">
+                {{#with client}}
+                  <table class="bordered">
+                    <tbody>
+                      <tr>
+                        <td>Nom</td>
+                        <td>
+                          <div class="input-field">
+                            <input id="lastName" name="lastName" type="text" class="validate-required" value="{{lastName}}">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Prénom</td>
+                        <td><div class="input-field">
+                          <input id="firstName" name="firstName" type="text" class="validate-required" value="{{firstName}}">
+                        </div></td>
+                      </tr>
+                      <tr>
+                        <td>E-mail</td>
+                        <td><div class="input-field">
+                          <input id="email" name="email" type="email" class="validate-required" value="{{email}}">
+                        </div></td>
+                      </tr>
+                      <tr>
+                        <td>Téléphone</td>
+                        <td><div class="input-field">
+                          <input id="tel" name="tel" type="text" class="validate" value="{{tel}}">
+                        </div></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button type="submit" form="updateClientForm" class="btn red accent-3">Enregistrer</button>
+                {{/with}}
+                </form>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
 </template>
 
-<template name="clientCard">
-  <div class="col s12 m6">
-    <div class="card-panel cyan darken-3 white-text" style="border-radius:10px !important">
-      <div class="row"><h4 class="white-text">{{name}}</h4></div>
-      <div class="row">
-        <div class="col s8">
-          <div class="row">
-            Places restantes : {{attendingsLeft}}
-          </div>
-          <div class="row">
-            Validité : {{dateTime}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
+<template name="clientReservation">
+  <b style="font-size:18px;">{{title}}</b><br>
+  le {{dateTime}}
+  <div class="divider"></div>
 </template>
 
-<template name="coachingCard">
-  <div class="col s6 m4 white-text">
-    <div class="card-panel cyan darken-3" style="border-radius:10px !important">
-      <div class="row"><h3 class="white-text">{{name}}</h3></div>
-      <div class="row">
-        <div class="col s8">
-          <div class="row">
-            pour {{maxAttendings}} places
-          </div>
-          <div class="row">
-            Validité : {{duration}} mois
-          </div>
-        </div>
-        <div class="col s4">
-          <b><span style="font-size:35px;">{{price}}</span> €</b>
-        </div>
-      </div>
-    </div>
-  </div>
+<template name="coachingPanelContact">
+
 </template>

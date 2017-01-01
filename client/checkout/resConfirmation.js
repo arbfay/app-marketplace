@@ -401,8 +401,10 @@ Template.reservationConfirmation.events({
           }
         });
         var promo = PromoCodes.findOne({code:promoCode});
-        var rTA = promo.reductionToApply > 0 ? promo.reductionToApply : 0;
-        price -= rTA;
+        if(promo){
+          var rTA = promo.reductionToApply > 0 ? promo.reductionToApply : 0;
+          price -= rTA;
+        }
 
         if(lesson.maxAttendeesLeft > 0){
 
@@ -410,6 +412,7 @@ Template.reservationConfirmation.events({
 
           var handler = StripeCheckout.configure({
             key: 'pk_live_35CsmegR7Q0ww6wi8QupJ9rp',
+            //key : 'pk_test_LqluwQNx3xv8VtbJwYme8XJc',
             image : "http://res.cloudinary.com/trys/image/upload/v1480159845/logo-trys-2-v1.2_b_w_transp_cut_icqbo8.png",
             token: function(token) {
               var userMail = Accounts.user().emails[0].address;
