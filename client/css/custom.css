@@ -104,10 +104,10 @@ display:inline-block;
 .searchImg{
   height:90vh;
   width:100vw;
-  background: -moz-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/q_50/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
-  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/q_50/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
-  background: -o-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/q_50/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(http://res.cloudinary.com/trys/image/upload/q_50/v1479201302/vent5-2_wozlvc.jpg) no-repeat center center;
+  background: -moz-linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4)), url(https://res.cloudinary.com/trys/image/upload/v1483362193/Yoga-Class-Picture-2_z42ejp.jpg) no-repeat center center;
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4)), url(https://res.cloudinary.com/trys/image/upload/v1483362193/Yoga-Class-Picture-2_z42ejp.jpg) no-repeat center center;
+  background: -o-linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4)), url(https://res.cloudinary.com/trys/image/upload/v1483362193/Yoga-Class-Picture-2_z42ejp.jpg) no-repeat center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4)), url(https://res.cloudinary.com/trys/image/upload/v1483362193/Yoga-Class-Picture-2_z42ejp.jpg) no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
