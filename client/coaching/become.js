@@ -9,7 +9,6 @@ Template.becomeCoach.events({
     var phone = t.phone.value;
     var city = t.city.value;
     var category = t.cat.value;
-    var message = t.comments.value;
 
     var text = "Nom : "+lastName+"<br>"
               +"Prénom : "+firstName+"<br>"
@@ -17,7 +16,6 @@ Template.becomeCoach.events({
               +"Telephone : "+phone+"<br>"
               +"Commune : "+city+"<br>"
               +"Discipline : "+category+"<br>"
-              +"Commentaires : "+message+"<br>";
 
     Meteor.call("sendMail","contact@trys.be",email,"Message/inscription d'un coach",text,
             (err,res)=>{

@@ -114,3 +114,7 @@ Meteor.publish('coachCards',function(coachId){
 Meteor.publish('coachClients',function(coachId){
   return Clients.find({coachId:coachId});
 });
+
+Meteor.publish('getAllSubmittedLessons', function(){
+  return SubmittedLessons.find();
+});

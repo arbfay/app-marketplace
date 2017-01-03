@@ -271,8 +271,6 @@ Meteor.methods({
      check(data.address, String);
      check(data.updatedAt, Date);
 
-     data.attendeesList = AttendeesList.insert({reservations:[],users:[]});
-
      return SubmittedLessons.insert(data);
    },
    insertLessonByAdmin : function(data){
@@ -303,6 +301,9 @@ Meteor.methods({
            console.log(err);
          }
        });
+   },
+   removeSubmittedLesson:function(id){
+     SubmittedLessons.remove({_id:id});
    },
    addNonUserAttendee : function(lessonId,aLId,data){
      check(data.firstName,String);

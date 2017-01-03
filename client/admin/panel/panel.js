@@ -85,3 +85,61 @@ Template.buttonItems.events({
     FlowRouter.go('/admin/lessons/update/find');
   }
 })
+
+Template.submittedLessons.helpers({
+  sbLessons:function(){
+    Meteor.subscribe('getAllSubmittedLessons',function(err,res){
+      if(err){
+        console.log(err);
+        Materialize.toast('Error publication',4000,'rounded');
+      }
+    });
+
+    return SubmittedLessons.find();
+  },
+  dateTime:function(){
+    var mom = moment(this.date);
+    return mom.format("ddd DD MMMM");
+  },
+  submitDate:function(){
+    var mom = moment(this.createdAt);
+    return mom.fromNow();
+  }
+});
+
+Template.submittedLessons.events({
+  "click .btnApprove" : function(event){
+    event.preventDefault();
+    var sbLesson = this;
+    console.log(this);
+    var sbLessonId = sbLesson._id;
+    delete sbLesson._id;
+    Meteor.call("insertLessonByAdmin", sbLesson,function(err,res){
+      if(err){
+        console.log(err);
+      } else {
+        Materialize.toast('Lesson approuvée',4000,'rounded');
+        Meteor.call('removeSubmittedLesson',sbLessonId,function(error,result){
+          if(error){
+            console.log(error);
+          } else {
+            Materialize.toast('submittedLesson removed',4000,'rounded');
+          }
+        });
+      }
+    });
+  },
+  "click .btnRefuse" : function(event){
+    event.preventDefault();
+    var sbLesson = this;
+    console.log(this);
+    var sbLessonId = sbLesson._id;
+    Meteor.call('removeSubmittedLesson',sbLessonId,function(error,result){
+      if(error){
+        console.log(error);
+      } else {
+        Materialize.toast('submittedLesson removed',4000,'rounded');
+      }
+    });
+  }
+});
