@@ -430,7 +430,113 @@
 </template>
 
 <template name="coachingPanelLessonDuplicate">
-  Duplicate
+  <div class="row">
+    <div class="row firstRow" style="padding-top:30px;">
+      <button class="btn-flat btnReturn">
+        <i class="material-icons left">keyboard_arrow_left</i>
+        Retour</button>
+    </div>
+    <div class="card-panel">
+      <h4>Dupliquer un cours à une nouvelle date</h4>
+      <p>Vous pouvez multiplier les dates de vos cours en dupliquant plusiers fois.</p>
+      <div class="row">
+        {{#with lesson}}
+        <form id="insertLessonByCoach">
+          <div class="input-field col s12">
+            <i class="material-icons left">title</i>
+            {{title}}
+          </div>
+          <div class="input-field col s12 m6">
+            <i class="material-icons left">drag_handle</i>
+            {{shortDesc}}
+          </div>
+          <div class="input-field col s12 m6">
+            <i class="material-icons left">view_headline</i>
+            {{longDesc}}
+          </div>
+          <div class="input-field col s12 m4">
+            Catégorie : {{category}}
+          </div>
+          <div class="col s12 m8">
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="material-icons left">location_on</i>
+                {{address}}
+              </div>
+            </div>
+          </div>
+          <div class="input-field col s3">
+            <i class="material-icons prefix">euro_symbol</i>
+            <input id="price" type="number" max="100" min="5" step="0.1" onchange="changeCommission()" class="validate baseCalculation" required>
+            <label for="price">Prix par participant</label>
+          </div>
+          <div class="input-field col s3">
+            <i class="material-icons prefix">people</i>
+            <input id="maxAttendees" type="number" max="30" min="0" class="validate" required>
+            <label for="maxAttendees">Nombre de participants</label>
+          </div>
+          <div class="input-field col s3">
+            <i class="material-icons prefix">update</i>
+            <input id="duration" type="number" min="0">
+            <label for="duration">Durée (en minutes)</label>
+          </div>
+          <div class="input-field col s3 center-align">
+            Calcul de la commission par réservation sur Trys <br>
+            <b><span class="commissionValue">2</span> €</b>
+          </div>
+          <div class="input-field col s6 m4">
+            <i class="material-icons prefix">today</i>
+            <input id="date" type="date" class="datepicker">
+            <label for="date"></label>
+          </div>
+          <div class="input-field col s6 m4 center-align">
+            <input type="checkbox" id="recurrent" />
+            <label for="recurrent">
+              <i class="material-icons">replay_5</i>Répéter 5 fois</label>
+          </div>
+          <div class="input-field col s6 m4">
+            <i class="material-icons prefix">schedule</i>
+            <input id="time" class="timepicker" type="time">
+            <label for="time"></label>
+          </div>
+          <div class="input-field col s12">
+            <i class="material-icons prefix">add</i>
+            <input id="instructions" type="text" class="validate" length="350">
+            <label for="instructions">Instructions</label>
+          </div>
+          <div class="input-field col m4 s6">
+            <button type="submit" form="insertLessonByCoach" class="red accent-3 btn-border-2">
+              <i class="material-icons">done</i>
+              Confirmer</button>
+          </div>
+        </form>
+        {{/with}}
+      </div>
+    </div>
+  </div>
+  <script>
+    var category = this.category;
+    changeCommission = function(){
+      var commission=2.0;
+      var price = $('#price').val();
+      if(category ==="Tai Chi"){
+        commission=1.5;
+        if(price >= 10.0 && price < 15.0){
+          commission+= price*0.05;
+        } else if (price >= 15.0){
+          commission+= price*0.08;
+        }
+      } else {
+        if(price >= 12.0 && price < 16.0){
+          commission+= price*0.05;
+        } else if (price >= 16.0){
+          commission+= price*0.08;
+        }
+      }
+      $('.commissionValue').replaceWith('<span class="commissionValue">'+commission+'</span>');
+    }
+
+  </script>
 </template>
 
 <template name="coachingPanelLessonInsert">
@@ -496,7 +602,7 @@
           </div>
           <div class="input-field col s3">
             <i class="material-icons prefix">euro_symbol</i>
-            <input id="price" type="number" max="100" min="5" step="0.1" class="validate baseCalculation" required>
+            <input id="price" type="number" max="100" min="5" step="0.1" class="validate baseCalculation" onchange="changeCommission()" required>
             <label for="price">Prix par participant</label>
           </div>
           <div class="input-field col s3">
@@ -510,7 +616,8 @@
             <label for="duration">Durée (en minutes)</label>
           </div>
           <div class="input-field col s3">
-            Commission par réservation : <span class="commissionValue">2</span>€
+            Calcul de la commission par réservation sur Trys <br>
+            <b><span class="commissionValue">2</span> €</b>
           </div>
           <div class="input-field col s6 m4">
             <i class="material-icons prefix">today</i>
@@ -553,6 +660,29 @@
       </div>
     </div>
   </div>
+  <script>
+    var category = $("select").val();
+    changeCommission = function(){
+      var commission=2.0;
+      var price = $('#price').val();
+      if(category ==="Tai Chi"){
+        commission=1.5;
+        if(price >= 10.0 && price < 15.0){
+          commission+= price*0.05;
+        } else if (price >= 15.0){
+          commission+= price*0.08;
+        }
+      } else {
+        if(price >= 12.0 && price < 16.0){
+          commission+= price*0.05;
+        } else if (price >= 16.0){
+          commission+= price*0.08;
+        }
+      }
+      $('.commissionValue').replaceWith('<span class="commissionValue">'+commission+'</span>');
+    }
+
+  </script>
 </template>
 
 <template name="coachingPanelLessonInsertAttendees">

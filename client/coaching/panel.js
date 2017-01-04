@@ -666,9 +666,6 @@ Template.coachingPanelAttendingList.events({
   }
 });
 
-Template.coachingPanelLessonInsertAttendees.helpers({
-
-});
 
 Template.coachingPanelLessonInsertAttendees.events({
   "click .btnReturn" : function(event){
@@ -929,8 +926,9 @@ Template.coachingPanelLessonInsert.events({
            console.log(response);
 
                var location = Session.get('loc');
+               var d = dateInMilli;
                 for(var i = 0; i<=r;i++){
-                  dateInMilli += 604800000;
+                  d = dateInMilli + i*604800000;
                   var toInsert={
                     imgUrl:imgUrl,
                     title:title,
@@ -945,7 +943,7 @@ Template.coachingPanelLessonInsert.events({
                     maxAttendeesLeft:maxAttendees,
                     price:price,
                     commission:commission,
-                    date:dateInMilli,
+                    date:d,
                     attendeesList:attendeesList,
                     createdAt: new Date(),
                     updatedAt: new Date(),
@@ -978,7 +976,90 @@ Template.coachingPanelLessonInsert.events({
   }
 });
 
+Template.coachingPanelLessonDuplicate.helpers({
+  lesson : function(){
+    var lessonId = Session.get('lessonId');
+    return Lessons.findOne({_id:lessonId});
+  }
+});
 
+Template.coachingPanelLessonDuplicate.events({
+    "click .btnReturn" : function(event){
+      event.preventDefault();
+      BlazeLayout.render('coachingPanel', {content:'coachingPanelLesson'});
+    },
+    "submit #insertLessonByCoach" : function(event){
+      event.preventDefault();
+       var t=event.target;
+       var lessonId = Session.get('lessonId');
+       var lesson = Lessons.findOne(lessonId);
+
+       var duration = t.duration.value;
+       var instructions = t.instructions.value;
+       var maxAttendees = t.maxAttendees.value;
+       var price=t.price.value;
+       var date = t.date.value;
+       var time = t.time.value;
+       var repeat = t.recurrent.checked;
+
+       //Date in milliseconds since 1st january 1970
+       var d = new Date(date+" "+time);
+       var dateInMilli = d.getTime();
+
+       //Pricing
+       var commission=2.0;
+       if(category ==="Tai Chi"){
+         commission=1.5;
+         if(price >= 10.0 && price < 15.0){
+           commission+= price*0.05;
+         } else if (price >= 15.0){
+           commission+= price*0.08;
+         }
+       } else {
+         if(price >= 12.0 && price < 16.0){
+           commission+= price*0.05;
+         } else if (price >= 16.0){
+           commission+= price*0.08;
+         }
+       }
+
+       maxAttendees= parseInt(maxAttendees);
+
+       var r=0;
+       if(repeat){
+         r=5;
+       }
+
+
+      var d = dateInMilli;
+
+      var toInsert = lesson;
+      delete toInsert._id;
+      toInsert.date=d;
+      toInsert.duration=duration;
+      toInsert.maxAttendeesLeft=maxAttendees;
+      toInsert.price=price;
+      toInsert.commission=commission;
+      toInsert.createdAt=new Date();
+      toInsert.updatedAt=new Date();
+      toInsert.instructions = instructions;
+      for(var i = 0; i<=r;i++){
+        d = dateInMilli + i*604800000;
+        toInsert.date = d;
+
+        Meteor.call("insertLessonByCoach", toInsert, (err,res)=>{
+         if(res){
+           Materialize.toast('Cours enregistré avec succès !', 4000,'rounded');
+         } else {
+           Materialize.toast("Erreur lors de l'insertion: "+err, 4000,'rounded');
+         }
+        });
+      }
+
+      t.date.value='';
+      t.time.value='';
+     }
+});
 Template.coachingPanelContact.events({
   "submit form": function(event, template){
      event.preventDefault();
