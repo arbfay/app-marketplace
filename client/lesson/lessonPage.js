@@ -56,7 +56,7 @@ Template.lessonPage.helpers({
     var id = FlowRouter.getParam('lessonId');
     Meteor.subscribe('matchingLessonsByFirstId', id, dateNow);
     Session.set("lesson",Lessons.findOne(id));
-  
+
 
     var lesson = Session.get("lesson");
     var coachEmail = lesson.coachEmail;
@@ -112,13 +112,22 @@ Template.lessonPage.helpers({
       return "";
     }
   },
+  address: function(){
+    var lessonId = FlowRouter.getParam('lessonId');
+    var lesson = Lessons.findOne({_id:lessonId});
+    if (lesson){
+      return lesson.address;
+    } else {
+      return "";
+    }
+  },
   coachName : function(){
     var prof = Session.get("coachProfile");
     return ""+prof.firstName+" "+prof.lastName;
   },
   coachShortDesc : function(){
     var coach = Coaches.findOne();
-    return coach.shortDesc;
+    return coach.description;
   },
   coachImgUrl : function(){
     var coach = Coaches.findOne();

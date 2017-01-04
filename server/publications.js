@@ -1,5 +1,4 @@
 Meteor.publish('nearLessons', function(loc,lim, now){
-  console.log(loc);
 
   check(lim, Number);
   check(loc.coordinates[0], Number);
@@ -25,7 +24,6 @@ Meteor.publish('nearLessons', function(loc,lim, now){
 });
 
 Meteor.publish('searchLessons', function(query, options){
-  console.log(Lessons.findOne(query,options));
   return Lessons.find(query,options);
 });
 

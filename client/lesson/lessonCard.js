@@ -36,7 +36,13 @@ Template.lessonCard.helpers({
   dateForHuman : function(){
     var d = this.date;
     var mom = moment(d);
-    var str=mom.format("ddd DD MMM, HH:mm");
+    var str=mom.format("ddd DD MMM");
+    return str;
+  },
+  timeForHuman : function(){
+    var d = this.date;
+    var mom = moment(d);
+    var str=mom.format("HH:mm");
     return str;
   }
 });

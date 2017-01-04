@@ -114,6 +114,11 @@ display:inline-block;
   background-size: cover;
 }
 
+.lesson-card-img {
+  height:100%
+}
+
+
 .priceReservationCard{
   font-weight: bold;
   color:white;

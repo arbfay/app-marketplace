@@ -55,36 +55,6 @@
   </div>
 </template>
 
-<!--
-<template name="searchResults">
-  <div class="row firstRow">
-    <div class="col m7 s12">
-      <div class="section">
-        <div class="row">
-          {{> searchbarForResults}}
-        </div>
-        <div class="row">
-          {{> filterCategory}}
-        </div>
-        <div class="divider"></div>
-        <div class="row" style="max-height:100vh;overflow:auto;">
-          {{> lessonsResults}}
-        </div>
-      </div>
-      <div class="container">
-        <div class="row center-align">
-          <button class="btn-flat btn-large showMore">
-            Afficher plus
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col m5 hide-on-small-only" style=" padding-right:0px !important;">
-      {{> map}}
-    </div>
-  </div>
-</template> -->
 <template name="filterCategory">
   <div class="center-align">
     <div class="col s4">
@@ -113,7 +83,7 @@
   </ul>
 </template>
 
-<template name="lessonCard">
+<!--<template name="lessonCard">
   <li class="col m6 s12">
               <div class="card hoverable">
                 <div class="card-image">
@@ -133,10 +103,10 @@
 
                 <div class="card-content" style="padding-bottom:0px;">
                   <div class="row">
-                    {{euro}} ・ {{category}}
+                    {{price}} € ・ {{category}}
                   </div>
                   <div class="row">
-                    	<p class="truncate">{{shortDesc}}</p>
+                    	<p class="">{{shortDesc}}</p>
                   </div>
                 </div>
 
@@ -144,6 +114,61 @@
                   <a href="{{path}}">{{dateForHuman}}</a>
                 </div>
               </div>
+  </li>
+</template>-->
+
+<template name="lessonCard">
+  <li class="col m6 s12">
+    <div class="card hoverable" style='padding-bottom:0px !important;'>
+      <div class="card-image waves-effect waves-block waves-light">
+        <div class="section" style="
+        height:100%;
+        width:100%;
+        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        ">
+          <div class="container">
+            <div class="row firstRow">
+              <div class="col m10 push-m1 s12 center-align">
+                <h4 class="mb8" style="color:white;">{{title}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-content" style="padding-bottom:0px !important;">
+        <table>
+          <tr>
+            <td>
+              <i class="material-icons left">update</i>{{duration}} min
+            </td>
+            <td>
+              <i class="material-icons left">event</i>{{dateForHuman}}
+            </td>
+            <td>
+              <i class="material-icons left">access_time</i>{{timeForHuman}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="material-icons left">euro_symbol</i>{{price}}
+            </td>
+            <td>
+              <i class="material-icons left">label_outline</i>{{category}}
+            </td>
+            <td>
+              <a href="{{path}}" class="btn red accent-2 btn-border-2">
+                Voir
+              </a>
+            </td>
+          </tr>
+        </table>
+
+      </div>
+    </div>
   </li>
 </template>
 
