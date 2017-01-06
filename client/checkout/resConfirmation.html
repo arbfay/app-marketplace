@@ -133,32 +133,43 @@
           <div class="row">
             <div class="col s12">
               <div class="row">
-                <p class="flow-text">{{shortDesc}}</p>
+                <h4>Description</h4>
+                <p class="">{{shortDesc}}</p>
+                <h4>Adresse</h4>
+                <p>{{address}}</p>
+              </div>
+            </div>
+            <div class="col s12 m12">
+              <div class="card-panel red accent-2" style="color:white; max-width:100%;">
+                  <div class="row firstRow" style="font-size:14px;">
+                        <div class="col s3">
+                          {{day}} {{date}} {{month}}
+                        </div>
+                        <div class="col s3">
+                          {{hour}}
+                        </div>
+                        <div class="col s3">
+
+                          {{duration}} min
+                        </div>
+                        <div class="col s3 center-align">
+                          €
+                          <span style="font-size:28px;">{{price}}</span>
+                        </div>
+                  </div>
+              </div>
+            </div>
+            <div class="col m6 s12">
+              <div class="card-panel green white-text">
+                <p style="margin-bottom:0px;">Pour {{earning}} points</p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="card-panel red accent-2" style="color:white; max-width:100%;">
-          <div class="row firstRow" style="font-size:14px;">
-                <div class="col s3">
-                  {{day}} {{date}} {{month}}
-                </div>
-                <div class="col s3">
-                  {{hour}}
-                </div>
-                <div class="col s3">
 
-                  {{duration}} min
-                </div>
-                <div class="col s3 center-align">
-                  €
-                  <span style="font-size:28px;">{{price}}</span>
-                </div>
-          </div>
-      </div>
-            </div>
+  </div>
 </template>
 
 <template name="promoCodeForm">
