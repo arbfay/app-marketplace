@@ -232,6 +232,29 @@ Meteor.methods({
        {$inc:{"cards.$.attendingsLeft" : val}}
      );
    },
+   editClientCard : function(clientId,newCard){
+     check(newCard.name, String);
+     check(newCard.expirationDate, Number);
+
+     Clients.update(
+       {_id:clientId,
+       "cards.createdAt":newCard.createdAt},
+       {
+         $set:{"cards.$.expirationDate":newCard.expirationDate,
+               "cards.$.attendingsLeft":newCard.attendingsLeft
+              }
+       }
+     );
+   },
+   removeClientCard : function(clientId, card){
+     check(card.name, String);
+     check(card.expirationDate, Number);
+
+     Clients.update(
+       {_id:clientId},
+       {$pull:{"cards" : card}}
+     );
+   },
    removeClient : function(clientId){
      var cId = Clients.findOne(clientId).coachId;
      Clients.update({_id:clientId}, {
@@ -388,13 +411,13 @@ Meteor.methods({
 
      return Reservations.insert(data);
    },
-   reservationPayment : function(token,userProfileId,userMail,lessonId,reservationId,pricePaid){
+   reservationPayment : function(token,userProfileId,userMail,lessonId,reservationId,pricePaid,earning){
      check(pricePaid,Number);
 
      var lesson = Lessons.findOne({_id: lessonId});
 
      UserProfiles.update(userProfileId,{$set:{stripeToken : token.id},
-                                        $inc:{points:50}});
+                                        $inc:{points:earning}});
 
      Lessons.update(lesson._id,{
        $inc:{maxAttendeesLeft : -1},

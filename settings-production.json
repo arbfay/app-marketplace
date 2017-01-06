@@ -1,0 +1,12 @@
+{
+  "galaxy.meteor.com":{
+    "env":{
+      "MONGO_URL":"mongodb://webappCaller:LongLiveAtTrys@ds133578-a0.mlab.com:33578,ds133578-a1.mlab.com:33578/trys-v1?replicaSet=rs-ds133578"
+    }
+  },
+  "public":{
+    "analyticsSettings":{
+      "Google Analytics":{"trackingId":"UA-76302115-3"}
+    }
+  }
+}

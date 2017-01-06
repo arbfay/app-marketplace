@@ -220,6 +220,8 @@ Template.coachingPanelProfile.events({
       updatedAt: new Date()
     };
 
+
+
     Meteor.call("updateUserProfile", up._id, upData, function(error, result){
       if(error){
         console.log("error", error);
@@ -236,13 +238,48 @@ Template.coachingPanelProfile.events({
       updatedAt : new Date()
     };
 
-    Meteor.call("updateCoach", coach._id, coachData, function(error, result){
-      if(error){
-        console.log("error", error);
-      } else {
-        Materialize.toast('Modifications enregistrées !', 4000, 'rounded');
-      }
+
+    var image = document.getElementById('photo').files[0];
+    var reader = new FileReader();
+    var imgUrl = "";
+
+    if(image){
+      reader.onloadend=function(e){
+        const data = new FormData();
+        data.append('file', e.target.result);
+        data.append('upload_preset', "f5ok4rwp");
+        var url ="https://api.cloudinary.com/v1_1/trys/image/upload";
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("POST", url, true);
+        xhr.onreadystatechange=function(){
+          if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+            var response = JSON.parse(xhr.responseText);
+            console.log("response :", response);
+            imgUrl=response.secure_url;
+            coachData.imgUrl=imgUrl;
+
+            Meteor.call("updateCoach", coach._id, coachData, function(error, result){
+              if(error){
+                console.log("error", error);
+              } else {
+                Materialize.toast('Modifications enregistrées !', 4000, 'rounded');
+              }
+            });
+          }  };
+      xhr.send(data);
+    }
+      reader.readAsDataURL(image);
+    } else {
+      Materialize.toast("Problèmes rencontrés avec l'image, veuillez réessayer plus tard.", 4000, 'rounded');
+      Meteor.call("updateCoach", coach._id, coachData, function(error, result){
+        if(error){
+          console.log("error", error);
+        } else {
+          Materialize.toast('Modifications enregistrées !', 4000, 'rounded');
+        }
     });
+  }
 
   }
 });
@@ -328,6 +365,17 @@ Template.coachingPanelClient.helpers({
     var coachId="";
     if(coach){coachId = coach._id;}
     return CoachCards.find().fetch();
+  },
+  cardName:function(){
+    return Session.get('cardToEdit').name;
+  },
+  expirationDate: function(){
+    var expDate = Session.get('cardToEdit').expirationDate;
+    var mom = moment(expDate);
+    return mom.format("YYYY-MM-DD");
+  },
+  attLeft : function(){
+    return Session.get('cardToEdit').attendingsLeft;
   }
 });
 
@@ -362,6 +410,31 @@ Template.coachingPanelClient.events({
     event.preventDefault();
     $('#modalAddCardToClient').openModal();
   },
+  "click .editClientCard":function(event){
+    event.preventDefault();
+    var clientId=Session.get("clientId");
+    Session.set('cardToEdit',this);
+    $('#modalEditClientCard').openModal();
+  },
+  "click .deleteClientCard":function(event){
+    event.preventDefault();
+    var clientId=Session.get("clientId");
+    var card = this;
+    swal({
+      title: "Êtes-vous certain(e) ?",
+      text: "Suppression de la carte du client.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Effacer",
+      cancelButtonText: "Annuler",
+      closeOnConfirm: false,
+    },
+    function(){
+        swal("Effacé!", "Le client a été effacé", "success");
+        Meteor.call('removeClientCard', clientId, card);
+    });
+  },
   "submit #addCardToClient" : function(event){
     event.preventDefault();
     var cardId = event.target.selectCoachCards.value;
@@ -379,6 +452,31 @@ Template.coachingPanelClient.events({
       }
     });
   },
+  "submit #editClientCardForm" : function(event){
+    event.preventDefault();
+    var oldCard = Session.get('cardToEdit');
+    var clientId = Session.get('clientId');
+
+    var expDate = event.target.expDate.value;
+
+    expDate = moment(expDate).valueOf();
+    var attLeft = event.target.attendingsLeft.value;
+
+    if(oldCard.expirationDate == expDate && oldCard.attendingsLeft == attLeft){
+      Materialize.toast('Modifications enregistrées',4000,'rounded');
+    } else {
+      var newCard = oldCard;
+      newCard.expirationDate=expDate;
+      newCard.attendingsLeft=attLeft;
+      Meteor.call('editClientCard',clientId,newCard,function(err,res){
+        if(err){
+          Materialize.toast('Problème rencontré, veuillez réessayer plus tard', 4000, 'rounded');
+        } else {
+          Materialize.toast('Modifications enregistrées',4000,'rounded');
+        }
+      });
+    }
+  }
 });
 
 Template.coachingPanelCardInsert.events({

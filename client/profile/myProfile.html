@@ -1,75 +1,83 @@
 <template name="myProfile">
   {{> navbar}}
-  <div class="container">
-    <div class="row">
-      <div class="col m8 center-align valign-wrapper">
-        <span style="margin-top:30px; valign">
-          <i class="material-icons" style="font-size:100px;">person</i>
-        </span>
-        <h3 style="display:inline;" class="valign">{{firstName}} {{lastName}}</h3>
+  <div class="grey lighten-4">
+    <div class="container">
+      <div class="row firstRow">
+        <div class="card-panel">
+          <div class="row firstRow">
+              <h3 class="valign">
+                Bienvenue {{firstName}},</h3>
+              <h5>Surtout n'hésitez pas à nous dire ce que vous penser de nous via le chat en bas à droite.</h5>
+            </div>
         </div>
       </div>
 
-    <div class="row">
-      <div class="col m4 s12">
-        <div class="collection">
-          <a href="#!" class="collection-item myInfo">Mes infos</a>
-          <a href="#!" class="collection-item myRes">Mes réservations</a>
-          <a href="#!" class="collection-item changePass">Changer de mot de passe</a>
-          <a href="#!" class="collection-item logOut">Se déconnecter</a>
+      <div class="row firstRow">
+        <div class="col m4 s12">
+          <div class="collection">
+            <a href="#!" class="collection-item myInfo">Mes infos</a>
+            <a href="#!" class="collection-item myRes">Mes réservations</a>
+            <a href="#!" class="collection-item changePass">Changer de mot de passe</a>
+            <a href="#!" class="collection-item logOut">Se déconnecter</a>
+          </div>
         </div>
+        <div class="col m8 s12">
+          {{> Template.dynamic template=content}}
       </div>
-      <div class="col m8 s12">
-        {{> Template.dynamic template=content}}
+    </div>
     </div>
   </div>
-  </div>
 
-  {{> footer}}
-</template>
+    {{> footer}}
+  </template>
 
-<template name="myInfo">
-  {{> profileEditingCard}}
-</template>
+  <template name="myInfo">
+    {{> profileEditingCard}}
+  </template>
 
-<template name="myRes">
-  <h3>Vos réservations</h3>
-  <ul class="collection">
-    {{#each reservation in reservationsList}}
-      {{> myResItem reservation}}
-    {{/each}}
-  </ul>
-</template>
-
-<template name="myResItem">
-  <li class="collection-item">
-    <h4>{{lessonTitle}}</h4>
-    <p>
-      {{dateForHuman}}
-    </p>
-    <p>
-      {{address}}
-    </p>
-  </li>
-</template>
-
-<template name="changePass">
-  <h3>Changer de mot de passe</h3>
-  <div class="card">
-    <form class="chaPas">
-      <div class="card-content">
-        <div class="input-field">
-          <input type="password" class="validate" id="oldPassword" name="oldPassword">
-          <label for="oldPassword">Ancien mot de passe</label>
-        </div>
-        <div class="input-field">
-          <input type="password" class="validate" id="newPassword" name="newPassword">
-          <label for="newPassword">Nouveau mot de passe</label>
-        </div>
+  <template name="myRes">
+    <div class="card-panel">
+      <div class="row">
+        <h3>Vos réservations</h3>
+        <ul class="collection">
+          {{#each reservation in reservationsList}}
+            {{> myResItem reservation}}
+          {{/each}}
+        </ul>
       </div>
-      <div class="card-action">
-        <button type="submit" class="btn red accent-2 confPass">Modifier</button>
-      </div>
-    </form>
-  </div>
+    </div>
+  </template>
+
+  <template name="myResItem">
+    <li class="collection-item">
+      <h4>{{lessonTitle}}</h4>
+      <p>
+        {{dateForHuman}}
+      </p>
+      <p>
+        {{address}}
+      </p>
+    </li>
+  </template>
+
+  <template name="changePass">
+    <div class="card-panel">
+      <div class="row firstRow">
+      <h4>Changer de mot de passe</h4>
+      <form class="chaPas">
+          <div class="input-field">
+            <input type="password" class="validate" id="oldPassword" name="oldPassword">
+            <label for="oldPassword">Ancien mot de passe</label>
+          </div>
+          <div class="input-field">
+            <input type="password" class="validate" id="newPassword" name="newPassword">
+            <label for="newPassword">Nouveau mot de passe</label>
+          </div>
+          <div class="col s6">
+            <button type="submit" class="btn red accent-3 confPass">Modifier</button>
+          </div>
+      </form>
+
+    </div>
+    </div>
 </template>

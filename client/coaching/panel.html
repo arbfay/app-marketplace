@@ -32,7 +32,7 @@
           </a>
           <a href="#!" class="collection-item cpContact">
             <i class="material-icons menu-item-panel">question_answer</i>
-            <span class="menu-item-panel">Contactez-nous</span>
+            <span class="menu-item-panel">Ligne directe</span>
           </a>
         </div>
       </div>
@@ -239,6 +239,20 @@
                         <div class="input-field col s12">
                           <textarea id="description" length="300" class="materialize-textarea"></textarea>
                           <label for="description">Description (max. 300 lettres)</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <div class="file-field input-field">
+                            <div class="btn cyan darken-3">
+                              <i class="material-icons left">insert_photo</i>
+                              <span>Photo</span>
+                              <input type="file" name="file" id="photo" accept="image/*" required>
+                            </div>
+                            <div class="file-path-wrapper">
+                              <input class="file-path validate" type="text" placeholder="Nouvelle photo de profil.">
+                            </div>
+                          </div>
                         </div>
                       </div>
                   <div class="row">
@@ -686,52 +700,52 @@
 </template>
 
 <template name="coachingPanelLessonInsertAttendees">
-<div class="row">
   <div class="row">
-    <div class="row firstRow" style="padding-top:30px;">
-      <button class="btn-flat btnReturn">
-        <i class="material-icons left">keyboard_arrow_left</i>
-        Retour</button>
+    <div class="row">
+      <div class="row firstRow" style="padding-top:30px;">
+        <button class="btn-flat btnReturn">
+          <i class="material-icons left">keyboard_arrow_left</i>
+          Retour</button>
+      </div>
     </div>
-  </div>
-  <div class="container">
-    <div class="card-panel">
-      <h4>Inscrire un client au cours</h4>
-      <div class="row">
-       <div class="col s12">
-         <form id="newAttendee">
-           <div class="input-field col s12">
-             <i class="material-icons prefix">person</i>
-             <input type="text" id="autocomplete-input" class="autocomplete">
-             <label for="autocomplete-input">Nom du client</label>
-           </div>
-           <div class="input-field col s12">
-              <input type="checkbox" name="fromCard" value="true" id="fromCard" />
-              <label for="fromCard">
-                Retirer 1 place sur une carte du client</label>
-           </div>
-           <div class="input-field col s6 m3">
-             <button type="submit" form="newAttendee" class="btn red accent-3 btn-border-2">
-               Inscrire
-             </button>
-           </div>
-         </form>
+    <div class="container">
+      <div class="card-panel">
+        <h4>Inscrire un client au cours</h4>
+        <div class="row">
+         <div class="col s12">
+           <form id="newAttendee">
+             <div class="input-field col s12">
+               <i class="material-icons prefix">person</i>
+               <input type="text" id="autocomplete-input" class="autocomplete">
+               <label for="autocomplete-input">Nom du client</label>
+             </div>
+             <div class="input-field col s12">
+                <input type="checkbox" name="fromCard" value="true" id="fromCard" />
+                <label for="fromCard">
+                  Retirer 1 place sur une carte du client</label>
+             </div>
+             <div class="input-field col s6 m3">
+               <button type="submit" form="newAttendee" class="btn red accent-3 btn-border-2">
+                 Inscrire
+               </button>
+             </div>
+           </form>
+         </div>
        </div>
      </div>
-   </div>
+    </div>
   </div>
-</div>
-<script>
-  var data={};
-  var clients= Clients.find().fetch();
-  for (var i =0;i<clients.length;i++){
-    var lastName=clients[i].lastName;
-    data[lastName]=null;
-  }
-  $('input.autocomplete').autocomplete({
-    data:data
-});
-</script>
+  <script>
+    var data={};
+    var clients= Clients.find().fetch();
+    for (var i =0;i<clients.length;i++){
+      var lastName=clients[i].lastName;
+      data[lastName]=null;
+    }
+    $('input.autocomplete').autocomplete({
+      data:data
+  });
+  </script>
 </template>
 
 
@@ -897,10 +911,14 @@
           <div class="card-panel">
             <h4>Ses cartes</h4>
             {{#each cards}}
-              <div class="card-panel cyan darken-3 white-text">
-                <b style="font-size:18px;">{{name}}</b> <br>
+              <div class="card-panel hoverable cyan darken-3 white-text">
+                <b style="font-size:18px;">{{name}}</b>  <br>
                 Valide jusqu'au {{expDate}} <br>
                 {{attendingsLeft}} places restantes<br>
+                <button class="btn cyan darken-3 editClientCard" style="margin-bottom:0px;">
+                      <i class="material-icons white-text">edit</i></button>
+                <button class="btn cyan darken-3 deleteClientCard" style="margin-bottom:0px;">
+                      <i class="material-icons white-text">delete</i></button>
               </div>
             {{/each}}
             <div class="row">
@@ -936,6 +954,40 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div id="modalEditClientCard" class="modal">
+      <div class="modal-content">
+        <h4>{{cardName}}</h4>
+        <form id="editClientCardForm">
+          <div class="row">
+            <div class="row">
+              <div class="col s12 m6">
+                <div class="input-field">
+                  <input id="expDate" name="expDate" type="date" class="validate" value="{{expirationDate}}">
+                  <label class="active" for="expDate">Date d'expiration</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 m6">
+                <div class="input-field">
+                  <input id="attendingsLeft" type="number" step=1 min="0" value="{{attLeft}}">
+                  <label class="active" for='attendingsLeft'>Places restantes</label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s6 m4">
+              <button type="submit" form='editClientCardForm' class="btn red accent-3">
+                Enregistrer
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -1061,7 +1113,7 @@
       <div class="container">
         <h3 class="uppercase">Contact rapide</h3>
         <p>
-          Vous pouvez nous joindre rapidement en nous visitant ou par téléphone.
+          Vous pouvez nous joindre rapidement en nous visitant, par téléphone ou via le chat direct.
         </p>
         <hr>
         <p>

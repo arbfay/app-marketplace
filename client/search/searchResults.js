@@ -1,3 +1,17 @@
+calcEarning=function(d,n){
+  var i=1;
+  var m = 43800;
+
+  var w=10;
+  if(Reservations.find().fetch().length != 0){
+    var lastResDate = Reservations.findOne({},{sort:{lessonDate:-1}}).lessonDate;
+    w = (n - lastResDate)/1000/60;
+  }
+
+  return Math.round(Math.min(183,((2/3)*d*(1.18^(i-1))*Math.log(m/w))));
+};
+
+
 Template.searchResults.onCreated(()=>{
   var template = Template.instance();
 
@@ -151,6 +165,14 @@ Template.searchResults.helpers({
       }
     }
 
+    if(Meteor.userId()){
+      Meteor.subscribe('myReservations',Meteor.userId(),function(err,res){
+        if(err){
+          console.log('Problème avec reservations: ',err);
+        }
+      });
+    }
+
     var filteredLessons = lessons.filter(filtreTitles);
     template.searchResults.set(filteredLessons);
     console.log(filteredLessons);
@@ -174,7 +196,6 @@ Template.searchResults.helpers({
       };
     }
   },
-
 });
 
 
@@ -259,6 +280,13 @@ Template.lessonsResults.helpers({
   },
 });
 
+Template.lessonCard.helpers({
+  earning:function(){
+    var duration = parseInt(this.duration);
+    var lessonDate = this.date;
+    return calcEarning(duration,lessonDate);
+  }
+});
 
 Template.searchResults.events({
   "click .showMore" : function(event,template){
@@ -311,49 +339,3 @@ Template.searchResults.events({
     }
   },
 });
-/*
-Template.filterCategory.events({
-  "click #categoryYoga" : (event) =>{
-
-    var s = Session.get("filterCategory");
-    var i = s.indexOf("Yoga");
-    if(i < 0){
-      s.push("Yoga");
-      Session.set("filterCategory",s);
-      document.getElementById("categoryYoga").checked = true;
-    } else {
-      s.splice(i, 1);
-      Session.set("filterCategory",s);
-      document.getElementById("categoryYoga").checked = false;
-    }
-  },
-  "click #categoryPilates" : (event) =>{
-
-    var s = Session.get("filterCategory");
-    var i = s.indexOf("Pilates");
-    if(i < 0){
-      s.push("Pilates");
-      Session.set("filterCategory",s);
-      document.getElementById("categoryPilates").checked = true;
-    } else {
-      s.splice(i, 1);
-      Session.set("filterCategory",s);
-      document.getElementById("categoryPilates").checked = false;
-    }
-  },
-  "click #categoryTaiChi" : (event) =>{
-
-    var s = Session.get("filterCategory");
-    var i = s.indexOf("Tai Chi");
-    if(i < 0){
-      s.push("Tai Chi");
-      Session.set("filterCategory",s);
-      document.getElementById("categoryTaiChi").checked = true;;
-    } else {
-      s.splice(i, 1);
-      Session.set("filterCategory",s);
-      document.getElementById("categoryTaiChi").checked = false;
-    }
-  },
-});
-*/

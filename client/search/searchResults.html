@@ -83,40 +83,6 @@
   </ul>
 </template>
 
-<!--<template name="lessonCard">
-  <li class="col m6 s12">
-              <div class="card hoverable">
-                <div class="card-image">
-                  <img src="{{imgUrl}}" border="0" alt="" height="186px" width="300px"/>
-                </div>
-
-                <div class="card-title">
-                  <div class="mt8" style="margin-left : 8px;">
-                    <a href="{{path}}" class="linkCard">{{title}}</a><br>
-                    <div class="card-location card-elem-light">
-                      <i class="material-icons" style="font-size: 14px;">update</i>
-                      {{duration}} min -
-                      <span>{{distance}}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="card-content" style="padding-bottom:0px;">
-                  <div class="row">
-                    {{price}} € ・ {{category}}
-                  </div>
-                  <div class="row">
-                    	<p class="">{{shortDesc}}</p>
-                  </div>
-                </div>
-
-                <div class="card-action">
-                  <a href="{{path}}">{{dateForHuman}}</a>
-                </div>
-              </div>
-  </li>
-</template>-->
-
 <template name="lessonCard">
   <li class="col m6 s12">
     <div class="card hoverable" style='padding-bottom:0px !important;'>
@@ -160,16 +126,32 @@
               <i class="material-icons left">label_outline</i>{{category}}
             </td>
             <td>
-              <a href="{{path}}" class="btn red accent-2 btn-border-2">
-                Voir
-              </a>
+              {{#if currentUser}}
+                <button style="margin-bottom:0px;" class="btn btn-border-2 tooltipped"  data-position="right" data-delay="50" data-tooltip="En participant à ce cours, vous pouvez gagner {{earning}} points.">
+                  <i class="material-icons point-icon" style="font-size:1.1em;">control_points</i><span class="point-font">{{earning}}</span>
+                </button>
+              {{else}}
+                <a href="{{path}}" class="btn red accent-2 btn-border-2">
+                  Voir
+                </a>
+              {{/if}}
             </td>
           </tr>
         </table>
-
+        {{#if currentUser}}
+          <a href="{{path}}" class="btn red accent-2 btn-border-2">
+            Voir
+          </a>
+        {{/if}}
       </div>
     </div>
   </li>
+  <script>
+    $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50,
+      html:true});
+    });
+  </script>
 </template>
 
 <template name="map">

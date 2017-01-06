@@ -3,7 +3,9 @@ Template.searchbar.events({
     event.preventDefault();
 
     var c=event.target.address.value;
-
+    analytics.track("Search", {
+      eventName: "Homepage",
+    });
     event.target.address.value = '';
     FlowRouter.go('/search',{},{address:c});
   }

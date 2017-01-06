@@ -299,6 +299,13 @@ Template.lessonConfirmationCard.helpers({
     var selection= Session.get("selectedDate");
 
     return selection.price;
+  },
+  earning:function(){
+    var lessonId = FlowRouter.getParam('lessonId');
+    var lesson = Lessons.findOne(lessonId);
+    var duration = parseInt(lesson.duration);
+    var lessonDate = lesson.date;
+    return calcEarning(duration,lessonDate);
   }
 });
 
@@ -371,6 +378,8 @@ Template.reservationConfirmation.events({
 
     var reservationId = FlowRouter.getParam('reservationId');
     var lesson = Lessons.findOne();
+    var lessonDate = lesson.date;
+    var duration = lesson.duration;
 
     var price;
     var email = Accounts.user().emails[0].address;
@@ -382,7 +391,6 @@ Template.reservationConfirmation.events({
         price = lesson.price;
         var promoCode = Session.get('promoCode');
         if(!promoCode){promoCode="";}
-
         Meteor.call('applyPromoCode',promoCode, (err,res)=>{
           if(res != false){
               Meteor.call('addPromoCodeUsage',res, Accounts.user().emails[0].address,(error,results)=>{
@@ -409,7 +417,7 @@ Template.reservationConfirmation.events({
         if(lesson.maxAttendeesLeft > 0){
 
           var priceInCents = price * 100;
-
+          var points = calcEarning(duration,lessonDate);
           var handler = StripeCheckout.configure({
             key: 'pk_live_35CsmegR7Q0ww6wi8QupJ9rp',
             //key : 'pk_test_LqluwQNx3xv8VtbJwYme8XJc',
@@ -418,7 +426,7 @@ Template.reservationConfirmation.events({
               var userMail = Accounts.user().emails[0].address;
               var userProfile = UserProfiles.findOne({email:userMail});
               var userProfileId = userProfile._id;
-              Meteor.call("reservationPayment", token, userProfile._id,userMail,lesson._id,reservationId,priceInCents,
+              Meteor.call("reservationPayment", token, userProfile._id,userMail,lesson._id,reservationId,priceInCents,points,
                     function(err,res){
                       if(err){
                         Materialize.toast("Erreur lors du process du paiement " + err,4000,'rounded');

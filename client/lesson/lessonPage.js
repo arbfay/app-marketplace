@@ -1,3 +1,6 @@
+
+
+
 Template.lessonMap.onCreated(function() {
 
   GoogleMaps.ready('lessonMap', function(map) {
@@ -68,6 +71,13 @@ Template.lessonPage.helpers({
     Meteor.subscribe('matchingUserProfileByCoachId', coachId);
     Session.set("coachProfile", UserProfiles.findOne({email:coachEmail}));
 
+    if(Meteor.userId()){
+      Meteor.subscribe('myReservations',Meteor.userId(),function(err,res){
+        if(err){
+          console.log('Problème avec reservations: ',err);
+        }
+      });
+    }
 
     //Initialisation du reservationCard
     var lessons = Lessons.find().fetch();
@@ -171,8 +181,17 @@ Template.lessonPage.helpers({
                      price:lesson.price,
                    };
     return selection;
+  },
+  earning:function(){
+    var lessonId = FlowRouter.getParam('lessonId');
+    var lesson = Lessons.findOne(lessonId);
+    var duration = parseInt(lesson.duration);
+    var lessonDate = lesson.date;
+    return calcEarning(duration,lessonDate);
   }
 });
+
+
 
 Template.lessonPage.events({
   "click #date1" : function(event){

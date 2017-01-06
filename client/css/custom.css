@@ -118,6 +118,12 @@ display:inline-block;
   height:100%
 }
 
+.point-icon{
+
+}
+.point-font{
+  font-size:1.4em;
+}
 
 .priceReservationCard{
   font-weight: bold;
