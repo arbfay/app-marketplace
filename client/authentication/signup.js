@@ -8,32 +8,34 @@ Template.signupForm.events({
 
     var userId=Accounts.createUser({email:email, password:password});
 
-    var toInsert = {
-                        user:userId,
-                        createdAt : new Date(),
-                        updatedAt : new Date(),
-                        firstName: "",
-                        lastName:"",
-                        points:0,
-                        address:{
-                          street:"",
-                          city:"",
-                          zip:"",
-                          country:"Belgium"
-                        },
-                        email:email,
-                      };
+    if(userId){
+      var toInsert = {
+                          user:userId,
+                          createdAt : new Date(),
+                          updatedAt : new Date(),
+                          firstName: "",
+                          lastName:"",
+                          points:0,
+                          address:{
+                            street:"",
+                            city:"",
+                            zip:"",
+                            country:"Belgium"
+                          },
+                          email:email,
+                        };
 
-    Meteor.call("insertUserProfile", toInsert, function(err,res){
-      if(err){
-        Materialize.toast("Echec lors de l'insertion du profil");
-      } else{
-        Materialize.toast("Faites du bien à votre corps !", 4000, 'rounded');
-      }
-    });
+      Meteor.call("insertUserProfile", toInsert, function(err,res){
+        if(err){
+          Materialize.toast("Echec lors de l'insertion du profil");
+        } else{
+          redirectionLogin();
+        }
+      });
 
-    target.email.value="";
-    target.password.value="";
-    FlowRouter.go('/');
+      target.email.value="";
+    } else {
+      Materialize.toast("Un compte avec cette adresse e-mail existe déjà.");
+    }
   }
 });

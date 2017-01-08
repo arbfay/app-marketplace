@@ -25,21 +25,8 @@ Template.updateLessonByAdmin.events({
      var dateInMilli = d.getTime();
 
      //Pricing
-     var commission=2.0;
-     if(category ==="Tai Chi"){
-       commission=1.5;
-       if(price >= 10.0 && price < 15.0){
-         commission+= price*0.05;
-       } else if (price >= 15.0){
-         commission+= price*0.08;
-       }
-     } else {
-       if(price >= 12.0 && price < 16.0){
-         commission+= price*0.05;
-       } else if (price >= 16.0){
-         commission+= price*0.08;
-       }
-     }
+     var commission=0.25;
+     commission += price*0.15;
 
      var coord;
      var lat=50.843;

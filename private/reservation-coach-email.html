@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Votre réservation sur Trys</title>
+  <title>Une nouvelle réservation sur Trys</title>
 
   <style type="text/css">
     /* Take care of image borders and formatting, client hacks */
@@ -306,12 +306,12 @@
         <table cellspacing="0" cellpadding="0" width="600" class="w320">
           <tr>
             <td class="header-lg">
-              Merci pour votre réservation !
+              Nouvelle réservation !
             </td>
           </tr>
           <tr>
             <td class="free-text">
-              Nous espérons que vous passerez un agréable moment en compagnie de {{coachName}} durant ce cours. N'hésitez pas à nous envoyer un petit e-mail pour nous partager votre expérience.
+              Pour le cours <b>{{lessonTitle}}</b> du <b>{{dateForHuman}}</b> à <b>{{timeForHuman}}</b> avec <b>{{firstName}} {{lastName}}</b>.
             </td>
           </tr>
           <tr>
@@ -321,108 +321,10 @@
                   <w:anchorlock/>
                   <center style="color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;">My Account</center>
                 </v:roundrect>
-              <![endif]--><a href="http://www.trys.be/profile"
-              style="background-color:#ff5252;border-radius:2px;color:#ffffff;display:inline-block;font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;line-height:45px;text-align:center;text-decoration:none;width:155px;-webkit-text-size-adjust:none;mso-hide:all;">Mon profil</a></div>
+              <![endif]--><a href="http://www.trys.be/coaching/panel"
+              style="background-color:#ff5252;border-radius:2px;color:#ffffff;display:inline-block;font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;line-height:45px;text-align:center;text-decoration:none;width:155px;-webkit-text-size-adjust:none;mso-hide:all;">Coach panel >></a></div>
             </td>
           </tr>
-          <tr>
-            <td class="w320">
-              <table cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                  <td class="mini-container-left">
-                    <table cellpadding="0" cellspacing="0" width="100%">
-                      <tr>
-                        <td class="mini-block-padding">
-                          <table cellspacing="0" cellpadding="0" width="100%" style="border-collapse:separate !important;">
-                            <tr>
-                              <td class="mini-block">
-                                <span class="header-sm">Adresse de facturation</span><br />
-                                {{firstName}} {{lastName}} <br />
-                                {{street}} <br />
-                                {{zip}} {{city}} <br />
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                  <td class="mini-container-right">
-                    <table cellpadding="0" cellspacing="0" width="100%">
-                      <tr>
-                        <td class="mini-block-padding">
-                          <table cellspacing="0" cellpadding="0" width="100%" style="border-collapse:separate !important;">
-                            <tr>
-                              <td class="mini-block">
-                                <span class="header-sm">Date de réservation</span><br />
-                                {{reservationDate}} <br />
-                                <br />
-                                <span class="header-sm">Code</span> <br />
-                                {{reservationId}}
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </center>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="top" width="100%" style="background-color: #ffffff;  border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;">
-      <center>
-        <table cellpadding="0" cellspacing="0" width="600" class="w320">
-            <tr>
-              <td class="item-table">
-                <table cellspacing="0" cellpadding="0" width="100%">
-                  <tr>
-                    <td class="title-dark" width="160">
-                      Séance
-                    </td>
-                    <td class="title-dark" width="200">
-                      Adresse
-                    </td>
-                    <td class="title-dark" width="120">
-                      Date
-                    </td>
-                    <td class="title-dark" width="80">
-                      Prix
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <td class="item-col item">
-                      <table cellspacing="0" cellpadding="0" width="100%">
-                        <tr>
-                          <td class="product">
-                            <span style="color: #4d4d4d; font-weight:bold;">{{title}}</span> <br />
-                            de {{coachName}}
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td class="item-col quantity">
-                      {{address}}
-                    </td>
-                    <td class="item-col">
-                      {{lessonDate}} <br>
-                      {{duration}} min
-                    </td>
-                    <td class="item-col">
-                      {{pricePaid}} €
-                    </td>
-                  </tr>
-
-                </table>
-              </td>
-            </tr>
         </table>
       </center>
     </td>

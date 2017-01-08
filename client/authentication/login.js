@@ -10,12 +10,18 @@ Template.loginForm.events({
       if(error != null){
         Materialize.toast('E-mail ou mot de passe incorrect.', 4000, 'rounded');
       } else{
-        Materialize.toast("Plus tu t'entraîneras, meilleur tu seras !", 4000, 'rounded');
+        redirectionLogin();
       }
     });
-
-    target.email.value="";
     target.password.value="";
-    FlowRouter.go('/');
   }
 });
+
+redirectionLogin = function(){
+  if(Session.get('reservationLogin')){
+    Materialize.toast('Sélectionnez une date, et cliquez sur "réserver".', 5000, 'rounded');
+    FlowRouter.go('/class/'+Session.get('reservationLogin'));
+  } else {
+    FlowRouter.go('/');
+  }
+}

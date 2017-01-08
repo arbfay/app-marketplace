@@ -491,7 +491,7 @@
           </div>
           <div class="input-field col s3">
             <i class="material-icons prefix">update</i>
-            <input id="duration" type="number" min="0">
+            <input id="duration" type="number" min="0" required>
             <label for="duration">Durée (en minutes)</label>
           </div>
           <div class="input-field col s3 center-align">
@@ -500,7 +500,7 @@
           </div>
           <div class="input-field col s6 m4">
             <i class="material-icons prefix">today</i>
-            <input id="date" type="date" class="datepicker">
+            <input id="date" type="date" class="datepicker" required>
             <label for="date"></label>
           </div>
           <div class="input-field col s6 m4 center-align">
@@ -510,13 +510,13 @@
           </div>
           <div class="input-field col s6 m4">
             <i class="material-icons prefix">schedule</i>
-            <input id="time" class="timepicker" type="time">
+            <input id="time" class="timepicker" type="time" required>
             <label for="time"></label>
           </div>
           <div class="input-field col s12">
             <i class="material-icons prefix">add</i>
             <input id="instructions" type="text" class="validate" length="350">
-            <label for="instructions">Instructions</label>
+            <label for="instructions">Instructions supplémentaires</label>
           </div>
           <div class="input-field col m4 s6">
             <button type="submit" form="insertLessonByCoach" class="red accent-3 btn-border-2">
@@ -531,22 +531,10 @@
   <script>
     var category = this.category;
     changeCommission = function(){
-      var commission=2.0;
+      var commission=0.25;
       var price = $('#price').val();
-      if(category ==="Tai Chi"){
-        commission=1.5;
-        if(price >= 10.0 && price < 15.0){
-          commission+= price*0.05;
-        } else if (price >= 15.0){
-          commission+= price*0.08;
-        }
-      } else {
-        if(price >= 12.0 && price < 16.0){
-          commission+= price*0.05;
-        } else if (price >= 16.0){
-          commission+= price*0.08;
-        }
-      }
+      commission += price*0.15;
+
       $('.commissionValue').replaceWith('<span class="commissionValue">'+commission+'</span>');
     }
 
@@ -626,7 +614,7 @@
           </div>
           <div class="input-field col s3">
             <i class="material-icons prefix">update</i>
-            <input id="duration" type="number" min="0">
+            <input id="duration" type="number" min="0" required>
             <label for="duration">Durée (en minutes)</label>
           </div>
           <div class="input-field col s3">
@@ -635,7 +623,7 @@
           </div>
           <div class="input-field col s6 m4">
             <i class="material-icons prefix">today</i>
-            <input id="date" type="date" class="datepicker">
+            <input id="date" type="date" class="datepicker" required>
             <label for="date"></label>
           </div>
           <div class="input-field col s6 m4 center-align">
@@ -645,13 +633,13 @@
           </div>
           <div class="input-field col s6 m4">
             <i class="material-icons prefix">schedule</i>
-            <input id="time" class="timepicker" type="time">
+            <input id="time" class="timepicker" type="time" required>
             <label for="time"></label>
           </div>
           <div class="input-field col s12">
             <i class="material-icons prefix">add</i>
             <input id="instructions" type="text" class="validate" length="350">
-            <label for="instructions">Instructions</label>
+            <label for="instructions">Instructions supplémentaires (Exemple: bâtiment avec porte rose, apporter son propre matériel, ...)</label>
           </div>
           <div class="input-field col s12">
             <div class="file-field input-field">
@@ -717,7 +705,7 @@
              <div class="input-field col s12">
                <i class="material-icons prefix">person</i>
                <input type="text" id="autocomplete-input" class="autocomplete">
-               <label for="autocomplete-input">Nom du client</label>
+               <label for="autocomplete-input">Nom ou prénom du client</label>
              </div>
              <div class="input-field col s12">
                 <input type="checkbox" name="fromCard" value="true" id="fromCard" />
@@ -739,7 +727,7 @@
     var data={};
     var clients= Clients.find().fetch();
     for (var i =0;i<clients.length;i++){
-      var lastName=clients[i].lastName;
+      var lastName=clients[i].lastName + clients[i].firstName;
       data[lastName]=null;
     }
     $('input.autocomplete').autocomplete({
@@ -830,17 +818,17 @@
           <form id="addCoachingCard" >
             <div class="row">
               <div class="input-field col s12">
-                <input id="name" type="text" class="validate-required">
+                <input id="name" type="text" class="validate-required" required>
                 <label for="name">Nom de la carte</label>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s6">
-                <input id="maxAttendings" type="number" min="0" class="validate-required">
+                <input id="maxAttendings" type="number" min="0" class="validate-required" required>
                 <label for="maxAttendings">Nombre de places</label>
               </div>
               <div class="input-field col s6">
-                <input id="duration" type="number" min="0" class="validate-required">
+                <input id="duration" type="number" min="0" class="validate-required" required>
                 <label for="duration">Durée de validité (en mois)</label>
               </div>
             </div>
@@ -1010,17 +998,17 @@
         <form id="addCoachingClient" >
           <div class="row">
             <div class="input-field col s6">
-              <input id="firstName" name="firstName" type="text" class="validate-required">
+              <input id="firstName" name="firstName" type="text" class="validate-required" required>
               <label for="firstName">Prénom</label>
             </div>
             <div class="input-field col s6">
-              <input id="lastName" name="lastName" type="text" class="validate-required">
+              <input id="lastName" name="lastName" type="text" class="validate-required" required>
               <label for="lastName">Nom</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6">
-              <input id="email" type="email" name="email" class="validate-required">
+              <input id="email" type="email" name="email" class="validate">
               <label for="email">E-mail</label>
             </div>
             <div class="input-field col s6">
@@ -1140,7 +1128,7 @@
             </div>
             <div class="row">
               <div class="input-field col s12">
-                <textarea id="comments" class="materialize-textarea"></textarea>
+                <textarea id="comments" class="materialize-textarea" required></textarea>
                 <label for="comments">Message</label>
               </div>
             </div>

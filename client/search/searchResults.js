@@ -123,26 +123,31 @@ Template.searchResults.onCreated(()=>{
 
     GoogleMaps.ready('map', function(map) {
       var res = template.searchResults.get();
+      var marker;
 
       for(var i = 0; i < res.length; i++) {
 
-          var marker = new google.maps.Marker({
+          var infowindow=new google.maps.InfoWindow();
+
+          marker = new google.maps.Marker({
               position: new google.maps.LatLng(res[i].geospatial.coordinates[1],
                                               res[i].geospatial.coordinates[0]),
               map: map.instance,
               title : res[i].title,
-              icon : 'http://res.cloudinary.com/trys/image/upload/v1479832863/loc_marker_v1axu1.png'
-                                        });
-          var contentString = '<div><strong>' + res[i].title + '</strong></div>'+
-                              '<div>'+ res[i].price+' €</div>' +
-                              '<a href="/class/'+ res[i]._id +'" class="btn-flat"> Voir </a>';
+              icon : 'http://res.cloudinary.com/trys/image/upload/v1479832863/loc_marker_v1axu1.png',
 
-          var infowindow = new google.maps.InfoWindow({
-            content: contentString
           });
-          marker.addListener('click', function() {
-            infowindow.open(map, marker);
-          });
+          var content = '<div><strong>' + res[i].title + '</strong></div>'+
+                                '<div>'+ res[i].price+' €</div>' +
+                                '<a href="/class/'+ res[i]._id +'" class="btn-flat">Voir</a>';
+
+          google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+              return function() {
+                  infowindow.setContent(content);
+                  infowindow.open(map,marker);
+              };
+          })(marker,content,infowindow));
+
       }
 
     });
@@ -184,7 +189,7 @@ Template.searchResults.helpers({
       var l = template.searchLocation.get();
       return {
         center: new google.maps.LatLng(l.coordinates[1], l.coordinates[0]),
-        zoom: 14,
+        zoom: 13,
         styles : [
           {"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},
           {"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},
@@ -200,56 +205,7 @@ Template.searchResults.helpers({
 
 
 
-Template.map.onCreated(function() {
 
-  GoogleMaps.ready('map', function(map) {
-    var res = Session.get('searchResults');
-
-    for(var i = 0; i < res.length; i++) {
-
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(res[i].geospatial.coordinates[1],
-                                            res[i].geospatial.coordinates[0]),
-            map: map.instance,
-            title : res[i].title,
-            icon : 'http://res.cloudinary.com/trys/image/upload/v1479832863/loc_marker_v1axu1.png'
-                                      });
-        var contentString = '<div><strong>' + res[i].title + '</strong></div>'+
-                            '<div>'+ res[i].price+' €</div>' +
-                            '<a href="/class/'+ res[i]._id +'" class="btn-flat"> Voir </a>';
-
-        var infowindow = new google.maps.InfoWindow({
-          content: contentString
-        });
-        marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
-    }
-  });
-});
-
-
-Template.map.helpers({
-  mapOptions: function() {
-    if (GoogleMaps.loaded()) {
-      Session.setDefault('searchedLoc', {type:"place",coordinates:[4.371, 50.843]});
-
-      var l = Session.get('searchedLoc');
-      return {
-        center: new google.maps.LatLng(l.coordinates[1], l.coordinates[0]),
-        zoom: 14,
-        styles : [
-          {"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},
-          {"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},
-          {"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},
-          {"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},
-          {"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},
-          {"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}
-        ],
-      };
-    }
-  }
-});
 
 Template.lessonsResults.helpers({
   results : function(){

@@ -218,6 +218,7 @@ function getCurrentLesson(){
 
 Template.lessonConfirmationCard.helpers({
   title : function(){
+    Session.set('reservationLogin',false);
     var lessonId = FlowRouter.getParam('lessonId');
     Meteor.subscribe("matchingLesson",lessonId);
     var lesson = Lessons.findOne();

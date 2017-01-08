@@ -1,8 +1,5 @@
 
-
-
-Template.lessonMap.onCreated(function() {
-
+Template.lessonMap.onRendered(function() {
   GoogleMaps.ready('lessonMap', function(map) {
     var res = Session.get('lesson');
     var geospatial = res.geospatial;
@@ -24,8 +21,8 @@ Template.lessonMap.onCreated(function() {
     marker.addListener('click', function() {
       infowindow.open(map, marker);
     });
-
   });
+
 });
 
 Template.lessonMap.helpers({
@@ -49,249 +46,133 @@ Template.lessonMap.helpers({
   }
 });
 
+Template.lessonPage.onRendered(function(){
+      var now = new Date();
+      var dateNow = now.getTime() + 600000; //Heure de maintenant + 10 minutes
+      var id = FlowRouter.getParam('lessonId');
+
+      Meteor.subscribe('matchingLessonsByFirstId', id, dateNow);
+
+      var lesson = Lessons.findOne(id);
+      var coachEmail = lesson.coachEmail;
+
+      Meteor.subscribe('matchingCoachByMail', coachEmail);
+
+      var coachId = Coaches.findOne({email:coachEmail})._id;
+
+      Meteor.subscribe('matchingUserProfileByCoachId', coachId);
+      Session.set("coachProfile", UserProfiles.findOne({email:coachEmail}));
+
+      if(Meteor.userId()){
+        Meteor.subscribe('myReservations',Meteor.userId(),function(err,res){
+          if(err){
+            console.log('Problème avec reservations: ',err);
+          }
+        });
+      }
+});
 
 Template.lessonPage.helpers({
-  title: function(){
-
-    var now = new Date();
-    var dateNow = now.getTime() + 2100000;
-
-    var id = FlowRouter.getParam('lessonId');
-    Meteor.subscribe('matchingLessonsByFirstId', id, dateNow);
-    Session.set("lesson",Lessons.findOne(id));
-
-
-    var lesson = Session.get("lesson");
-    var coachEmail = lesson.coachEmail;
-    Meteor.subscribe('matchingCoachByMail', coachEmail);
-    var coach = Coaches.findOne();
-    Session.set("coach", coach);
-
-    var coachId = coach._id;
-    Meteor.subscribe('matchingUserProfileByCoachId', coachId);
-    Session.set("coachProfile", UserProfiles.findOne({email:coachEmail}));
-
-    if(Meteor.userId()){
-      Meteor.subscribe('myReservations',Meteor.userId(),function(err,res){
-        if(err){
-          console.log('Problème avec reservations: ',err);
-        }
-      });
-    }
-
-    //Initialisation du reservationCard
-    var lessons = Lessons.find().fetch();
-    var lesson = lessons[0];
-    var dateInMilli=lesson.date;
-    var mom = moment(dateInMilli);
-    var selection = {date: mom.date(),
-                     day: mom.format("ddd"),
-                     month:mom.format("MMM"),
-                     hour:mom.format("HH:mm"),
-                     duration:lesson.duration,
-                     price:lesson.price,
-                     select:0,
-                   };
-
-    Session.set('selectedDate', selection);
-
-    $('#date1').addClass('active');
-    $('#date2').removeClass('active');
-    $('#date3').removeClass('active');
-    //fin de l'initialisation du reservationCard
-
-
+  lesson : function(){
+    var template = Template.instance();
     var lessonId = FlowRouter.getParam('lessonId');
     var lesson = Lessons.findOne(lessonId);
-    if (lesson){
-      return lesson.title;
+    template.selectedLesson = new ReactiveVar(lesson);
+    return lesson;
+  },
+  coach : function(){
+    var coachEmail = this.coachEmail;
+    var coach = Coaches.findOne({email : coachEmail});
+    var coachProfile = UserProfiles.findOne({email : coachEmail});
+    var url = coach.imgUrl;
+    if(!url){
+      url = "https://res.cloudinary.com/trys/image/upload/q_80/v1483720491/Coaches/blank-profile-picture.png";
+    }
+    return {
+      coachName : coachProfile.firstName+" "+coachProfile.lastName,
+      description:coach.description,
+      coachImgUrl:url
+    };
+  },
+  longDesc : function(){
+    if(this.longDesc ===""){
+      return this.shortDesc;
     } else {
-      return "";
+      return this.longDesc;
     }
   },
-  imgUrl : function(){
-    var lesson = Session.get("lesson");
-    return lesson.imgUrl;
-  },
-  longDesc: function(){
-    var lessonId = FlowRouter.getParam('lessonId');
-    var lesson = Lessons.findOne({_id:lessonId});
-    if (lesson){
-      return lesson.longDesc;
-    } else {
-      return "";
+  nextDates : function(){
+    var lessons = Lessons.find().fetch();
+    var limit = 3;
+    var res = [];
+    for(var i =0;i<limit;i++){
+      var dateInMilli=lessons[i].date;
+      var mom = moment(dateInMilli);
+      res.push({dateForHuman : mom.format("ddd DD MMM"),
+                timeForHuman : mom.format("HH:mm"),
+                thisDuration:lessons[i].duration,
+                thisPrice:lessons[i].price,
+                id:lessons[i]._id
+              });
     }
+    return res;
   },
-  address: function(){
-    var lessonId = FlowRouter.getParam('lessonId');
-    var lesson = Lessons.findOne({_id:lessonId});
-    if (lesson){
-      return lesson.address;
-    } else {
-      return "";
-    }
-  },
-  coachName : function(){
-    var prof = Session.get("coachProfile");
-    return ""+prof.firstName+" "+prof.lastName;
-  },
-  coachShortDesc : function(){
-    var coach = Coaches.findOne();
-    return coach.description;
-  },
-  coachImgUrl : function(){
-    var coach = Coaches.findOne();
-    return coach.imgUrl;
-  },
-  date1 : function(){
-    var lessons = Lessons.find().fetch();
-    var lesson = lessons[0];
-    var dateInMilli=lesson.date;
+  selectedDate : function(){
+    var template = Template.instance();
+    var selection = template.selectedLesson.get();
+    var dateInMilli=selection.date;
     var mom = moment(dateInMilli);
-    var selection = {date: mom.date(),
-                     day: mom.format("ddd"),
-                     month:mom.format("MMM"),
-                     duration:lesson.duration,
-                     price:lesson.price,
-                   };
-    return selection;
-  },
-  date2 : function() {
-    var lessons = Lessons.find().fetch();
-    var lesson = lessons[1];
-    var dateInMilli=lesson.date;
-    var mom = moment(dateInMilli);
-    var selection = {date: mom.date(),
-                     day: mom.format("ddd"),
-                     month:mom.format("MMM"),
-                     duration:lesson.duration,
-                     price:lesson.price,
-                   };
-    return selection;
-  },
-  date3 : function(){
-    var lessons = Lessons.find().fetch();
-    var lesson = lessons[2];
-    var dateInMilli=lesson.date;
-    var mom = moment(dateInMilli);
-    var selection = {date: mom.date(),
-                     day: mom.format("ddd"),
-                     month:mom.format("MMM"),
-                     duration:lesson.duration,
-                     price:lesson.price,
-                   };
-    return selection;
-  },
-  earning:function(){
-    var lessonId = FlowRouter.getParam('lessonId');
-    var lesson = Lessons.findOne(lessonId);
-    var duration = parseInt(lesson.duration);
-    var lessonDate = lesson.date;
-    return calcEarning(duration,lessonDate);
+    return {
+                date : mom.format("ddd DD MMM"),
+                time : mom.format("HH:mm"),
+                duration:selection.duration,
+                price:selection.price,
+                id:selection._id,
+                earning : calcEarning(selection.duration,selection.date),
+              };
   }
 });
-
-
 
 Template.lessonPage.events({
-  "click #date1" : function(event){
+  'click .nextDate' : function(event,template){
     event.preventDefault();
-
-    var lessons = Lessons.find().fetch();
-    var lesson = lessons[0];
-    var dateInMilli=lesson.date;
-    var mom = moment(dateInMilli);
-    var selection = {date: mom.date(),
-                     day: mom.format("ddd"),
-                     month:mom.format("MMM"),
-                     hour:mom.format("HH:mm"),
-                     duration:lesson.duration,
-                     price:lesson.price,
-                     select:0,
-                   };
-
-    Session.set('selectedDate', selection);
-
-    $('#date1').addClass('active');
-    $('#date2').removeClass('active');
-    $('#date3').removeClass('active');
+    template.selectedLesson.set(Lessons.findOne(this.id));
   },
-  "click #date2" : function(event){
+  "click #reservation" : (event,template)=>{
     event.preventDefault();
+    var lesson = template.selectedLesson.get()
+    var userId = Meteor.userId();
 
-    var lessons = Lessons.find().fetch();
-    var lesson = lessons[1];
-    var dateInMilli=lesson.date;
-    var mom = moment(dateInMilli);
-    var selection = {date: mom.date(),
-                     day: mom.format("ddd"),
-                     month:mom.format("MMM"),
-                     hour:mom.format("HH:mm"),
-                     duration:lesson.duration,
-                     price:lesson.price,
-                     select:1,
-                   };
+    if(!userId){
+      Session.set('reservationLogin',FlowRouter.getParam("lessonId"));
+      FlowRouter.go('/signup');
+    }
+      var userMail = Accounts.user().emails[0].address;
 
-    Session.set('selectedDate', selection);
+      var lessonId = lesson._id;
+      var coachEmail= lesson.coachEmail;
 
-    $('#date1').removeClass('active');
-    $('#date2').addClass('active');
-    $('#date3').removeClass('active');
-
+      if(lesson && userId && userMail){
+        var toInsert = {
+          userId:userId,
+          userEmail :userMail,
+          lessonId : lessonId,
+          lessonTitle:lesson.title,
+          lessonDate:lesson.date,
+          coachEmail : coachEmail,
+          isComplete:false,
+          isPaid:false,
+          createdAt : new Date(),
+          updatedAt : new Date(),
+        };
+        Meteor.call('insertReservation', toInsert, function(err,res){
+          if(err){
+            Materialize.toast("Erreur lors de l'insertion d'une réservation",4000,'rounded');
+          } else{
+            FlowRouter.go('/class/:lessonId/:reservationId',{lessonId:lessonId,
+                                                            reservationId:res},{});
+          }
+        });
+      }
   },
-  "click #date3" : function(event){
-    event.preventDefault();
-
-    var lessons = Lessons.find().fetch();
-    var lesson = lessons[2];
-    var dateInMilli=lesson.date;
-    var mom = moment(dateInMilli);
-    var selection = {date: mom.date(),
-                     day: mom.format("ddd"),
-                     month:mom.format("MMM"),
-                     hour:mom.format("HH:mm"),
-                     duration:lesson.duration,
-                     price:lesson.price,
-                     select:2,
-                   };
-
-    Session.set('selectedDate', selection);
-
-    $('#date1').removeClass('active');
-    $('#date2').removeClass('active');
-    $('#date3').addClass('active');
-  },
-
-});
-
-Template.reservationCard.helpers({
-  price : function(){
-    var selection= Session.get("selectedDate");
-
-    return selection.price;
-  },
-  date : function(){
-    var selection= Session.get("selectedDate");
-
-    return selection.date;
-  },
-  day : function(){
-    var selection= Session.get("selectedDate");
-
-    return selection.day;
-  },
-  month : function(){
-    var selection= Session.get("selectedDate");
-
-    return selection.month;
-  },
-  hour : function(){
-    var selection= Session.get("selectedDate");
-
-    return selection.hour;
-  },
-  duration:function(){
-    var selection = Session.get("selectedDate");
-    return selection.duration;
-  }
 });

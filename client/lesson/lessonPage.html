@@ -1,4 +1,4 @@
-<template name="lessonPage">
+<!--<template name="lessonPage">
 
       <div class="section" style="
       height:60vh;
@@ -26,11 +26,13 @@
         <div class="container">
           <div class="row">
             <div style="padding-top:30px;">
-                <img src="{{coachImgUrl}}" alt="" class="circle" width="52px;">
+              {{#with coach}}
+                <img src="{{imgUrl}}" alt="" class="circle" width="52px;">
                 <span class="title"><a href="#">{{coachName}}</a></span>
                 <p>
-                  {{coachShortDesc}}
+                  {{description}}
                 </p>
+              {{/with}}
             </div>
           </div>
 
@@ -134,42 +136,144 @@
         </div>
       </div>
 </template>
-
+-->
 <template name="lessonMap">
       {{> googleMap name="lessonMap" options=mapOptions}}
 </template>
 
-<template name="reservationCard">
 
-    <div class="card-panel red accent-2">
-        <div class="priceReservationCard">
-          <div class="center-align">
-            €
-            <span style="font-size:64px;">{{price}}</span>
-          </div>
 
-        <div class="" style="font-size:20px; margin-top:30px;">
-          <ul class="ulReservationCard">
-            <li>
-              <i class="material-icons">event</i>
-              {{day}} {{date}} {{month}}
-            </li>
-            <li>
-              <i class="material-icons">schedule</i>
-              {{hour}}
-            </li>
-            <li>
-              <i class="material-icons">update</i>
-              {{duration}} min
-            </li>
-          </ul>
+<template name="lessonPage">
+  {{#with lesson}}
+    <div class="section" style="
+                              height:60vh;
+                              width:100vw;
+                              background: -moz-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+                              background: -webkit-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+                              background: -o-linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+                              background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
+                              -webkit-background-size: cover;
+                              -moz-background-size: cover;
+                              -o-background-size: cover;
+                              background-size: cover;
+                              ">
+    <div class="container v-align-transform">
+      <div class="row firstRow">
+        <div class="col m10 push-m1 s12 center-align">
+          <h2 class="mb8" style="color:white;">{{title}}</h2>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="row center-align">
-        <button id="reservation" class="waves-effect waves-teal btn cyan darken-2">
-          Reserver
-        </button>
+    <div class="row grey lighten-5">
+      <div class="container">
+        <div class="row">
+          <div style="padding-top:30px;">
+            {{#with coach}}
+              <div class="card-panel">
+                <div class="row firstRow">
+                  <img src="{{coachImgUrl}}" alt="Photo de profil" class="circle left" width="70px;" style="margin-right:10px;">
+                  <span class="title"><a href="#">{{coachName}}</a></span>
+                  <p>
+                    {{description}}
+                  </p>
+                </div>
+              </div>
+            {{/with}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12 m6 l7">
+            <div class="card-panel">
+              <div class="row firstRow" style="padding-right:20px;padding-left:20px;">
+                <h4 style="margin-top:10px;">Description</h4>
+                <p class="">{{longDesc}}</p>
+
+                  <div class="divider"></div>
+                  <h4 style="margin-top:10px;">Adresse</h4>
+                  <p><i class="material-icons left">location_on</i>{{address}}</p>
+
+                  <div class="divider"></div>
+                  <h4 style="margin-top:10px;">Prochaines séances</h4>
+                  <div class="collection center-align">
+                    {{#each nextDates}}
+                      <a href="#!" class="collection-item nextDate">
+                        <div class="row firstRow">
+                          <div class="col m3">
+                            {{dateForHuman}}
+                          </div>
+                          <div class="col m3">
+                            {{timeForHuman}}
+                          </div>
+                          <div class="col m3">
+                            {{thisDuration}} min
+                          </div>
+                          <div class="col m3">
+                            {{thisPrice}}€
+                          </div>
+                        </div>
+                      </a>
+                    {{/each}}
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col m1">
+        </div>
+        <div class="col l4 m5 s12">
+          {{#with selectedDate}}
+          <div class="card-panel red accent-2">
+              <div class="priceReservationCard">
+                <div class="center-align">
+                  €
+                  <span style="font-size:64px;">{{price}}</span>
+                </div>
+
+              <div class="" style="font-size:20px; margin-top:30px;">
+                <ul class="ulReservationCard">
+                  <li>
+                    <i class="material-icons">event</i>
+                    {{date}}
+                  </li>
+                  <li>
+                    <i class="material-icons">schedule</i>
+                    {{time}}
+                  </li>
+                  <li>
+                    <i class="material-icons">update</i>
+                    {{duration}} min
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="row center-align">
+              <button id="reservation" class="waves-effect waves-teal btn cyan darken-2">
+                Reserver
+              </button>
+            </div>
+          </div>
+            <div class="card-panel white-text green">
+              <b>{{earning}} points à gagner avec ce cours !</b>
+            </div>
+          {{/with}}
+        </div>
       </div>
     </div>
+
+    <div class="">
+      <div class="col s12 map-container" style="
+        margin:0 0 0 0 !important;
+        padding:30px 0 0 0 !important;
+        width : 100vw;
+        height : 300px;
+        position:relative;
+      ">
+        {{> lessonMap}}
+      </div>
+    </div>
+  </div>
+{{/with}}
 </template>

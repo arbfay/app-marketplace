@@ -457,7 +457,6 @@ Meteor.methods({
      var reservationDate = moment(reservation.createdAt);
      reservationDate = reservationDate.format("dddd DD MMMM, HH:mm");
      var lessonDate = moment(lesson.date);
-     lessonDate = lessonDate.format("dddd DD MMMM, HH:mm");
      SSR.compileTemplate('htmlEmail', Assets.getText('billing-email.html'));
 
      var data = {
@@ -471,17 +470,34 @@ Meteor.methods({
        reservationId:reservationId,
        title:lesson.title,
        address:lesson.address,
-       lessonDate:lessonDate,
+       lessonDate:lessonDate.format("dddd DD MMMM, HH:mm");,
        pricePaid:pricePaid/100,
        duration:lesson.duration,
      };
 
      Email.send({
         to: userProfile.email,
-        from: "Trys <faycal@trys.be>",
+        from: "Team Trys <faycal@trys.be>",
         subject: "Votre réservation sur Trys",
         html: SSR.render('htmlEmail',data),
       });
+
+      SSR.compileTemplate('coachEmail', Assets.getText('reservation-email.html'));
+
+      var dataTwo = {
+        lessonTitle:lesson.title,
+        firstName:userProfile.firstName,
+        lastName:userProfile.lastName,
+        dateForHuman:lessonDate.format('ddd DD MMM'),
+        timeForHuman:lessonDate.format('HH:mm'),
+      };
+
+      Email.send({
+         to: userProfile.email,
+         from: "Team Trys <faycal@trys.be>",
+         subject: "Nouvelle réservation sur Trys",
+         html: SSR.render('coachEmail',dataTwo),
+       });
 
      return true;
    },
