@@ -1,3 +1,5 @@
+
+
 geocode = function(address){
   if(GoogleMaps.loaded()){
       var geocoder = new google.maps.Geocoder();
@@ -286,7 +288,7 @@ Template.coachingPanelProfile.events({
 
 Template.coachingPanelClients.helpers({
   clients : function(){
-    return Clients.find();
+    return Clients.find({},{sort : {lastName:1}});
   },
   coachCards : function(){
     return CoachCards.find();
@@ -463,16 +465,18 @@ Template.coachingPanelClient.events({
     var attLeft = event.target.attendingsLeft.value;
 
     if(oldCard.expirationDate == expDate && oldCard.attendingsLeft == attLeft){
-      Materialize.toast('Modifications enregistrées',4000,'rounded');
+      $('#modalEditClientCard').closeModal();
+      Materialize.toast('Modifications enregistrées.',4000,'rounded');
     } else {
       var newCard = oldCard;
       newCard.expirationDate=expDate;
       newCard.attendingsLeft=attLeft;
       Meteor.call('editClientCard',clientId,newCard,function(err,res){
         if(err){
-          Materialize.toast('Problème rencontré, veuillez réessayer plus tard', 4000, 'rounded');
+          Materialize.toast('Problème rencontré, veuillez réessayer plus tard.', 4000, 'rounded');
         } else {
-          Materialize.toast('Modifications enregistrées',4000,'rounded');
+          $('#modalEditClientCard').closeModal();
+          Materialize.toast('Modifications enregistrées.',4000,'rounded');
         }
       });
     }
@@ -542,6 +546,9 @@ Template.coachingPanelClientInsert.events({
     var email = t.email.value;
     var tel = t.tel.value;
     var coachId = Coaches.findOne()._id;
+
+    if(!email){email="";}
+    if(!tel){tel="";}
 
     var data = {
       firstName:firstName,

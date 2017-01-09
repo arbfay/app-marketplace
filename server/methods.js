@@ -175,7 +175,7 @@ Meteor.methods({
        updatedAt:data.updatedAt,
      };
 
-     if(Accounts.findUserByEmail(data.email)){
+     if(data.email !== ""){
        d.isUser=true;
        d.userId = Accounts.findUserByEmail(data.email)._id;
      }
@@ -470,7 +470,7 @@ Meteor.methods({
        reservationId:reservationId,
        title:lesson.title,
        address:lesson.address,
-       lessonDate:lessonDate.format("dddd DD MMMM, HH:mm");,
+       lessonDate:lessonDate.format("dddd DD MMMM, HH:mm"),
        pricePaid:pricePaid/100,
        duration:lesson.duration,
      };
