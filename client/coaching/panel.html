@@ -715,7 +715,7 @@
     var data={};
     var clients= Clients.find().fetch();
     for (var i =0;i<clients.length;i++){
-      var lastName=clients[i].lastName + clients[i].firstName;
+      var lastName=clients[i].lastName +" "+clients[i].firstName;
       data[lastName]=null;
     }
     $('input.autocomplete').autocomplete({

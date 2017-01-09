@@ -780,7 +780,9 @@ Template.coachingPanelLessonInsertAttendees.events({
   "submit #newAttendee": function(event){
     event.preventDefault();
 
-    var lastName=$("#autocomplete-input").val();
+    var name=$("#autocomplete-input").val();
+    var names = name.split(" ");
+    var lastName = names[0];
     var fromCard = event.target.fromCard.checked;
     var client = Clients.findOne({lastName:lastName});
 
@@ -859,7 +861,7 @@ Template.coachingPanelLessons.helpers({
     if(!Accounts.user()){ return [];}
     var coachEmail =Accounts.user().emails[0].address;
     var dateNow = new Date();
-    var now = dateNow.getTime();
+    var now = dateNow.getTime() + 5400000;
     var l = Lessons.find({coachEmail:coachEmail,
                           date:{$lt:now}
                         },{sort : {date : 1},
