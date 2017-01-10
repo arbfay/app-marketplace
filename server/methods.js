@@ -130,6 +130,35 @@ Meteor.methods({
 
      return true;
    },
+   insertUserProfileForCoach : function(data){
+     var firstName = data.firstName;
+     var lastName = data.lastName;
+     var points = data.points;
+     var zip = data.address.zip;
+     var birthdate = data.birthdate;
+     var phone = data.phone;
+
+     if(!points){points=0;}
+     if(!birthdate){birthdate=100;}
+
+     check(firstName,String);
+     check(lastName,String);
+     check(points, Number);
+     check(zip, String);
+     check(birthdate, Number);
+
+     UserProfiles.insert(data);
+
+     SSR.compileTemplate('htmlEmail', Assets.getText('welcome-coach-email.html'));
+
+     Email.send({
+        to: data.email,
+        from: "Fayçal de Trys <faycal@trys.be>",
+        subject: "Vous avez maintenant accès au Trys Coach Panel !",
+        html: SSR.render('htmlEmail',{}),
+      });
+
+   },
    updateUserProfile : function(id,data){
      UserProfiles.update(
        {_id:id},

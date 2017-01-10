@@ -783,8 +783,31 @@ Template.coachingPanelLessonInsertAttendees.events({
     var name=$("#autocomplete-input").val();
     var names = name.split(" ");
     var lastName = names[0];
+    var firstName=names[1];
+    for(var i=1;i<names.length;i++){
+      if(names[i+1]){firstName += " "+names[i+1];}
+    }
     var fromCard = event.target.fromCard.checked;
-    var client = Clients.findOne({lastName:lastName});
+    var client = Clients.findOne({lastName:lastName,
+                                  firstName:firstName,});
+    if(!client){
+      lastName = names[0] +" "+ names[1];
+      firstName=names[2];
+      for(var i=2;i<names.length;i++){
+        if(names[i+1]){firstName += " "+names[i+1];}
+      }
+      client = Clients.findOne({lastName:lastName,
+                                firstName:firstName,});
+    }
+    if(!client){
+      lastName = names[0] +" "+ names[1]+" "+names[2];
+      firstName=names[3];
+      for(var i=3;i<names.length;i++){
+        if(names[i+1]){firstName += " "+names[i+1];}
+      }
+      client = Clients.findOne({lastName:lastName,
+                                firstName: firstName});
+    }
 
     if(!client){
         Materialize.toast("Ce client n'existe pas.",4000,'rounded');

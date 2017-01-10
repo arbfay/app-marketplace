@@ -44,11 +44,17 @@
   </div>
 
   {{>footer}}
+
+  <script>
+    $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
+  </script>
 </template>
 
 <template name="coachingPanelHome">
   <h2>Bienvenue,</h2>
-  <h4>Vos prochains cours</h4>
+  <h4>Vos prochains cours <i class="material-icons tooltip tooltipped" data-position="right" data-tooltip="I am tooltip">help_outline</i></h4>
   <div class="row">
     {{#each lesson in nextLessons}}
       {{> basicCoachLessonCard lesson}}
@@ -56,7 +62,7 @@
       <p>Aucun cours à venir. Vous devriez en ajouter !</p>
     {{/each}}
   </div>
-  <h4>Statistiques</h4>
+  <h4>Statistiques <i class="material-icons tooltip tooltipped" data-position="right" data-tooltip="Les statistiques ne sont pas encore disponibles. Plus tard, ils vous permettront de savoir comment se porte votre activité." data-placement="right">help_outline</i></h4>
   <div class="row">
     {{#with stats}}
         <div class="col s3">
@@ -155,6 +161,7 @@
 
 <template name="coachingPanelProfile">
   <br>
+  <i class="material-icons tooltipped right" data-position="left" data-tooltip="Seuls votre photo de profil, votre nom, votre prénom et votre description seront visibles des utilisateurs. Le reste nous sert afin de pouvoir communiquer avec vous." data-placement="right">help_outline</i>
   <div class="row" id="main">
         <div class="col m6 s12 well" id="leftPanel">
             <div class="row">
@@ -247,7 +254,7 @@
                             <div class="btn cyan darken-3">
                               <i class="material-icons left">insert_photo</i>
                               <span>Photo</span>
-                              <input type="file" name="file" id="photo" accept="image/*" required>
+                              <input type="file" name="file" id="photo" accept="image/*">
                             </div>
                             <div class="file-path-wrapper">
                               <input class="file-path validate" type="text" placeholder="Nouvelle photo de profil.">
@@ -267,14 +274,23 @@
   </div>
   </div>
   </div>
+  <script>
+    $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
+  </script>
 </template>
 
 <template name="coachingPanelLessons">
   <div class="row">
   <div class="col s12">
     <p></p>
-    <button class="btn blue darken-2 newLesson"><i class="material-icons left">event</i>Créer un cours</button>
-    <button class="btn red accent-2 btnProblem"><i class="material-icons left">warning</i>Signaler un problème</button>
+    <button class="btn blue darken-2 newLesson tooltipped" data-position="bottom" data-tooltip="Créez un nouveau cours dans votre activité ?"><i class="material-icons left">event</i>Créer un cours</button>
+    <button class="btn red accent-2 btnProblem tooltipped" data-position="bottom" data-tooltip="Vous avez constatez un problème ?"><i class="material-icons left">warning</i>Signaler un problème</button>
+
+    <i class="material-icons tooltipped right" data-position="left" data-tooltip="Créez un cours pour commencer. Tous les cours que vous enregistrez ici sont automatiquement référencés
+    sur la plateforme Trys pour que les utilisateurs puissent effectuer des réservations. Si vous constatez un problème, signez le le plus rapidement possible." data-placement="right">help_outline</i>
+
   </div>
   <div class="row">
     <div class="col s12 m10">
@@ -322,6 +338,7 @@
   <script>
     $(document).ready(function(){
       $('ul.tabs').tabs();
+      $('.tooltipped').tooltip({delay: 50});
     });
   </script>
 </template>
@@ -332,11 +349,11 @@
       <button class="btn-flat btnReturn">
         <i class="material-icons left">keyboard_arrow_left</i>
         Retour</button>
-      <button class="btn red accent-2 btnCancel">
+      <button class="btn red accent-2 btnCancel tooltipped" data-position="bottom" data-tooltip="Le cours ne pourra finalement pas être donné ?">
         <i class="material-icons left">event_busy</i>Annuler le cours</button>
-      <button class="btn cyan darken-3 btnUpdate">
+      <button class="btn cyan darken-3 btnUpdate tooltipped" data-position="bottom" data-tooltip="Les informations sont incorrectes ?">
         <i class="material-icons left">edit</i>Modifier le cours</button>
-      <button class="btn blue darken-2 btnDuplicate">
+      <button class="btn blue darken-2 btnDuplicate tooltipped" data-posiion="bottom" data-tooltip="Plutôt que de créer un nouveau cours avec le même titre et la même addresse que ce cours, pourquoi pas simplement copier celui-ci avec de nouvelles dates ?">
         <i class="material-icons left">content_copy</i>Dupliquer le cours</button>
     </div>
     <div class="row">
@@ -406,7 +423,7 @@
         </div>
         <div class="col s12 m6">
           <div class="card-panel">
-            <h4>Liste des inscrits</h4>
+            <h4>Liste des participants <i class="material-icons tooltipped right" data-position="left" data-tooltip="Vous pouvez retrouver ici les utilisateurs Trys, qui ont effectué une réservation pour votre cours, ainsi que vos clients que vous avez inscrits vous-même. Idéal pour faire la liste des présences !">help_outline</i></h4>
             <span class="letter-circle">T</span> = utilisateur Trys &nbsp; &nbsp;
              <span class="letter-circle">C</span> = votre client
             {{> coachingPanelAttendingList attendeesList}}
@@ -417,6 +434,12 @@
     </div>
     </div>
   </div>
+
+  <script>
+    $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
+  </script>
 </template>
 
 <template name="coachingPanelAttendingList">
@@ -441,6 +464,12 @@
     <button class="btn blue darken-2 newAttendee"><i class="material-icons left">person_add</i>
       Inscrire un client</button>
   </div>
+
+  <script>
+    $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
+  </script>
 </template>
 
 <template name="coachingPanelLessonDuplicate">
@@ -538,6 +567,12 @@
       $('.commissionValue').replaceWith('<span class="commissionValue">'+commission+'</span>');
     }
 
+  </script>
+
+  <script>
+    $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
   </script>
 </template>
 
@@ -673,6 +708,12 @@
     }
 
   </script>
+
+  <script>
+    $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
+  </script>
 </template>
 
 <template name="coachingPanelLessonInsertAttendees">
@@ -698,7 +739,7 @@
              <div class="input-field col s12">
                 <input type="checkbox" name="fromCard" value="true" id="fromCard" />
                 <label for="fromCard">
-                  Retirer 1 place sur une carte du client</label>
+                  Retirer 1 place sur une carte du client <i class="material-icons tooltip tooltipped" data-position="right" data-tooltip="Si le client dispose d'une carte valide, une place lui sera automatiquement retirée. Sinon, le client sera quand même inscrit, et vous recevrez une notification.">help_outline</i></label>
              </div>
              <div class="input-field col s6 m3">
                <button type="submit" form="newAttendee" class="btn red accent-3 btn-border-2">
@@ -715,12 +756,19 @@
     var data={};
     var clients= Clients.find().fetch();
     for (var i =0;i<clients.length;i++){
-      var lastName=clients[i].lastName +" "+clients[i].firstName;
+      var lastName=clients[i].lastName+" "+clients[i].firstName;
       data[lastName]=null;
+
     }
     $('input.autocomplete').autocomplete({
       data:data
   });
+  </script>
+
+  <script>
+    $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
   </script>
 </template>
 
@@ -728,11 +776,12 @@
 
 <template name="coachingPanelClients">
   <br style="margin-top:20px;">
+  <i class="material-icons tooltipped right" data-position="left" data-tooltip="Enregistrez ici vos clients réguliers, et créez les cartes que vous vendez habituellement à ces clients. Cela vous permet de les inscrire à vos cours et d'octroyer les bonnes cartes à chacun.">help_outline</i>
   <p class="flow-text">Vous pouvez gérer vos clients qui n'utilisent pas Trys en
      les enregistrant ici gratuitement.</p>
   <div class="row">
     <div class="col m8 s12">
-      <button class="btn blue darken-2 newClient"><i class="material-icons left">person_add</i>
+      <button class="btn blue darken-2 newClient tooltipped" data-position="bottom" data-tooltip="Vous avez un nouveau client qui s'est inscrit ?"><i class="material-icons left">person_add</i>
         Nouveau client</button>
       <div class="row">
         <div class="card-panel">
@@ -755,9 +804,9 @@
                 <td>{{email}}</td>
                 <td>{{tel}}</td>
                 <td><a class="editClient">
-                      <i class="material-icons">edit</i></a>
+                      <i class="material-icons tooltipped" data-position="top" data-tooltip="Modifier">edit</i></a>
                     <a class="deleteClient">
-                      <i class="material-icons">delete</i></a>
+                      <i class="material-icons tooltipped" data-position="top" data-tooltip="Supprimer">delete</i></a>
                 </td>
               </tr>
               {{else}}
@@ -775,7 +824,7 @@
       </div>
     </div>
     <div class="col m4 s12">
-      <button class="btn blue darken-2 newCard"><i class="material-icons left">add_to_photos</i>
+      <button class="btn blue darken-2 newCard tooltipped" data-position="bottom" data-tooltip="Vous créez une nouvelle carte ? Exemple : Carte de 10 places valide pendant 6 mois ?"><i class="material-icons left">add_to_photos</i>
         Créer une carte</button>
       <div class="card-panel">
           <h4>Vos cartes</h4>
@@ -790,10 +839,17 @@
       </div>
     </div>
   </div>
+
+  <script>
+    $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
+  </script>
 </template>
 
 <template name="coachingPanelCardInsert">
   <br>
+  <i class="material-icons tooltipped right" data-position="left" data-tooltip="Vous pourrez ensuite octroyer cette carte à vos clients. Le prix n'est pas obligatoire, elle permettra de générer des statistiques sur vos ventes.">help_outline</i>
     <div class="row">
         <div class="col m6 s12">
           <button class="btn-flat btnReturn">
@@ -807,17 +863,17 @@
             <div class="row">
               <div class="input-field col s12">
                 <input id="name" type="text" class="validate-required" required>
-                <label for="name">Nom de la carte</label>
+                <label for="name">Nom de la carte*</label>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s6">
                 <input id="maxAttendings" type="number" min="0" class="validate-required" required>
-                <label for="maxAttendings">Nombre de places</label>
+                <label for="maxAttendings">Nombre de places*</label>
               </div>
               <div class="input-field col s6">
                 <input id="duration" type="number" min="0" class="validate-required" required>
-                <label for="duration">Durée de validité (en mois)</label>
+                <label for="duration">Durée de validité (en mois)*</label>
               </div>
             </div>
             <div class="row">
@@ -836,6 +892,12 @@
         </div>
     </div>
   </div>
+
+  <script>
+    $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
+  </script>
 </template>
 
 <template name="coachingPanelClient">
@@ -847,9 +909,9 @@
         Retour</button>
     </div>
     <div class="col s6 m6">
-      <button class="btn cyan darken-2" id="updateClient"><i class="material-icons left">edit</i>
+      <button class="btn cyan darken-2 tooltipped" data-position="botton" data-tooltip="Les informations sur ce client ne sont plus correctes ?" id="updateClient"><i class="material-icons left">edit</i>
         Modifier</button>
-      <button class="btn red accent-2" id='deleteClient'><i class="material-icons left">delete</i>
+      <button class="btn red accent-2 tooltipped" data-position="bottom" data-tooltip="Ce client a décidé de ne plus venir ?" id='deleteClient'><i class="material-icons left">delete</i>
         Supprimer</button>
     </div>
   </div>
@@ -921,6 +983,7 @@
         <div class="row">
           <div class="col m12 s12">
             <div class="card-panel">
+              <i class="material-icons tooltipped right" data-position="left" data-tooltip="Suivi des présences du client à vos cours.">help_outline</i>
               <h4>Inscriptions</h4>
               {{#each reservation in reservations}}
                 {{> clientReservation reservation}}
@@ -973,12 +1036,25 @@
         $(".addCardTwo").show();
       }
     </script>
+
+    <script>
+      $(document).ready(function(){
+        $('.tooltipped').tooltip({delay: 50});
+      });
+    </script>
 </template>
 
 <template name="coachingPanelClientInsert">
+  <br>
+  <div class="row">
+    <div class="col s3 m3">
+      <button class="btn-flat btnReturn" onclick="BlazeLayout.render('coachingPanel', {content:'coachingPanelClients'});">
+        <i class="material-icons left">keyboard_arrow_left</i>
+        Retour</button>
+    </div>
+  </div>
   <div class="row">
     <div class="col m3 hide-on-small-only">
-
     </div>
     <div class="col m6 s12">
       <div class="card-panel">
@@ -987,11 +1063,11 @@
           <div class="row">
             <div class="input-field col s6">
               <input id="firstName" name="firstName" type="text" class="validate-required" required>
-              <label for="firstName">Prénom</label>
+              <label for="firstName">Prénom*</label>
             </div>
             <div class="input-field col s6">
               <input id="lastName" name="lastName" type="text" class="validate-required" required>
-              <label for="lastName">Nom</label>
+              <label for="lastName">Nom*</label>
             </div>
           </div>
           <div class="row">
@@ -1014,6 +1090,11 @@
     </div>
   </div>
 
+  <script>
+    $(document).ready(function(){
+      $('.tooltipped').tooltip({delay: 50});
+    });
+  </script>
 </template>
 
 <template name="coachingPanelClientUpdate">
@@ -1072,6 +1153,12 @@
         </div>
       </div>
     </div>
+
+    <script>
+      $(document).ready(function(){
+        $('.tooltipped').tooltip({delay: 50});
+      });
+    </script>
 </template>
 
 
@@ -1089,7 +1176,7 @@
       <div class="container">
         <h3 class="uppercase">Contact rapide</h3>
         <p>
-          Vous pouvez nous joindre rapidement en nous visitant, par téléphone ou via le chat direct.
+          Vous pouvez nous joindre rapidement en nous visitant, par téléphone ou <b>via le chat direct.</b>
         </p>
         <hr>
         <p>
@@ -1126,4 +1213,10 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50});
+  });
+</script>
 </template>

@@ -260,18 +260,18 @@
             data-error="Veuillez remplir l'ensemble des champs correctement, s'il vous plaît.">
             <div class="row">
               <div class="input-field col s6">
-                <input id="lastName" type="text" class="validate">
+                <input id="lastName" type="text" class="validate" required>
                 <label for="lastName">Nom</label>
               </div>
               <div class="input-field col s6">
-                <input id="firstName" type="text" class="validate">
+                <input id="firstName" type="text" class="validate" required>
                 <label for="firstName">Prénom</label>
               </div>
             </div>
 
             <div class="row">
               <div class="input-field col s12">
-                <input id="email" type="email" class="validate">
+                <input id="email" type="email" class="validate" required value="{{email}}">
                 <label for="email">Adresse e-mail</label>
               </div>
             </div>
@@ -294,12 +294,15 @@
               <input name="cat" type="radio" id="category3" value="Tai Chi" />
               <label for="category3">Tai Chi &nbsp;</label>
             </div>
+            {{#if currentUser}}
+            {{else}}
             <div class="row">
               <div class="input-field col s6">
                 <input id="password" type="password" class="validate">
                 <label for="password">Choisissez un mot de passe</label>
               </div>
             </div>
+            {{/if}}
             <div class="row">
               <div class="col s6">
                 <button type="submit" class="btn-1 btn-border-2">S'enregistrer</button>
