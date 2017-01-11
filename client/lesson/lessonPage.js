@@ -2,25 +2,26 @@
 Template.lessonMap.onRendered(function() {
   GoogleMaps.ready('lessonMap', function(map) {
     var res = Session.get('lesson');
-    var geospatial = res.geospatial;
-    var coord = geospatial.coordinates;
+    if(res)
+      {var geospatial = res.geospatial;
+      var coord = geospatial.coordinates;
 
-    var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(coord[1],
-                                            coord[0]),
-            map: map.instance,
-            title : res.title,
-            icon : 'http://res.cloudinary.com/trys/image/upload/v1479832863/loc_marker_v1axu1.png'
+      var marker = new google.maps.Marker({
+              position: new google.maps.LatLng(coord[1],
+                                              coord[0]),
+              map: map.instance,
+              title : res.title,
+              icon : 'http://res.cloudinary.com/trys/image/upload/v1479832863/loc_marker_v1axu1.png'
+        });
+      var contentString = '<div><strong>' + res.title + '</strong></div>'+
+                          '<a href="/class/'+ res._id +'" class="btn-flat"> Voir </a>';
+
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString
       });
-    var contentString = '<div><strong>' + res.title + '</strong></div>'+
-                        '<a href="/class/'+ res._id +'" class="btn-flat"> Voir </a>';
-
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
-    });
+      marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });}
   });
 
 });
@@ -51,17 +52,13 @@ Template.lessonPage.onRendered(function(){
       var dateNow = now.getTime() + 600000; //Heure de maintenant + 10 minutes
       var id = FlowRouter.getParam('lessonId');
 
-      Meteor.subscribe('matchingLessonsByFirstId', id, dateNow);
-
+      const h1 = Meteor.subscribe('matchingLessonsByFirstId', id, dateNow);
       var lesson = Lessons.findOne(id);
-      var coachEmail = lesson.coachEmail;
 
-      Meteor.subscribe('matchingCoachByMail', coachEmail);
+      const h2 = Meteor.subscribe('matchingCoachByMail', lesson.coachEmail);
+      const h3 = Meteor.subscribe('userProfileByMail', lesson.coachEmail);
 
-      var coachId = Coaches.findOne({email:coachEmail})._id;
-
-      Meteor.subscribe('matchingUserProfileByCoachId', coachId);
-      Session.set("coachProfile", UserProfiles.findOne({email:coachEmail}));
+      Session.set("coachProfile", UserProfiles.findOne({email:lesson.coachEmail}));
 
       if(Meteor.userId()){
         Meteor.subscribe('myReservations',Meteor.userId(),function(err,res){

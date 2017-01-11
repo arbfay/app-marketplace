@@ -394,6 +394,9 @@ Meteor.methods({
       });
    },
    cancelNonUserAttendee : function(clientId,lessonId,date,cardData){
+     console.log("clientId : ", clientId);
+     console.log("lessonId : ", lessonId);
+     console.log("cardData : ", cardData);
      var client = Clients.findOne(clientId);
      var lesson = Lessons.findOne(lessonId);
      var aL = AttendeesList.findOne(lesson.attendeesList);
@@ -403,6 +406,7 @@ Meteor.methods({
        email:client.email,
        createdAt:date
      };
+     console.log(toMatch);
 
      AttendeesList.update(aL._id,
        {

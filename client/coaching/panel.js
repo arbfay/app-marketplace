@@ -723,7 +723,8 @@ Template.coachingPanelAttendingList.helpers({
 Template.coachingPanelAttendingList.events({
   "click .cancelAttendee":function(event){
     event.preventDefault();
-    var client = Clients.findOne({email:this.secondaryInfo});
+    var client;
+    client = Clients.findOne({firstName:this.firstName,lastName:this.lastName});
     var clientId = client._id;
     var lessonId = Session.get("lessonId");
     var date = this.createdAt;
