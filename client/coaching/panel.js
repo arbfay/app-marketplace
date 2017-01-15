@@ -41,7 +41,7 @@ Template.coachingPanel.helpers({
     });
 
 
-    var coach = Coaches.findOne();
+    var coach = Coaches.findOne({email:coachEmail});
 
     var up = UserProfiles.findOne({email:coach.email});
 
@@ -50,7 +50,6 @@ Template.coachingPanel.helpers({
       imgUrl="http://placehold.it/300/9e9e9e/000000?text=Photo";
     }
 
-    var coach = Coaches.findOne();
     var coachId="";
     if(coach){coachId = coach._id;}
 
@@ -288,7 +287,7 @@ Template.coachingPanelProfile.events({
 
 Template.coachingPanelClients.helpers({
   clients : function(){
-    return Clients.find({},{sort : {lastName:1}});
+    return Clients.find({},{sort : {firstName:1}});
   },
   coachCards : function(){
     return CoachCards.find();
@@ -462,7 +461,7 @@ Template.coachingPanelClient.events({
     var expDate = event.target.expDate.value;
 
     expDate = moment(expDate).valueOf();
-    var attLeft = event.target.attendingsLeft.value;
+    var attLeft = parseInt(event.target.attendingsLeft.value);
 
     if(oldCard.expirationDate == expDate && oldCard.attendingsLeft == attLeft){
       $('#modalEditClientCard').closeModal();
@@ -977,8 +976,8 @@ Template.coachingPanelLessonInsert.events({
      //Composition of the address
      var address = street+" , "+zip+" "+city;
      //Date in milliseconds since 1st january 1970
-     var d = new Date(date+" "+time);
-     var dateInMilli = d.getTime();
+     var d = moment(date+" "+time,"DD-MM-YYYY HH:mm");
+     var dateInMilli = d.valueOf();
 
      //Pricing
      var commission=0.25;
@@ -1121,8 +1120,8 @@ Template.coachingPanelLessonDuplicate.events({
        var repeat = t.recurrent.checked;
 
        //Date in milliseconds since 1st january 1970
-       var d = new Date(date+" "+time);
-       var dateInMilli = d.getTime();
+       var d = moment(date+" "+time,"DD-MM-YYYY HH:mm");
+       var dateInMilli = d.valueOf();
 
        //Pricing
        var commission=0.25;

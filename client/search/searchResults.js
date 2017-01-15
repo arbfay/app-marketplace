@@ -203,10 +203,6 @@ Template.searchResults.helpers({
   },
 });
 
-
-
-
-
 Template.lessonsResults.helpers({
   results : function(){
     Session.setDefault("filterCategory",["Yoga", "Pilates", "Tai Chi"]);

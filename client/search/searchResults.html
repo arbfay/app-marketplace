@@ -128,21 +128,12 @@
             <td>
               {{#if currentUser}}
                 <button style="margin-bottom:0px;" class="btn btn-border-2 tooltipped"  data-position="right" data-delay="50" data-tooltip="En participant à ce cours, vous pouvez gagner {{earning}} points.">
-                  <i class="material-icons point-icon" style="font-size:1.1em;">control_points</i><span class="point-font">{{earning}}</span>
+                  <i class="material-icons point-icon" style="font-size:1.05em;">control_points</i><span class="point-font">{{earning}}</span>
                 </button>
-              {{else}}
-                <a href="{{path}}" class="btn red accent-2 btn-border-2">
-                  Voir
-                </a>
               {{/if}}
             </td>
           </tr>
         </table>
-        {{#if currentUser}}
-          <a href="{{path}}" class="btn red accent-2 btn-border-2">
-            Voir
-          </a>
-        {{/if}}
       </div>
     </div>
   </li>

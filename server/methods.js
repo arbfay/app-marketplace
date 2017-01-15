@@ -204,9 +204,9 @@ Meteor.methods({
        updatedAt:data.updatedAt,
      };
 
-     if(data.email !== ""){
+     if(data.email !== "" && Meteor.users.find({"emails.0.address":data.email})){
        d.isUser=true;
-       d.userId = Accounts.findUserByEmail(data.email)._id;
+       d.userId = Meteor.users.find({"emails.0.address":data.email})._id;
      }
 
      var clientId = Clients.insert(d);

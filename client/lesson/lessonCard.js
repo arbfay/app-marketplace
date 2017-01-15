@@ -1,13 +1,14 @@
 
 
 Template.lessonCard.events({
-  "click #see": function(event, template){
-     event.preventDefault();
-     var id = this._id;
+  "click .section" : (event,template) => {
+    event.preventDefault();
+    var id = template.data._id;
 
-     var path =FlowRouter.path('/class/:lessonId',{lessonId : id},{});
 
-     FlowRouter.go(path);
+    var path =FlowRouter.path('/class/:lessonId',{lessonId : id},{});
+
+    FlowRouter.go(path);
   }
 });
 

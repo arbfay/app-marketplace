@@ -5,11 +5,13 @@ Template.becomeCoach.events({
     var t = event.target;
     var lastName = t.lastName.value;
     var firstName = t.firstName.value;
-    var email = t.email.value;
+    var email="";
+    if(t.email.value){email=t.email.value;}
     var phone = t.phone.value;
     var city = t.city.value;
     var category = t.cat.value;
-    var password = t.password.value;
+    var password="123";
+    if(!Meteor.userId()){password=t.password.value;}
 
     var text = "Nom : "+lastName+"<br>"
               +"Prénom : "+firstName+"<br>"
@@ -94,6 +96,7 @@ Template.becomeCoach.events({
             alert("Erreur lors de l'insertion d'un coach");
           } else{
             Materialize.toast('Visitez votre Coach Panel !', 4000, 'rounded');
+            FlowRouter.go('/coaching/panel');
           }
         });
       }
