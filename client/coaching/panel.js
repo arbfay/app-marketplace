@@ -976,7 +976,9 @@ Template.coachingPanelLessonInsert.events({
      //Composition of the address
      var address = street+" , "+zip+" "+city;
      //Date in milliseconds since 1st january 1970
-     var d = moment(date+" "+time,"DD-MM-YYYY HH:mm");
+     var str = date+" "+time;
+     var nDate = new Date(str);
+     var d = moment(nDate);
      var dateInMilli = d.valueOf();
 
      //Pricing
@@ -1120,7 +1122,9 @@ Template.coachingPanelLessonDuplicate.events({
        var repeat = t.recurrent.checked;
 
        //Date in milliseconds since 1st january 1970
-       var d = moment(date+" "+time,"DD-MM-YYYY HH:mm");
+       var str = date+" "+time;
+       var nDate = new Date(str);
+       var d = moment(nDate);
        var dateInMilli = d.valueOf();
 
        //Pricing
@@ -1135,11 +1139,9 @@ Template.coachingPanelLessonDuplicate.events({
        }
 
 
-      var d = dateInMilli;
-
       var toInsert = lesson;
       delete toInsert._id;
-      toInsert.date=d;
+      toInsert.date=dateInMilli;
       toInsert.duration=duration;
       toInsert.maxAttendeesLeft=maxAttendees;
       toInsert.price=price;
@@ -1148,8 +1150,7 @@ Template.coachingPanelLessonDuplicate.events({
       toInsert.updatedAt=new Date();
       toInsert.instructions = instructions;
       for(var i = 0; i<=r;i++){
-        d = dateInMilli + i*604800000;
-        toInsert.date = d;
+        toInsert.date = dateInMilli + i*604800000;
 
         Meteor.call("insertLessonByCoach", toInsert, (err,res)=>{
          if(res){
