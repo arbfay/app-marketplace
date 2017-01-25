@@ -976,10 +976,7 @@ Template.coachingPanelLessonInsert.events({
      //Composition of the address
      var address = street+" , "+zip+" "+city;
      //Date in milliseconds since 1st january 1970
-     var str = date+" "+time;
-     var nDate = new Date(str);
-     var d = moment(nDate);
-     var dateInMilli = d.valueOf();
+     var dateInMilli = dateInUnix(date,time);
 
      //Pricing
      var commission=0.25;
@@ -1122,10 +1119,7 @@ Template.coachingPanelLessonDuplicate.events({
        var repeat = t.recurrent.checked;
 
        //Date in milliseconds since 1st january 1970
-       var str = date+" "+time;
-       var nDate = new Date(str);
-       var d = moment(nDate);
-       var dateInMilli = d.valueOf();
+       var dateInMilli = dateInUnix(date,time);
 
        //Pricing
        var commission=0.25;
@@ -1193,3 +1187,13 @@ Template.coachingPanelContact.events({
      });
   }
 });
+
+dateInUnix = function(date,time){
+  var str = date+" "+time;
+  if(!time){
+    var m = moment(str,['DD-MM-YYYY','MM-DD-YYYY','YYYY-DD-MM','YYYY-MM-DD']);
+  } else {
+    var m = moment(str,['DD-MM-YYYY HH:mm','MM-DD-YYYY HH:mm','YYYY-DD-MM HH:mm','YYYY-MM-DD HH:mm']);
+  }
+  return m.valueOf();
+}

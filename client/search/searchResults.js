@@ -30,7 +30,7 @@ Template.searchResults.onCreated(()=>{
     }
   });
 
-  template.searchLimit = new ReactiveVar(6);
+  template.searchLimit = new ReactiveVar(10);
   template.searchResults = new ReactiveVar();
   template.categories = new ReactiveVar(["Yoga","Pilates","Tai Chi"]);
 

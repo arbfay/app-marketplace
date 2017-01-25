@@ -98,9 +98,23 @@
   display:inline-block;
 }
 
+.white-link{
+  color:#fff;
+}
+
+.ban-text{
+  font-family:'Roboto';
+  font-weight:500;
+  font-size:2em;
+  line-height:1.5;
+}
+
 .feature-bloc{
   padding:3%;
   padding-bottom:2%;
+}
+.feature-bloc-s{
+  padding:1%;
 }
 
 .feature-coach-left{
@@ -207,11 +221,18 @@ display:inline-block;
   height:100%
 }
 
-.point-icon{
-
+.point-button{
+  padding-left:10px !important;
+  padding-right:10px !important;
+  margin:auto !important;
 }
+
+.point-icon{
+ font-size:1.2em !important;
+}
+
 .point-font{
-  font-size:1.3em;
+  font-size:1.3em !important;
 }
 
 .priceReservationCard{

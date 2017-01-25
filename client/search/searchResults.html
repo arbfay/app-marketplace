@@ -27,7 +27,9 @@
         <div class="row" style="max-height:100vh;overflow:auto;">
           <ul>
             {{#each res in results}}
+            <li class="col l6 m12 s12">
               {{>lessonCard res}}
+            </li>
             {{/each}}
           </ul>
         </div>
@@ -77,70 +79,9 @@
 <template name="lessonsResults">
   <ul>
     {{#each res in results}}
+    <li class="col m6 s12">
       {{>lessonCard res}}
-
+    </li>
     {{/each}}
   </ul>
-</template>
-
-<template name="lessonCard">
-  <li class="col m6 s12">
-    <div class="card hoverable" style='padding-bottom:0px !important;'>
-      <div class="card-image waves-effect waves-block waves-light">
-        <div class="section" style="
-        height:100%;
-        width:100%;
-        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{imgUrl}}) no-repeat center center;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        ">
-          <div class="container">
-            <div class="row firstRow">
-              <div class="col m10 push-m1 s12 center-align">
-                <h4 class="mb8" style="color:white;">{{title}}</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-content" style="padding-bottom:0px !important;">
-        <table>
-          <tr>
-            <td>
-              <i class="material-icons left">update</i>{{duration}} min
-            </td>
-            <td>
-              <i class="material-icons left">event</i>{{dateForHuman}}
-            </td>
-            <td>
-              <i class="material-icons left">access_time</i>{{timeForHuman}}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <i class="material-icons left">euro_symbol</i>{{price}}
-            </td>
-            <td>
-              <i class="material-icons left">label_outline</i>{{category}}
-            </td>
-            <td>
-              {{#if currentUser}}
-                <button style="margin-bottom:0px;" class="btn btn-border-2 tooltipped"  data-position="right" data-delay="50" data-tooltip="En participant à ce cours, vous pouvez gagner {{earning}} points.">
-                  <i class="material-icons point-icon" style="font-size:1.05em;">control_points</i><span class="point-font">{{earning}}</span>
-                </button>
-              {{/if}}
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </li>
-  <script>
-    $(document).ready(function(){
-      $('.tooltipped').tooltip({delay: 50,
-      html:true});
-    });
-  </script>
 </template>

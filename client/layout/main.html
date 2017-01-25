@@ -27,91 +27,19 @@
 </template>
 
 <template name="lessonsExample">
-  <div class="section">
+  <div class="section grey lighten-4">
     <div class="container">
+      <center>
+        <h3 class="feature-bloc">Les prochains cours</h3>
+      </center>
       <div class="row">
-        <div class="col m4">
-
-          <div class="card">
-            <div class="card-image">
-              <img src="http://res.cloudinary.com/trys/image/upload/q_50/v1479316560/yoga-class_ff9hqf.jpg" width="400" height="200" border="0" alt="" />
-            </div>
-
-            <div class="card-title">
-              <div class="mt8" style="margin-left : 8px;">
-                Holy Yoga
-              </div>
-            </div>
-
-            <div class="card-content" style="padding-bottom:0px;">
-              <div class="row">
-                €€ ・ Yoga
-              </div>
-              <div class="row">
-                	The Holy Yoga combines Christian meditation and some forms of yoga. The course is given in English.
-              </div>
-            </div>
-
-            <div class="card-action">
-              <a href="#">Voir le cours</a>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col m4">
-          <div class="card">
-            <div class="card-image">
-              <img src="http://res.cloudinary.com/trys/image/upload/q_50/v1479316560/yoga-class_ff9hqf.jpg" width="400" height="200" border="0" alt="" />
-            </div>
-
-            <div class="card-title">
-              <div class="mt8" style="margin-left : 8px;">
-                Holy Yoga
-              </div>
-            </div>
-
-            <div class="card-content" style="padding-bottom:0px;">
-              <div class="row">
-                €€ ・ Yoga
-              </div>
-              <div class="row">
-                	The Holy Yoga combines Christian meditation and some forms of yoga. The course is given in English.
-              </div>
-            </div>
-
-            <div class="card-action">
-              <a href="#">Voir le cours</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col m4">
-          <div class="card">
-            <div class="card-image">
-              <img src="http://res.cloudinary.com/trys/image/upload/q_50/v1479316560/yoga-class_ff9hqf.jpg" width="400" height="200" border="0" alt="" />
-            </div>
-
-            <div class="card-title">
-              <div class="mt8" style="margin-left : 8px;">
-                Holy Yoga
-              </div>
-            </div>
-
-            <div class="card-content" style="padding-bottom:0px;">
-              <div class="row">
-                €€ ・ Yoga
-              </div>
-              <div class="row">
-                  The Holy Yoga combines Christian meditation and some forms of yoga. The course is given in English.
-              </div>
-            </div>
-
-            <div class="card-action">
-              <a href="#">Voir le cours</a>
-            </div>
-          </div>
-        </div>
+        <ul>
+          {{#each res in results}}
+            <li class="col l4 m6 s12">
+              {{>lessonCard res}}
+            </li>
+          {{/each}}
+        </ul>
       </div>
     </div>
   </div>
@@ -171,5 +99,17 @@
 </template>
 
 <template name="newsletterForm">
-
+  <div class="section cyan darken-2">
+      <center class="feature-bloc-s">
+        <div class="row firstRow ban-text">
+          <div class="col l2 hide-on-small-only"></div>
+          <div class="col l6 m12 s12">
+            <span class="white-text">Vous êtes professeur de yoga, pilates ou tai chi ?</span>
+          </div>
+          <div class="col l2 m12 s12">
+            <a href="/coaching/become" class="btn red accent-2 white-link">Découvrez Trys >></a>
+          </div>
+        </div>
+      </center>
+  </div>
 </template>
