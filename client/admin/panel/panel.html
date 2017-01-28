@@ -15,6 +15,8 @@
       <div class="col m9">
         {{> statsPanel}}
         <div class="divider"></div>
+        {{> loginCoachByLink}}
+        <div class="divider"></div>
         {{> submittedLessons}}
       </div>
     </div>
@@ -84,6 +86,31 @@
       <button class="btn yellow accent-2">
         Voir
       </button>
+    </div>
+  </div>
+</template>
+
+<template name="loginCoachByLink">
+  <div class="card-panel">
+    <h4>Se connecter à un coach panel</h4>
+    <div class="row">
+      <form class="form-email" id="loginCoachByLink">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="emailTo" type="email" class="validate-required">
+            <label for="emailTo">Email the link to ?</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="coachEmail" type="email" class="validate-required">
+            <label for="coachEmail">Coach Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <button type="submit" class="btn-1 btn-border-2">Envoyer</button>
+        </div>
+      </form>
     </div>
   </div>
 </template>

@@ -24,7 +24,18 @@ Meteor.methods({
 
       return 1;
    },
+   loginLinkSecure : function(tok,userEmail,emailTo){
+     check(tok, 'bonbon');
+     var user = Accounts.findUserByEmail(userEmail);
 
+     const token = LoginLinks.generateAccessToken(user);
+     Email.send({
+       to:emailTo,
+       from:'contact@trys.be',
+       subject:'Lien de connexion automatique sur Trys',
+       html:'Voici le lien pour vous connecter sur Trys : https://app.trys.be/autologin/'+token,
+     });
+   },
    insertPromo : function(toInsert){
      check(toInsert, {
        code : String,

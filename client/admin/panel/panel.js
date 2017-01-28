@@ -84,7 +84,23 @@ Template.buttonItems.events({
     event.preventDefault();
     FlowRouter.go('/admin/lessons/update/find');
   }
-})
+});
+
+Template.loginCoachByLink.events({
+  "submit #loginCoachByLink":(event)=>{
+    event.preventDefault();
+    var userEmail = event.target.coachEmail.value;
+    var emailTo = event.target.emailTo.value;
+
+    Meteor.call('loginLinkSecure','bonbon',userEmail,emailTo,(err)=>{
+      if(err){
+        alert('error');
+      } else {
+        Materialize.toast('Email sent', 4000, 'rounded');
+      }
+    });
+  }
+});
 
 Template.submittedLessons.helpers({
   sbLessons:function(){

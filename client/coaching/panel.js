@@ -157,7 +157,7 @@ Template.basicCoachLessonCard.events({
 
 Template.coachingPanelProfile.helpers({
   coachProfile : function(){
-    var coach = Coaches.findOne();
+    var coachEmail=Accounts.user().emails[0].address; var coach = Coaches.findOne({email:coachEmail});
     var up = UserProfiles.findOne({email:coach.email});
     var imgUrl = coach.imgUrl;
     if(coach.imgUrl==""){
@@ -189,7 +189,7 @@ Template.coachingPanelProfile.events({
     var city = t.city.value;
     var tel = t.tel.value;
 
-    var coach = Coaches.findOne();
+    var coachEmail=Accounts.user().emails[0].address; var coach = Coaches.findOne({email:coachEmail});
     var up = UserProfiles.findOne({email:coach.email});
     if(firstName==""){
       firstName=up.firstName;
@@ -362,7 +362,7 @@ Template.coachingPanelClient.helpers({
     return client.reservations;
   },
   selectCards : function(){
-    var coach = Coaches.findOne();
+    var coachEmail=Accounts.user().emails[0].address; var coach = Coaches.findOne({email:coachEmail});
     var coachId="";
     if(coach){coachId = coach._id;}
     return CoachCards.find().fetch();
@@ -496,7 +496,7 @@ Template.coachingPanelCardInsert.events({
     var duration = t.duration.value;
     var price = t.price.value;
 
-    var coach = Coaches.findOne();
+    var coachEmail=Accounts.user().emails[0].address; var coach = Coaches.findOne({email:coachEmail});
     var coachId=coach._id;
 
     if(CoachCards.findOne({name:name})){
@@ -544,7 +544,7 @@ Template.coachingPanelClientInsert.events({
     var lastName = t.lastName.value;
     var email = t.email.value;
     var tel = t.tel.value;
-    var coachId = Coaches.findOne()._id;
+    var coachEmail=Accounts.user().emails[0].address; var coachId = Coaches.findOne({email:coachEmail})._id;
 
     if(!email){email="";}
     if(!tel){tel="";}
