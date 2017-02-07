@@ -17,10 +17,10 @@
           </div>
           <div class="row center-align">
             <button class="btn red darken-3 waves-effect waves-light cancelBtn" style="border-radius:2px !important;">
-              Annuler</button>
+              {{_ "checkout.buttons.cancel"}}</button>
             <button class="btn-large waves-effect waves-light payBtn green darken-2">
               <i class="material-icons left">credit_card</i>
-              Paiement</button>
+              {{_ "checkout.buttons.payment"}}</button>
           </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
 <template name="profileEditingCard">
   <form>
     <div class="card">
-      <div class="card-title center-align" style="padding-top:20px;" ><h2>Vos informations</h2></div>
+      <div class="card-title center-align" style="padding-top:20px;" ><h2>{{_ "profile.edit.title"}}</h2></div>
       <div class="card-content">
         <div class="container profileInfo">
           <div class="row">
@@ -43,11 +43,11 @@
           <div class="row">
             <div class="input-field col s6">
               <input id="lastName" type="text" class="validate-required" value="{{firstName}}">
-              <label class="active" for="lastName">Nom</label>
+              <label class="active" for="lastName">{{_ "profile.edit.lastname"}}</label>
             </div>
             <div class="input-field col s6">
               <input id="firstName" type="text" class="validate-required" value="{{lastName}}">
-              <label class="active" for="firstName">Prénom</label>
+              <label class="active" for="firstName">{{_ "profile.edit.firstname"}}</label>
             </div>
           </div>
           <div class="row" >
@@ -63,33 +63,33 @@
           <div class="row">
             <div class="input-field col s12">
               <input id="street" type="text" class="validate-required" value="{{street}}">
-              <label class="active" for="street">Rue</label>
+              <label class="active" for="street">{{_ "profile.edit.street"}}</label>
             </div>
           </div>
 
           <div class="row">
             <div class="input-field col s6">
               <input id="zip" type="text" class="validate-required" value="{{zip}}">
-              <label class="active" for="zip">Code Postal</label>
+              <label class="active" for="zip">{{_ "profile.edit.zip"}}</label>
             </div>
             <div class="input-field col s6">
               <input id="city" type="text" class="validate-required" value="{{city}}">
-              <label class="active" for="city">Commune</label>
+              <label class="active" for="city">{{_ "profile.edit.city"}}</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6">
               <input id="birthdate" type="date" class="validate" value="{{birthdate}}">
-              <label class="active" for="birthdate">Date de naissance</label>
+              <label class="active" for="birthdate">{{_ "profile.edit.birthday"}}</label>
             </div>
             <div class="input-field col s6">
               <input id="phoneNumber" type="text" class="validate" value="{{phoneNumber}}">
-              <label class="active" for="phoneNumber">Téléphone</label>
+              <label class="active" for="phoneNumber">{{_ "profile.edit.phone"}}</label>
             </div>
           </div>
         </div>
         <button type="submit" class="btn waves-effect waves-light updateProfile cyan darken-3" style="border:none !important;border-radius:2px !important;">
-          Modifier
+          {{_ "profile.edit.button"}}
         </button>
       </div>
     </div>
@@ -161,7 +161,7 @@
             </div>
             <div class="col m6 s12">
               <div class="card-panel green white-text">
-                <p style="margin-bottom:0px;">Pour {{earning}} points</p>
+                <p style="margin-bottom:0px;">{{earning}} points</p>
               </div>
             </div>
           </div>

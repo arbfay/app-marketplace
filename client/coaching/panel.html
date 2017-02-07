@@ -16,23 +16,23 @@
         <div class="collection menu-coach-panel">
           <a href="#!" class="collection-item cpHome">
             <i class="material-icons menu-item-panel">home</i>
-            <span class="menu-item-panel">Accueil</span>
+            <span class="menu-item-panel">{{_ "cpSideMenu.home"}}</span>
           </a>
           <a href="#!" class="collection-item cpProfile">
             <i class="material-icons menu-item-panel">perm_identity</i>
-            <span class="menu-item-panel">Profil coach</span>
+            <span class="menu-item-panel">{{_ "cpSideMenu.profile"}}</span>
           </a>
           <a href="#!" class="collection-item cpLessons">
             <i class="material-icons menu-item-panel">event</i>
-            <span class="menu-item-panel">Cours</span>
+            <span class="menu-item-panel">{{_ "cpSideMenu.classes"}}</span>
           </a>
           <a href="#!" class="collection-item cpClients">
             <i class="material-icons menu-item-panel">list</i>
-            <span class="menu-item-panel">Clients</span>
+            <span class="menu-item-panel">{{_ "cpSideMenu.clients"}}</span>
           </a>
           <a href="#!" class="collection-item cpContact">
             <i class="material-icons menu-item-panel">question_answer</i>
-            <span class="menu-item-panel">Ligne directe</span>
+            <span class="menu-item-panel">{{_ "cpSideMenu.contact"}}</span>
           </a>
         </div>
       </div>
@@ -53,16 +53,16 @@
 </template>
 
 <template name="coachingPanelHome">
-  <h2>Bienvenue,</h2>
-  <h4>Vos prochains cours <i class="material-icons tooltip tooltipped" data-position="right" data-tooltip="I am tooltip">help_outline</i></h4>
+  <h2>{{_ "cpHome.welcome"}}</h2>
+  <h4>{{_ "cpHome.nextClasses"}} <i class="material-icons tooltip tooltipped" data-position="right" data-tooltip='{{_ "cpHome.nextClasses_tooltip"}}'>help_outline</i></h4>
   <div class="row">
     {{#each lesson in nextLessons}}
       {{> basicCoachLessonCard lesson}}
     {{else}}
-      <p>Aucun cours à venir. Vous devriez en ajouter !</p>
+      <p>{{_ "cpHome.noClasses"}}</p>
     {{/each}}
   </div>
-  <h4>Statistiques <i class="material-icons tooltip tooltipped" data-position="right" data-tooltip="Les statistiques ne sont pas encore disponibles. Plus tard, ils vous permettront de savoir comment se porte votre activité." data-placement="right">help_outline</i></h4>
+  <h4>{{_ "cpHome.stats"}} <i class="material-icons tooltip tooltipped" data-position="right" data-tooltip='{{_ "cpHome.stats_tooltip"}}' data-placement="right">help_outline</i></h4>
   <div class="row">
     {{#with stats}}
         <div class="col s3">
@@ -70,7 +70,7 @@
             <div class="card">
               <div class="card-content">
                 <h3 class="center-align">{{clients}}</h3>
-                <p class="center-align">clients</p>
+                <p class="center-align">{{_ "cpHome.stats_clients"}}</p>
               </div>
             </div>
           </div>
@@ -80,7 +80,7 @@
             <div class="card">
               <div class="card-content">
                 <h3 class="center-align">{{trysReservations}}</h3>
-                <p class="center-align">réservations Trys</p>
+                <p class="center-align">{{_ "cpHome.stats_bookings"}}</p>
               </div>
             </div>
           </div>
@@ -90,26 +90,23 @@
             <div class="card">
               <div class="card-content">
                 <h3 class="center-align">{{comingLessons}}</h3>
-                <p class="center-align">cours à venir</p>
+                <p class="center-align">{{_ "cpHome.stats_classes"}}</p>
               </div>
             </div>
           </div>
         </div>
     {{else}}
-      <p>Rien à afficher</p>
+      <p>{{_ "cpHome.noStats"}}r</p>
     {{/with}}
   </div>
-  <h4>Il vaut mieux le savoir</h4>
+  <h4>{{_ "cpHome.info_title"}}</h4>
   <div class="row">
     {{#each info in infoCards}}
       {{> basicInfoCard info}}
     {{else}}
     <div class="col s6 m3">
       <div class="card-panel">
-        Toutes les séances sur votre Panneau de Gestion
-        sont automatiquement référencées sur le site web
-        pour que les utilisateurs puissent réserver
-        leur place.
+        {{_ "cpHome.info_default"}}
       </div>
     </div>
     {{/each}}
@@ -153,7 +150,7 @@
         <span>{{dateTime}}<i class="material-icons right" >more_vert</i></span>
       </div>
       <div class="card-action">
-        <a href="#" class="cpLesson">Voir</a>
+        <a href="#" class="cpLesson">{{_ "cpLessonCard.see"}}</a>
       </div>
     </div>
   </div>
@@ -161,7 +158,7 @@
 
 <template name="coachingPanelProfile">
   <br>
-  <i class="material-icons tooltipped right" data-position="left" data-tooltip="Seuls votre photo de profil, votre nom, votre prénom et votre description seront visibles des utilisateurs. Le reste nous sert afin de pouvoir communiquer avec vous." data-placement="right">help_outline</i>
+  <i class="material-icons tooltipped right" data-position="left" data-tooltip='{{_ "cpProfile.template_tooltip"}}' data-placement="right">help_outline</i>
   <div class="row" id="main">
         <div class="col m6 s12 well" id="leftPanel">
             <div class="row">
@@ -173,27 +170,27 @@
                       <table class="bordered">
                         <tbody>
                           <tr>
-                            <td>Nom</td>
+                            <td>{{_ "cpProfile.lastname"}}</td>
                             <td><b>{{lastName}}</b></td>
                           </tr>
                           <tr>
-                            <td>Prénom</td>
+                            <td>{{_ "cpProfile.firstname"}}</td>
                             <td><b>{{firstName}}</b></td>
                           </tr>
                           <tr>
-                            <td>E-mail</td>
+                            <td>{{_ "cpProfile.email"}}</td>
                             <td><b>{{email}}</b></td>
                           </tr>
                           <tr>
-                            <td>Téléphone</td>
+                            <td>{{_ "cpProfile.phone"}}</td>
                             <td><b>{{tel}}</b></td>
                           </tr>
                           <tr>
-                            <td>Adresse</td>
+                            <td>{{_ "cpProfile.address"}}</td>
                             <td><b>{{address}}</b></td>
                           </tr>
                           <tr>
-                            <td>Description</td>
+                            <td>{{_ "cpProfile.description"}}</td>
                             <td><b>{{description}}</b></td>
                           </tr>
                         </tbody>
@@ -208,44 +205,44 @@
               <div class="col m12">
                 <div class="card-panel">
                  <form id="updateCoachProfile">
-                    <h3>Modifier vos informations<small></small></h3>
+                    <h3>{{_ "cpProfile.update-form_title"}}<small></small></h3>
                       <div class="row">
                         <div class="input-field col s6">
                           <input id="lastName" type="text" class="validate-required">
-                          <label for="lastName">Nom</label>
+                          <label for="lastName">{{_ "cpProfile.lastname"}}</label>
                         </div>
                         <div class="input-field col s6">
                           <input id="firstName" type="text" class="validate-required">
-                          <label for="firstName">Prénom</label>
+                          <label for="firstName">{{_ "cpProfile.firstname"}}</label>
                         </div>
                       </div>
                       <div class="row">
                         <div class="input-field col s12">
                           <input id="tel" type="text" class="validate-required">
-                          <label for="tel">Téléphone</label>
+                          <label for="tel">T{{_ "cpProfile.phone"}}</label>
                         </div>
                       </div>
                       <div class="row">
                         <div class="input-field col s12">
                           <input id="street" type="text" class="validate-required">
-                          <label for="street">Rue</label>
+                          <label for="street">{{_ "cpProfile.street"}}</label>
                         </div>
                       </div>
 
                       <div class="row">
                         <div class="input-field col s6">
                           <input id="zip" type="text" class="validate-required" >
-                          <label for="zip">Code Postal</label>
+                          <label for="zip">{{_ "cpProfile.zip"}}</label>
                         </div>
                         <div class="input-field col s6">
                           <input id="city" type="text" class="validate-required" >
-                          <label for="city">Commune</label>
+                          <label for="city">{{_ "cpProfile.city"}}</label>
                         </div>
                       </div>
                       <div class="row">
                         <div class="input-field col s12">
                           <textarea id="description" length="300" class="materialize-textarea"></textarea>
-                          <label for="description">Description (max. 300 lettres)</label>
+                          <label for="description">{{_ "cpProfile.description"}}</label>
                         </div>
                       </div>
                       <div class="row">
@@ -257,7 +254,7 @@
                               <input type="file" name="file" id="photo" accept="image/*">
                             </div>
                             <div class="file-path-wrapper">
-                              <input class="file-path validate" type="text" placeholder="Nouvelle photo de profil.">
+                              <input class="file-path validate" type="text" placeholder='{{_ "cpProfile.photo-input_placeholder"}}'>
                             </div>
                           </div>
                         </div>
@@ -265,7 +262,7 @@
                   <div class="row">
                     <div class="col xs12 col m6">
                       <button type="submit" form="updateCoachProfile" class="btn red accent-3">
-                        Enregistrer</button>
+                        {{_ "cpProfile.submit"}}</button>
                     </div>
                   </div>
                 </form>
@@ -285,11 +282,10 @@
   <div class="row">
   <div class="col s12">
     <p></p>
-    <button class="btn blue darken-2 newLesson " data-position="bottom" data-tooltip="Créez un nouveau cours dans votre activité ?"><i class="material-icons left">event</i>Créer un cours</button>
-    <button class="btn red accent-2 btnProblem " data-position="bottom" data-tooltip="Vous avez constatez un problème ?"><i class="material-icons left">warning</i>Signaler un problème</button>
+    <button class="btn blue darken-2 newLesson " data-position="bottom" data-tooltip='{{_ "cpLessons.buttons.new-lesson_tooltip"}}'><i class="material-icons left">event</i>{{_ "cpLessons.buttons.new-lesson"}}</button>
+    <button class="btn red accent-2 btnProblem " data-position="bottom" data-tooltip='{{_ "cpLessons.buttons.problem"}}'><i class="material-icons left">warning</i>{{_ "cpLessons.buttons.problem"}}</button>
 
-    <i class="material-icons tooltipped right" data-position="left" data-tooltip="Créez un cours pour commencer. Tous les cours que vous enregistrez ici sont automatiquement référencés
-    sur la plateforme Trys pour que les utilisateurs puissent effectuer des réservations. Si vous constatez un problème, signez le le plus rapidement possible." data-placement="right">help_outline</i>
+    <i class="material-icons tooltipped right" data-position="left" data-tooltip='{{_ "cpLessons.template_tooltip"}}' data-placement="right">help_outline</i>
 
   </div>
   <div class="row">
@@ -297,10 +293,10 @@
       <div class="card-panel">
         <ul class="tabs">
           <li class="tab col m6">
-            <a href="#futureLessons">À venir</a>
+            <a href="#futureLessons">{{_ "cpLessons.future-classes"}}</a>
           </li>
           <li class="tab col m6">
-            <a href="#pastLessons">Passés</a>
+            <a href="#pastLessons">{{_ "cpLessons.past-classes"}}</a>
           </li>
         </ul>
         <div id="futureLessons">
@@ -308,12 +304,12 @@
           {{#each lesson in comingLess}}
             {{> basicCoachLessonCard lesson}}
           {{else}}
-            <p>Aucun cours à venir. Ajoutez-en un !</p>
+            <p>{{_ "cpLessons.no-future-classes"}}</p>
           {{/each}}
           </div>
           {{#if moreComingLess}}
           <div class="row firstRow center-align">
-            <button class="btn-flat btn-lg loadMore" >Voir plus</button>
+            <button class="btn-flat btn-lg loadMore" >{{_ "cpLessons.see-more"}}</button>
           </div>
           {{/if}}
         </div>
@@ -322,12 +318,12 @@
           {{#each lesson in pastLess}}
             {{> basicCoachLessonCard lesson}}
           {{else}}
-            <p>Aucun cours passé.</p>
+            <p>{{_ "cpLessons.no-past-classes"}}</p>
           {{/each}}
           </div>
           {{#if morePastLess}}
           <div class="row firstRow center-align">
-            <button class="btn-flat btn-lg loadMore" >Voir plus</button>
+            <button class="btn-flat btn-lg loadMore" >{{_ "cpLessons.see-more"}}</button>
           </div>
           {{/if}}
         </div>
@@ -348,13 +344,13 @@
     <div class="row firstRow" style="padding-top:30px;">
       <button class="btn-flat btnReturn">
         <i class="material-icons left">keyboard_arrow_left</i>
-        Retour</button>
-      <button class="btn red accent-2 btnCancel " data-position="bottom" data-tooltip="Le cours ne pourra finalement pas être donné ?">
-        <i class="material-icons left">event_busy</i>Annuler le cours</button>
-      <button class="btn cyan darken-3 btnUpdate " data-position="bottom" data-tooltip="Les informations sont incorrectes ?">
-        <i class="material-icons left">edit</i>Modifier le cours</button>
-      <button class="btn blue darken-2 btnDuplicate " data-posiion="bottom" data-tooltip="Plutôt que de créer un nouveau cours avec le même titre et la même addresse que ce cours, pourquoi pas simplement copier celui-ci avec de nouvelles dates ?">
-        <i class="material-icons left">content_copy</i>Dupliquer le cours</button>
+        {{_ "cpLesson.buttons.return"}}</button>
+      <button class="btn red accent-2 btnCancel " data-position="bottom" data-tooltip='{{_ "cpLesson.buttons.cancel_tooltip"}}'>
+        <i class="material-icons left">event_busy</i>{{_ "cpLesson.buttons.cancel"}}</button>
+      <button class="btn cyan darken-3 btnUpdate " data-position="bottom" data-tooltip={{_ "cpLesson.buttons.edit_tooltip"}}>
+        <i class="material-icons left">edit</i>{{_ "cpLesson.buttons.edit"}}</button>
+      <button class="btn blue darken-2 btnDuplicate " data-posiion="bottom" data-tooltip='{{_ "cpLesson.buttons.duplicate_tooltip"}}'>
+        <i class="material-icons left">content_copy</i>{{_ "cpLesson.buttons.duplicate"}}</button>
     </div>
     <div class="row">
       <div class="card-panel">
@@ -402,19 +398,19 @@
             <table class="bordered">
               <tbody>
                 <tr>
-                  <td>Courte description</td>
+                  <td>{{_ "cpLesson.short-desc"}}</td>
                   <td><b>{{shortDesc}}</b></td>
                 </tr>
                 <tr>
-                  <td>Longue description</td>
+                  <td>{{_ "cpLesson.long-desc"}}</td>
                   <td><b>{{longDesc}}</b></td>
                 </tr>
                 <tr>
-                  <td>Lieu</td>
+                  <td>{{_ "cpLesson.location"}}</td>
                   <td><b>{{address}}</b></td>
                 </tr>
                 <tr>
-                  <td>Instructions supplémentaires</td>
+                  <td>{{_ "cpLesson.instructions"}}</td>
                   <td><b>{{instructions}}</b></td>
                 </tr>
               </tbody>
@@ -423,9 +419,9 @@
         </div>
         <div class="col s12 m6">
           <div class="card-panel">
-            <h4>Liste des participants <i class="material-icons tooltipped right" data-position="left" data-tooltip="Vous pouvez retrouver ici les utilisateurs Trys, qui ont effectué une réservation pour votre cours, ainsi que vos clients que vous avez inscrits vous-même. Idéal pour faire la liste des présences !">help_outline</i></h4>
-            <span class="letter-circle">T</span> = utilisateur Trys &nbsp; &nbsp;
-             <span class="letter-circle">C</span> = votre client
+            <h4>{{_ "cpLesson.attending-list.title"}} <i class="material-icons tooltipped right" data-position="left" data-tooltip='{{_ "cpLesson.attending-list.tooltip"}}'>help_outline</i></h4>
+            <span class="letter-circle">T</span> = {{_ "cpLesson.attending-list.trys-user"}} &nbsp; &nbsp;
+             <span class="letter-circle">C</span> = {{_ "cpLesson.attending-list.client"}}
             {{> coachingPanelAttendingList attendeesList}}
           </div>
         </div>
@@ -457,12 +453,12 @@
       {{/if}}
     </li>
     {{else}}
-      Aucun inscrit.
+      {{_ "cpLesson.attending-list.no-client"}}
     {{/each}}
   </ul>
   <div class="row">
     <button class="btn blue darken-2 newAttendee"><i class="material-icons left">person_add</i>
-      Inscrire un client</button>
+      {{_ "cpLesson.attending-list.button-add"}}</button>
   </div>
 
   <script>
@@ -477,11 +473,11 @@
     <div class="row firstRow" style="padding-top:30px;">
       <button class="btn-flat btnReturn">
         <i class="material-icons left">keyboard_arrow_left</i>
-        Retour</button>
+        {{_ "cpLessonDuplicate.buttons.return"}}</button>
     </div>
     <div class="card-panel">
-      <h4>Dupliquer un cours à une nouvelle date</h4>
-      <p>Vous pouvez multiplier les dates de vos cours en dupliquant plusieurs fois.</p>
+      <h4>{{_ "cpLessonDuplicate.title"}}</h4>
+      <p>{{_ "cpLessonDuplicate.subtitle"}}</p>
       <div class="row">
         {{#with lesson}}
         <form id="insertLessonByCoach">
@@ -498,7 +494,7 @@
             {{longDesc}}
           </div>
           <div class="input-field col s12 m4">
-            Catégorie : {{category}}
+            {{_ "cpLessonDuplicate.form.category"}} : {{category}}
           </div>
           <div class="col s12 m8">
             <div class="row">
@@ -511,20 +507,20 @@
           <div class="input-field col s3">
             <i class="material-icons prefix">euro_symbol</i>
             <input id="price" type="number" max="100" min="5" step="0.1" onchange="changeCommission()" class="validate baseCalculation" required>
-            <label for="price">Prix par participant</label>
+            <label for="price">{{_ "cpLessonDuplicate.form.price"}}</label>
           </div>
           <div class="input-field col s3">
             <i class="material-icons prefix">people</i>
             <input id="maxAttendees" type="number" max="30" min="0" class="validate" required>
-            <label for="maxAttendees">Nombre de participants</label>
+            <label for="maxAttendees">{{_ "cpLessonDuplicate.form.attend"}}</label>
           </div>
           <div class="input-field col s3">
             <i class="material-icons prefix">update</i>
             <input id="duration" type="number" min="0" required>
-            <label for="duration">Durée (en minutes)</label>
+            <label for="duration">{{_ "cpLessonDuplicate.form.duration"}}</label>
           </div>
           <div class="input-field col s3 center-align">
-            Calcul de la commission par réservation sur Trys <br>
+            {{_ "cpLessonDuplicate.form.commission"}} <br>
             <b><span class="commissionValue">2</span> €</b>
           </div>
           <div class="input-field col s6 m4">
@@ -535,7 +531,7 @@
           <div class="input-field col s6 m4 center-align">
             <input type="checkbox" id="recurrent" />
             <label for="recurrent">
-              <i class="material-icons">replay_5</i>Répéter 5 fois</label>
+              <i class="material-icons">replay_5</i>{{_ "cpLessonDuplicate.form.repeat"}}</label>
           </div>
           <div class="input-field col s6 m4">
             <i class="material-icons prefix">schedule</i>
@@ -545,12 +541,12 @@
           <div class="input-field col s12">
             <i class="material-icons prefix">add</i>
             <input id="instructions" type="text" class="validate" length="350">
-            <label for="instructions">Instructions supplémentaires</label>
+            <label for="instructions">{{_ "cpLessonDuplicate.form.instructions"}}</label>
           </div>
           <div class="input-field col m4 s6">
             <button type="submit" form="insertLessonByCoach" class="red accent-3 btn-border-2">
               <i class="material-icons">done</i>
-              Confirmer</button>
+              {{_ "cpLessonDuplicate.buttons.submit"}}</button>
           </div>
         </form>
         {{/with}}
@@ -581,26 +577,26 @@
     <div class="row firstRow" style="padding-top:30px;">
       <button class="btn-flat btnReturn">
         <i class="material-icons left">keyboard_arrow_left</i>
-        Annuler</button>
+        {{_ "cpLessonInsert.buttons.return"}}</button>
     </div>
     <div class="card-panel">
-      <h4>Nouveau cours</h4>
+      <h4>{{_ "cpLessonInsert.title"}}</h4>
       <div class="row">
         <form id="insertLessonByCoach">
           <div class="input-field col s12">
             <i class="material-icons prefix">title</i>
             <input id="title" type="text" class="validate" required>
-            <label for="title">Titre du cours (ex: XIntense Accro Yoga)</label>
+            <label for="title">{{_ "cpLessonInsert.form.title"}}</label>
           </div>
           <div class="input-field col s12 m6">
             <i class="material-icons prefix">drag_handle</i>
             <input id="shortDesc" type="text" length="150" class="validate" required>
-            <label for="shortDesc">Courte description (max. 150 lettres)</label>
+            <label for="shortDesc">{{_ "cpLessonInsert.form.short-desc"}}</label>
           </div>
           <div class="input-field col s12 m6">
             <i class="material-icons prefix">view_headline</i>
             <textarea id="longDesc" length="1000" class="materialize-textarea" required></textarea>
-            <label for="longDesc">Longue description (max. 1000 lettres)</label>
+            <label for="longDesc">{{_ "cpLessonInsert.form.long-desc"}}</label>
           </div>
           <div class="input-field col s12 m4">
             <p>
@@ -621,36 +617,36 @@
               <div class="input-field col s12">
                 <i class="material-icons prefix">location_on</i>
                 <input id="street" type="text" class="validate" length="150" required >
-                <label for="street">Rue et N°</label>
+                <label for="street">{{_ "cpLessonInsert.form.address"}}</label>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s6">
                 <i class="material-icons prefix">location_city</i>
                 <input id="zip" type="text" class="validate" length="5">
-                <label for="zip">Code postal</label>
+                <label for="zip">{{_ "cpLessonInsert.form.zip"}}</label>
               </div>
               <div class="input-field col s6">
                 <i class="material-icons prefix">location_city</i>
                 <input id="city" type="text" class="validate" length="150" required>
-                <label for="city">Commune</label>
+                <label for="city">{{_ "cpLessonInsert.form.city"}}</label>
               </div>
             </div>
           </div>
           <div class="input-field col s3">
             <i class="material-icons prefix">euro_symbol</i>
             <input id="price" type="number" max="100" min="5" step="0.1" class="validate baseCalculation" onchange="changeCommission()" required>
-            <label for="price">Prix par participant</label>
+            <label for="price">{{_ "cpLessonInsert.form.price"}}</label>
           </div>
           <div class="input-field col s3">
             <i class="material-icons prefix">people</i>
             <input id="maxAttendees" type="number" max="30" min="0" class="validate" required>
-            <label for="maxAttendees">Nombre de participants</label>
+            <label for="maxAttendees">{{_ "cpLessonInsert.form.attend"}}</label>
           </div>
           <div class="input-field col s3">
             <i class="material-icons prefix">update</i>
             <input id="duration" type="number" min="0" required>
-            <label for="duration">Durée (en minutes)</label>
+            <label for="duration">{{_ "cpLessonInsert.form.duration"}}</label>
           </div>
           <div class="input-field col s3">
             Calcul de la commission par réservation sur Trys <br>
@@ -664,7 +660,7 @@
           <div class="input-field col s6 m4 center-align">
             <input type="checkbox" id="recurrent" />
             <label for="recurrent">
-              <i class="material-icons">replay_5</i>Répéter 5 fois</label>
+              <i class="material-icons">replay_5</i>{{_ "cpLessonInsert.form.repeat"}}</label>
           </div>
           <div class="input-field col s6 m4">
             <i class="material-icons prefix">schedule</i>
@@ -674,7 +670,7 @@
           <div class="input-field col s12">
             <i class="material-icons prefix">add</i>
             <input id="instructions" type="text" class="validate" length="350">
-            <label for="instructions">Instructions supplémentaires (Exemple: bâtiment avec porte rose, apporter son propre matériel, ...)</label>
+            <label for="instructions">{{_ "cpLessonInsert.form.instructions"}}</label>
           </div>
           <div class="input-field col s12">
             <div class="file-field input-field">
@@ -684,14 +680,14 @@
                 <input type="file" name="file" id="photo" accept="image/*" required>
               </div>
               <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Télécharger 1 photo pour illustrer votre cours.">
+                <input class="file-path validate" type="text" placeholder='{{_ "cpLessonInsert.form.photo"}}'>
               </div>
             </div>
           </div>
           <div class="input-field col m4 s6">
             <button type="submit" form="insertLessonByCoach" class="red accent-3 btn-border-2">
               <i class="material-icons">done</i>
-              Confirmer</button>
+              {{_ "cpLessonInsert.buttons.submit"}}</button>
           </div>
         </form>
       </div>
@@ -722,28 +718,28 @@
       <div class="row firstRow" style="padding-top:30px;">
         <button class="btn-flat btnReturn">
           <i class="material-icons left">keyboard_arrow_left</i>
-          Retour</button>
+          {{_ "cpLessonInsert.buttons.return"}}</button>
       </div>
     </div>
     <div class="container">
       <div class="card-panel">
-        <h4>Inscrire un client au cours</h4>
+        <h4>{{_ "cpLessonInsert.title"}}</h4>
         <div class="row">
          <div class="col s12">
            <form id="newAttendee">
              <div class="input-field col s12">
                <i class="material-icons prefix">person</i>
                <input type="text" id="autocomplete-input" class="autocomplete">
-               <label for="autocomplete-input">Nom ou prénom du client</label>
+               <label for="autocomplete-input">{{_ "cpLessonInsertAttendees.form.input"}}</label>
              </div>
              <div class="input-field col s12">
                 <input type="checkbox" name="fromCard" value="true" id="fromCard" />
                 <label for="fromCard">
-                  Retirer 1 place sur une carte du client <i class="material-icons tooltip tooltipped" data-position="right" data-tooltip="Si le client dispose d'une carte valide, une place lui sera automatiquement retirée. Sinon, le client sera quand même inscrit, et vous recevrez une notification.">help_outline</i></label>
+                  {{_ "cpLessonInsertAttendees.form.from-card"}} <i class="material-icons tooltip tooltipped" data-position="right" data-tooltip='{{_ "cpLessonInsertAttendees.form.from-card_tooltip"}}'>help_outline</i></label>
              </div>
              <div class="input-field col s6 m3">
                <button type="submit" form="newAttendee" class="btn red accent-3 btn-border-2">
-                 Inscrire
+                 {{_ "cpLessonInsertAttendees.form.button"}}
                </button>
              </div>
            </form>
@@ -776,23 +772,22 @@
 
 <template name="coachingPanelClients">
   <br style="margin-top:20px;">
-  <i class="material-icons tooltipped right" data-position="left" data-tooltip="Enregistrez ici vos clients réguliers, et créez les cartes que vous vendez habituellement à ces clients. Cela vous permet de les inscrire à vos cours et d'octroyer les bonnes cartes à chacun.">help_outline</i>
-  <p class="flow-text">Vous pouvez gérer vos clients qui n'utilisent pas Trys en
-     les enregistrant ici gratuitement.</p>
+  <i class="material-icons tooltipped right" data-position="left" data-tooltip='{{_ "cpClients.tooltip"}}'>help_outline</i>
+  <p class="flow-text">{{_ "cpClients.subtitle"}}</p>
   <div class="row">
     <div class="col m8 s12">
-      <button class="btn blue darken-2 newClient " data-position="bottom" data-tooltip="Vous avez un nouveau client qui s'est inscrit ?"><i class="material-icons left">person_add</i>
-        Nouveau client</button>
+      <button class="btn blue darken-2 newClient " data-position="bottom" data-tooltip='{{_ "cpClients.buttons.add_tooltip"}}'><i class="material-icons left">person_add</i>
+        {{_ "cpClients.buttons.add"}}</button>
       <div class="row">
         <div class="card-panel">
           <table class="bordered">
           <thead>
             <tr>
-                <th data-field="firstName">Nom</th>
-                <th data-field="lastName">Prénom</th>
-                <th data-field="email">E-mail</th>
-                <th data-field="tel">Téléphone</th>
-                <th data-field="actions">Actions</th>
+                <th data-field="firstName">{{_ "cpClients.table.firstname"}}</th>
+                <th data-field="lastName">{{_ "cpClients.table.lastname"}}</th>
+                <th data-field="email">{{_ "cpClients.table.email"}}</th>
+                <th data-field="tel">{{_ "cpClients.table.phone"}}</th>
+                <th data-field="actions">{{_ "cpClients.table.actions"}}</th>
                 <th></th>
             </tr>
           </thead>
@@ -824,15 +819,15 @@
       </div>
     </div>
     <div class="col m4 s12">
-      <button class="btn blue darken-2 newCard " data-position="bottom" data-tooltip="Vous créez une nouvelle carte ? Exemple : Carte de 10 places valide pendant 6 mois ?"><i class="material-icons left">add_to_photos</i>
-        Créer une carte</button>
+      <button class="btn blue darken-2 newCard " data-position="bottom" data-tooltip='{{_ "cpClients.buttons.new-card_tooltip"}}'><i class="material-icons left">add_to_photos</i>
+        {{_ "cpClients.buttons.new-card"}}</button>
       <div class="card-panel">
-          <h4>Vos cartes</h4>
+          <h4>{{_ "cpClients.cards.title"}}</h4>
           {{#each coachCards}}
             <div class="card-panel cyan darken-3 white-text">
               <b style="font-size:18px;">{{name}}</b> <br>
-              Validité : {{duration}} mois <br>
-              Places : {{maxAttendings}} <br>
+              {{_ "cpClients.cards.valid"}} : {{duration}} mois <br>
+              {{_ "cpClients.cards.attendings"}} : {{maxAttendings}} <br>
               <b>{{price}}</b> €
             </div>
           {{/each}}
@@ -849,44 +844,44 @@
 
 <template name="coachingPanelCardInsert">
   <br>
-  <i class="material-icons tooltipped right" data-position="left" data-tooltip="Vous pourrez ensuite octroyer cette carte à vos clients. Le prix n'est pas obligatoire, elle permettra de générer des statistiques sur vos ventes.">help_outline</i>
+  <i class="material-icons tooltipped right" data-position="left" data-tooltip='{{_ "cpCardInsert.tooltip"}}'>help_outline</i>
     <div class="row">
         <div class="col m6 s12">
           <button class="btn-flat btnReturn">
             <i class="material-icons left">keyboard_arrow_left</i>
-            Retour</button>
+            {{_ "cpLessonInsert.buttons.return"}}</button>
         </div>
         <div class="col s12 m6">
           <div class="card-panel">
-          <h3>Créer une nouvelle carte</h3>
+          <h3>{{_ "cpCardInsert.title"}}</h3>
           <form id="addCoachingCard" >
             <div class="row">
               <div class="input-field col s12">
                 <input id="name" type="text" class="validate-required" required>
-                <label for="name">Nom de la carte*</label>
+                <label for="name">{{_ "cpCardInsert.form.name"}}</label>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s6">
                 <input id="maxAttendings" type="number" min="0" class="validate-required" required>
-                <label for="maxAttendings">Nombre de places*</label>
+                <label for="maxAttendings">{{_ "cpCardInsert.form.attendings"}}</label>
               </div>
               <div class="input-field col s6">
                 <input id="duration" type="number" min="0" class="validate-required" required>
-                <label for="duration">Durée de validité (en mois)*</label>
+                <label for="duration">{{_ "cpCardInsert.form.duration"}}</label>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s6">
                 <input id="price" type="number" min="0" class="validate-required">
-                <label for="price">Prix de la carte</label>
+                <label for="price">{{_ "cpCardInsert.form.price"}}</label>
               </div>
             </div>
           </form>
           <div class="row">
             <div class="col s6">
               <button type="submit" form="addCoachingCard" class="btn-border-2">
-                Enregistrer</button>
+                {{_ "cpLessonInsert.buttons.submit"}}</button>
             </div>
           </div>
         </div>
@@ -909,10 +904,10 @@
         Retour</button>
     </div>
     <div class="col s6 m6">
-      <button class="btn cyan darken-2 " data-position="botton" data-tooltip="Les informations sur ce client ne sont plus correctes ?" id="updateClient"><i class="material-icons left">edit</i>
-        Modifier</button>
-      <button class="btn red accent-2 " data-position="bottom" data-tooltip="Ce client a décidé de ne plus venir ?" id='deleteClient'><i class="material-icons left">delete</i>
-        Supprimer</button>
+      <button class="btn cyan darken-2 " data-position="botton" data-tooltip='{{_ "cpClient.buttons.edit_tooltip"}}' id="updateClient"><i class="material-icons left">edit</i>
+        {{_ "cpClient.buttons.edit"}}</button>
+      <button class="btn red accent-2 " data-position="bottom" data-tooltip='{{_ "cpClient.buttons.delete_tooltip"}}' id='deleteClient'><i class="material-icons left">delete</i>
+        {{_ "cpClient.buttons.delete"}}</button>
     </div>
   </div>
   <div class="row" id="main">
@@ -924,19 +919,19 @@
                   <table class="bordered">
                     <tbody>
                       <tr>
-                        <td>Nom</td>
+                        <td>{{_ "cpClient.table.lastname"}}</td>
                         <td><b>{{lastName}}</b></td>
                       </tr>
                       <tr>
-                        <td>Prénom</td>
+                        <td>{{_ "cpClient.table.firstname"}}</td>
                         <td><b>{{firstName}}</b></td>
                       </tr>
                       <tr>
-                        <td>E-mail</td>
+                        <td>{{_ "cpClient.table.email"}}</td>
                         <td><b>{{email}}</b></td>
                       </tr>
                       <tr>
-                        <td>Téléphone</td>
+                        <td>{{_ "cpClient.table.phone"}}</td>
                         <td><b>{{tel}}</b></td>
                       </tr>
                     </tbody>
@@ -947,12 +942,12 @@
         </div>
         <div class="row">
           <div class="card-panel">
-            <h4>Ses cartes</h4>
+            <h4>{{_ "cpClient.cards.title"}}</h4>
             {{#each cards}}
               <div class="card-panel hoverable cyan darken-3 white-text">
                 <b style="font-size:18px;">{{name}}</b>  <br>
-                Valide jusqu'au {{expDate}} <br>
-                {{attendingsLeft}} places restantes<br>
+                {{_ "cpClient.cards.valid"}} {{expDate}} <br>
+                {{attendingsLeft}} {{_ "cpClient.cards.sitsLeft"}}<br>
                 <button class="btn cyan darken-3 editClientCard" style="margin-bottom:0px;">
                       <i class="material-icons white-text">edit</i></button>
                 <button class="btn cyan darken-3 deleteClientCard" style="margin-bottom:0px;">
@@ -964,14 +959,14 @@
                 <div class="row">
                   <div class="input-field col s8">
                     <select id="selectCoachCards" >
-                      <option value="" disabled selected>Quelle carte ?</option>
+                      <option value="" disabled selected>{{_ "cpClient.cards.option"}}</option>
                       {{#each selectCards}}
                         <option value="{{_id}}">{{name}}</option>
                       {{/each}}
                     </select>
                   </div>
                   <div class="col s4">
-                    <button class="btn red accent-3 addCardTwo btn-border-2" type="submit" form="addCardToClient" onclick="showSelect()">Ajouter</button>
+                    <button class="btn red accent-3 addCardTwo btn-border-2" type="submit" form="addCardToClient" onclick="showSelect()">{{_ "cpClient.buttons.add-card"}}</button>
                   </div>
                 </div>
               </form>
@@ -983,12 +978,12 @@
         <div class="row">
           <div class="col m12 s12">
             <div class="card-panel">
-              <i class="material-icons tooltipped right" data-position="left" data-tooltip="Suivi des présences du client à vos cours.">help_outline</i>
-              <h4>Inscriptions</h4>
+              <i class="material-icons tooltipped right" data-position="left" data-tooltip='{{_ "cpClient.attendings.tooltip"}}'>help_outline</i>
+              <h4>{{_ "cpClient.attendings.title"}}</h4>
               {{#each reservation in reservations}}
                 {{> clientReservation reservation}}
               {{else}}
-                Aucune inscription.
+                {{_ "cpClient.attendings.empty"}}
               {{/each}}
             </div>
           </div>
@@ -1005,7 +1000,7 @@
               <div class="col s12 m6">
                 <div class="input-field">
                   <input id="expDate" name="expDate" type="date" class="validate" value="{{expirationDate}}" required>
-                  <label class="active" for="expDate">Date d'expiration</label>
+                  <label class="active" for="expDate">{{_ "cpClient.cards.expiration-date"}}</label>
                 </div>
               </div>
             </div>
@@ -1013,7 +1008,7 @@
               <div class="col s12 m6">
                 <div class="input-field">
                   <input id="attendingsLeft" type="number" step=1 min="0" value="{{attLeft}}" required>
-                  <label class="active" for='attendingsLeft'>Places restantes</label>
+                  <label class="active" for='attendingsLeft'>{{_ "cpClient.cards.sitsLeft"}}</label>
                 </div>
               </div>
 
@@ -1022,7 +1017,7 @@
           <div class="row">
             <div class="col s6 m4">
               <button type="submit" form='editClientCardForm' class="btn red accent-3">
-                Enregistrer
+                {{_ "cpLessonInsert.buttons.submit"}}
               </button>
             </div>
           </div>
@@ -1050,7 +1045,7 @@
     <div class="col s3 m3">
       <button class="btn-flat btnReturn" onclick="BlazeLayout.render('coachingPanel', {content:'coachingPanelClients'});">
         <i class="material-icons left">keyboard_arrow_left</i>
-        Retour</button>
+        {{_ "cpLessonInsert.buttons.return"}}</button>
     </div>
   </div>
   <div class="row">
@@ -1058,31 +1053,31 @@
     </div>
     <div class="col m6 s12">
       <div class="card-panel">
-        <h4>Ajouter un client</h4>
+        <h4>{{_ "cpClientInsert.title"}}</h4>
         <form id="addCoachingClient" >
           <div class="row">
             <div class="input-field col s6">
               <input id="firstName" name="firstName" type="text" class="validate-required" required>
-              <label for="firstName">Prénom*</label>
+              <label for="firstName">{{_ "cpClientInsert.form.firstname"}}</label>
             </div>
             <div class="input-field col s6">
               <input id="lastName" name="lastName" type="text" class="validate-required" required>
-              <label for="lastName">Nom*</label>
+              <label for="lastName">{{_ "cpClientInsert.form.lastname"}}</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6">
               <input id="email" type="email" name="email" class="validate">
-              <label for="email">E-mail</label>
+              <label for="email">{{_ "cpClientInsert.form.email"}}</label>
             </div>
             <div class="input-field col s6">
               <input id="tel" type="text" name="tel" class="validate">
-              <label for="tel">Téléphone</label>
+              <label for="tel">{{_ "cpClientInsert.form.phone"}}</label>
             </div>
           </div>
           <div class="row">
             <div class="col s6">
-              <button class="btn red accent-3 btn-border-2" type="submit" form="addCoachingClient">Ajouter</button>
+              <button class="btn red accent-3 btn-border-2" type="submit" form="addCoachingClient">{{_ "cpLessonInsert.buttons.submit"}}</button>
             </div>
           </div>
         </form>
@@ -1103,7 +1098,7 @@
     <div class="col s3 m3">
       <button class="btn-flat btnReturn">
         <i class="material-icons left">keyboard_arrow_left</i>
-        Annuler</button>
+        {{_ "cpClientUpdate.buttons.cancel"}}</button>
     </div>
     <div class="col s6 m6">
     </div>
@@ -1118,7 +1113,7 @@
                   <table class="bordered">
                     <tbody>
                       <tr>
-                        <td>Nom</td>
+                        <td>{{_ "cpClientInsert.form.firstname"}}</td>
                         <td>
                           <div class="input-field">
                             <input id="lastName" name="lastName" type="text" class="validate-required" value="{{lastName}}">
@@ -1126,26 +1121,26 @@
                         </td>
                       </tr>
                       <tr>
-                        <td>Prénom</td>
+                        <td>{{_ "cpClientInsert.form.lastname"}}</td>
                         <td><div class="input-field">
                           <input id="firstName" name="firstName" type="text" class="validate-required" value="{{firstName}}">
                         </div></td>
                       </tr>
                       <tr>
-                        <td>E-mail</td>
+                        <td>{{_ "cpClientInsert.form.email"}}</td>
                         <td><div class="input-field">
                           <input id="email" name="email" type="email" class="validate-required" value="{{email}}">
                         </div></td>
                       </tr>
                       <tr>
-                        <td>Téléphone</td>
+                        <td>{{_ "cpClientInsert.form.phone"}}</td>
                         <td><div class="input-field">
                           <input id="tel" name="tel" type="text" class="validate" value="{{tel}}">
                         </div></td>
                       </tr>
                     </tbody>
                   </table>
-                  <button type="submit" form="updateClientForm" class="btn red accent-3">Enregistrer</button>
+                  <button type="submit" form="updateClientForm" class="btn red accent-3">{{_ "cpLessonInsert.buttons.submit"}}</button>
                 {{/with}}
                 </form>
               </div>
@@ -1174,40 +1169,39 @@
     <div class="row">
     <div class="col m6 s12">
       <div class="container">
-        <h3 class="uppercase">Contact rapide</h3>
+        <h3 class="uppercase">{{_ "cpContact.title"}}</h3>
         <p>
-          Vous pouvez nous joindre rapidement en nous visitant, par téléphone ou <b>via le chat direct.</b>
+          {{_ "cpContact.subtitle"}}
         </p>
         <hr>
         <p>
-            Rue de la Science 23
-            <br> 1000 Bruxelles
+            {{_ "cpContact.address"}}
         </p>
         <hr>
         <p>
-            <strong>Téléphone:</strong> 0472.38.41.52 (Fayçal Arbai)
+            <strong>{{_ "cpContact.phone"}}:</strong> 0472.38.41.52 (Fayçal Arbai)
             <br>
         </p>
       </div>
     </div>
     <div class="col m6 s12">
       <div class="container">
-        <h3 class="uppercase">Formulaire</h3>
-        <form class="form-email" id="form" data-success="Merci d'avoir rempli ce formulaire, nous rentrerons en contact très prochainement"
-            data-error="Veuillez remplir l'ensemble des champs correctement, s'il vous plaît.">
+        <h3 class="uppercase">{{_ "cpContact.form.title"}}</h3>
+        <form class="form-email" id="form" data-success='{{_ "cpContact.form.data-success"}}'
+            data-error='{{_ "cpContact.form.data-error"}}'>
             <div class="row">
               <div class="input-field col s12">
                 <input id="subject" type="text" class="validate-required">
-                <label for="subject">Sujet</label>
+                <label for="subject">{{_ "cpContact.form.subject"}}</label>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s12">
                 <textarea id="comments" class="materialize-textarea" required></textarea>
-                <label for="comments">Message</label>
+                <label for="comments">{{_ "cpContact.form.comment"}}</label>
               </div>
             </div>
-          <button type="submit" class="btn-1 btn-border-2">Envoyer</button>
+          <button type="submit" class="btn-1 btn-border-2">{{_ "cpContact.form.submit"}}</button>
         </form>
       </div>
     </div>

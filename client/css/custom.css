@@ -1,5 +1,15 @@
 /****** PLACE YOUR CUSTOM STYLES HERE ******/
 
+.signupForm {
+  height:100vh;
+  width:100vw;
+  background: #f5f5f5 no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .menu-item-panel{
   font-size:3vh;
   padding-top:5px;

@@ -6,8 +6,8 @@
         <div class="card-panel">
           <div class="row firstRow">
               <h3 class="valign">
-                Bienvenue {{firstName}},</h3>
-              <h5>Surtout n'hésitez pas à nous dire ce que vous pensez de nous via le chat en bas à droite.</h5>
+                {{_ "profile.headline"}} {{firstName}},</h3>
+              <h5>{{_ "profile.subheadline"}}</h5>
             </div>
         </div>
       </div>
@@ -15,10 +15,10 @@
       <div class="row firstRow">
         <div class="col m4 s12">
           <div class="collection">
-            <a href="#!" class="collection-item myInfo">Mes infos</a>
-            <a href="#!" class="collection-item myRes">Mes réservations</a>
-            <a href="#!" class="collection-item changePass">Changer de mot de passe</a>
-            <a href="#!" class="collection-item logOut">Se déconnecter</a>
+            <a href="#!" class="collection-item myInfo">{{_ "profile.sideMenu.infos"}}</a>
+            <a href="#!" class="collection-item myRes">{{_ "profile.sideMenu.bookings"}}</a>
+            <a href="#!" class="collection-item changePass">{{_ "profile.sideMenu.change-password"}}</a>
+            <a href="#!" class="collection-item logOut">{{_ "profile.sideMenu.logout"}}</a>
           </div>
         </div>
         <div class="col m8 s12">
@@ -38,7 +38,7 @@
   <template name="myRes">
     <div class="card-panel">
       <div class="row">
-        <h3>Vos réservations</h3>
+        <h3>{{_ "profile.bookings.title"}}</h3>
         <ul class="collection">
           {{#each reservation in reservationsList}}
             {{> myResItem reservation}}
@@ -63,18 +63,18 @@
   <template name="changePass">
     <div class="card-panel">
       <div class="row firstRow">
-      <h4>Changer de mot de passe</h4>
+      <h4>{{_ "profile.change-password.title"}}</h4>
       <form class="chaPas">
           <div class="input-field">
             <input type="password" class="validate" id="oldPassword" name="oldPassword">
-            <label for="oldPassword">Ancien mot de passe</label>
+            <label for="oldPassword">{{_ "profile.change-password.old"}}</label>
           </div>
           <div class="input-field">
             <input type="password" class="validate" id="newPassword" name="newPassword">
-            <label for="newPassword">Nouveau mot de passe</label>
+            <label for="newPassword">{{_ "profile.change-password.new"}}</label>
           </div>
           <div class="col s6">
-            <button type="submit" class="btn red accent-3 confPass">Modifier</button>
+            <button type="submit" class="btn red accent-3 confPass">{{_ "profile.change-password.button"}}</button>
           </div>
       </form>
 

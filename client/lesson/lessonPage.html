@@ -47,15 +47,15 @@
           <div class="col s12 m6 l7">
             <div class="card-panel">
               <div class="row firstRow" style="padding-right:20px;padding-left:20px;">
-                <h4 style="margin-top:10px;">Description</h4>
+                <h4 style="margin-top:10px;">{{_ "lesson.description"}}</h4>
                 <p class="">{{longDesc}}</p>
 
                   <div class="divider"></div>
-                  <h4 style="margin-top:10px;">Adresse</h4>
+                  <h4 style="margin-top:10px;">{{_ "lesson.address"}}</h4>
                   <p><i class="material-icons left">location_on</i>{{address}}</p>
 
                   <div class="divider"></div>
-                  <h4 style="margin-top:10px;">Prochaines séances</h4>
+                  <h4 style="margin-top:10px;">{{_ "lesson.next-classes"}}</h4>
                   <div class="collection center-align">
                     {{#each nextDates}}
                       <a href="#!" class="collection-item nextDate">
@@ -110,12 +110,12 @@
 
             <div class="row center-align">
               <button id="reservation" class="waves-effect waves-teal btn cyan darken-2">
-                Reserver
+                {{_ "lesson.booking-button"}}
               </button>
             </div>
           </div>
             <div class="card-panel white-text green">
-              <b>{{earning}} points à gagner avec ce cours !</b>
+              <b>{{earning}} {{_ "lesson.points-card"}}</b>
             </div>
           {{/with}}
         </div>

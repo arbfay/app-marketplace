@@ -3,13 +3,13 @@
     <div class="container v-align-transform">
       <div class="row">
         <div class="col m10 push-m1 s12 center-align">
-          <h3 class="mb8 uppercase white-text">Réservez votre place<br> <span class="animation-container">
+          <h3 class="mb8 uppercase white-text">{{_ "homepage.headline.line1"}}<br> <span class="animation-container">
                   <span class="words">yoga</span><b class="vh"></b>
                   <span class="words">・pilates</span><b class="vh"></b>
                   <span class="words">・tai chi</span>
                 </span></h3>
-                <h5 class="mb8 uppercase white-text">Et gagnez des cadeaux
-                  en vous dépensant
+                <h5 class="mb8 uppercase white-text">
+                  {{_ "homepage.headline.line2"}}
                 </h5>
           <div class="row">
             {{> searchbar}}
@@ -30,7 +30,7 @@
   <div class="section grey lighten-4">
     <div class="container">
       <center>
-        <h3 class="feature-bloc">Les prochains cours</h3>
+        <h3 class="feature-bloc">{{_ "homepage.next-classes"}}</h3>
       </center>
       <div class="row">
         <ul>
@@ -55,9 +55,9 @@
               <img alt="Accès facile" src="http://res.cloudinary.com/trys/image/upload/v1479746682/map_npdf8b.png">
             </div>
             <div class="col m8">
-              <h5 class="uppercase bold mb16">Plus de recherches fastidieuses</h5>
+              <h5 class="uppercase bold mb16">{{_ "homepage.features.one"}}</h5>
               <p class="fade-1-4">
-                Des coachs qui donnent des cours partout à Bruxelles et que vous pouvez trouver en un seul endroit. Voilà qui aide.
+                {{_ "homepage.features.one-explain"}}
               </p>
             </div>
           </div>
@@ -69,9 +69,9 @@
                 <img alt="Récompenses" src="http://res.cloudinary.com/trys/image/upload/v1479746682/reward_bbaep0.png">
               </div>
               <div class="col m8">
-                <h5 class="uppercase bold mb16">Rester motivé avec des cadeaux !</h5>
+                <h5 class="uppercase bold mb16">{{_ "homepage.features.two"}}</h5>
                 <p class="fade-1-4">
-                  Pour chaque cours, recevez des points et entrez ainsi dans l'arène. Hissez-vous dans le top 10% et recevez des cadeaux.
+                  {{_ "homepage.features.two-explain"}}
                 </p>
               </div>
             </div>
@@ -86,9 +86,9 @@
               <img alt="Responsable" src="http://res.cloudinary.com/trys/image/upload/v1479746682/responsable_dzam0h.png">
             </div>
             <div class="col m8">
-              <h5 class="uppercase bold mb16">Avec une entreprise qui s'engage</h5>
+              <h5 class="uppercase bold mb16">{{_ "homepage.features.three"}}</h5>
               <p class="fade-1-4">
-                Il ne s'agit pas seulement d'une plateforme, nous nous engageons avec nos coachs pour vous aider à devenir meilleur.
+                {{_ "homepage.features.three-explain"}}
               </p>
             </div>
           </div>
@@ -104,10 +104,10 @@
         <div class="row firstRow ban-text">
           <div class="col l2 hide-on-small-only"></div>
           <div class="col l6 m12 s12">
-            <span class="white-text">Vous êtes professeur de yoga, pilates ou tai chi ?</span>
+            <span class="white-text">{{_ "homepage.band.content"}}</span>
           </div>
           <div class="col l2 m12 s12">
-            <a href="/coaching/become" class="btn red accent-2 white-link">Découvrez Trys >></a>
+            <a href="/coaching/become" class="btn red accent-2 white-link">{{_ "homepage.band.button"}}</a>
           </div>
         </div>
       </center>

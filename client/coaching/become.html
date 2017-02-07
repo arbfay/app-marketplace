@@ -13,11 +13,11 @@
 
     <div class="container v-align-transform">
       <center>
-        <h1 class="white-text">Gérez votre activité <br>Trouvez des clients</h1>
-        <h4 class="white-text">Avec un seul outil dédié pour les professeurs de Yoga, Pilates et Tai Chi</h4>
+        <h1 class="white-text">{{_ "becoming-coach.headline.line1"}} <br> {{_ "becoming-coach.headline.line2"}}</h1>
+        <h4 class="white-text">{{_ "becoming-coach.subheadline"}}</h4>
         <a href="#feature">
           <button class="btn red accent-3">
-            Découvrir <i class="material-icons right">navigate_next</i>
+            {{_ "becoming-coach.cta"}} <i class="material-icons right">navigate_next</i>
           </button>
         </a>
       </center>
@@ -29,19 +29,17 @@
   <div class="row feature-coach-left" id="feature">
     <div class="col m6 s12">
       <div class="ib"><i class="material-icons icon left">dashboard</i></div>
-      <h2>Gérez votre activité</h2>
-      <p class="justify">Notre outil de gestion s’appelle le Coach Panel et il vous permet d’enregistrer vos cours dans notre calendrier,
-        d’inscrire vos clients et leur assigner une de vos cartes. De cette manière, vous pouvez enregistrer les présents lors de chaque
-        cours et leurs cartes seront automatiquement mises à jour. Plus pratique que le papier ou la mémoire ! </p>
+      <h2>{{_ "becoming-coach.section-one.title"}}</h2>
+      <p class="justify">{{_ "becoming-coach.section-one.explanation"}}</p>
       <div class="row">
-        <div class="col m6 s6"><i class="material-icons icon-s left">date_range</i><br>Calendrier</div>
-        <div class="col m6 s6"><i class="material-icons icon-s left">contact_mail</i><br>Clients</div>
-        <div class="col m6 s6"><i class="material-icons icon-s left">list</i><br>Présences</div>
-        <div class="col m6 s6"><i class="material-icons icon-s left">filter_none</i><br>Cartes</div>
+        <div class="col m6 s6"><i class="material-icons icon-s left">date_range</i><br>{{_ "becoming-coach.section-one.features.calendar"}}</div>
+        <div class="col m6 s6"><i class="material-icons icon-s left">contact_mail</i><br>{{_ "becoming-coach.section-one.features.clients"}}</div>
+        <div class="col m6 s6"><i class="material-icons icon-s left">list</i><br>{{_ "becoming-coach.section-one.features.attending"}}</div>
+        <div class="col m6 s6"><i class="material-icons icon-s left">filter_none</i><br>{{_ "becoming-coach.section-one.features.cards"}}</div>
       </div>
       <a href="#join">
         <button class="btn red accent-2">
-          Commencez maintenant <i class="material-icons right">navigate_next</i>
+          {{_ "becoming-coach.section-one.cta"}} <i class="material-icons right">navigate_next</i>
         </button>
       </a>
     </div>
@@ -66,10 +64,9 @@
         background-size: cover;
         ">
         <div class="container" style="vertical-align:middle;">
-          <h4 class="uppercase white-text">Nous participons à la construction d'un monde meilleur</h4>
+          <h4 class="uppercase white-text">{{_ "becoming-coach.section-two.title"}}</h4>
           <p  class="hide-on-small-only" style="font-size:18px;">
-            Nous le savons, une activité physique régulière fait de nous une personne meilleure sur le plan de la santé, mais sur le plan humain aussi.
-            En aidant un maximum de personnes à excercer régulièrement une activité physique, c'est le monde entier que nous aidons !
+            {{_ "becoming-coach.section-two.explanation"}}
           </p>
         </div>
         </div>
@@ -82,17 +79,15 @@
     </div>
     <div class="col m6 s12">
       <div class="ib"><i class="material-icons icon right">web</i></div>
-      <h2>Trouvez de nouveaux clients</h2>
-      <p class="justify">Tous vos cours enregistrés sur l’outil de gestion sont automatiquement répertoriés sur notre plateforme
-        où les utilisateurs peuvent les trouver et effectué des réservations. Lors de chaque réservation, vous serez avertis
-         par e-mail et le nom de l’inscrit sera affiché sur la liste de présence du cours automatiquement. Une pierre, deux coups !</p>
+      <h2>{{_ "becoming-coach.section-three.title"}}</h2>
+      <p class="justify">{{_ "becoming-coach.section-three.explanation"}}</p>
       <div class="row">
-        <div class="col m6 s6"><i class="material-icons icon-s left">location_searching</i><br>Référencement</div>
-        <div class="col m6 s6"><i class="material-icons icon-s left">payment</i><br>Paiement en ligne</div>
+        <div class="col m6 s6"><i class="material-icons icon-s left">location_searching</i><br>{{_ "becoming-coach.section-three.features.indexed"}}</div>
+        <div class="col m6 s6"><i class="material-icons icon-s left">payment</i><br>{{_ "becoming-coach.section-three.features.payment"}}</div>
       </div>
       <a href="#join">
         <button class="btn red accent-2">
-          Commencez maintenant <i class="material-icons left">navigate_before</i>
+          {{_ "becoming-coach.section-three.cta"}} <i class="material-icons left">navigate_before</i>
         </button>
       </a>
     </div>
@@ -100,18 +95,15 @@
 
   <div class="row firstRow cyan darken-2 white-text feature-bloc">
     <center>
-      <h4 class="center-align uppercase white-text" >Nous sommes là pour vous aider</h4>
+      <h4 class="center-align uppercase white-text" >{{_ "becoming-coach.section-four.title"}}</h4>
       <div class="col m4 s12">
         <div class=" center-align">
             <div class="center-align">
                 <i class="material-icons" style="font-size:350%;">group_work</i>
-                <h5 class="uppercase white-text">Achats groupés</h5>
+                <h5 class="uppercase white-text">{{_ "becoming-coach.section-four.cols.one.title"}}</h5>
             </div>
             <p class="justify">
-                Nous rassemblons un nombre important
-                de professionnels, ce qui permet d'effectuer
-                des achats groupés et de réduire ainsi les coûts
-                pour tous les participants à l'achat.
+                N{{_ "becoming-coach.section-four.cols.one.explanation"}}
             </p>
         </div>
       </div>
@@ -119,14 +111,10 @@
         <div class="center-align">
               <div class="center-align">
                   <i class="material-icons" style="font-size:350%;">share</i>
-                  <h5 class="uppercase white-text">Réseau</h5>
+                  <h5 class="uppercase white-text">{{_ "becoming-coach.section-four.cols.two.title"}}</h5>
               </div>
               <p class="justify">
-                Nous organisons des rencontres
-                entre enseignants afin de vous
-                donner l'opportunité de rencontrer
-                d'autres passionés et de partager vos
-                 bonnes pratiques.
+                {{_ "becoming-coach.section-four.cols.two.explanation"}}
               </p>
           </div>
       </div>
@@ -134,31 +122,25 @@
         <div class="center-align">
             <div class="center-align">
                 <i class="material-icons" style="font-size:350%;">help_outline</i>
-                <h5 class="uppercase white-text">Soutien</h5>
+                <h5 class="uppercase white-text">{{_ "becoming-coach.section-four.cols.three.title"}}</h5>
             </div>
             <p class="justify">
-                Si vous rencontrez des difficultés
-                dans votre activité, nous pourrons
-                vous soutenir et vous aider à les surmonter
-                grâce à notre réseau notamment.
+                {{_ "becoming-coach.section-four.cols.three.explanation"}}
             </p>
         </div>
       </div>
       <a href="#join">
         <button class="btn red accent-2">
-          Rejoindre <i class="material-icons right">navigate_next</i>
+          {{_ "becoming-coach.section-four.cta"}} <i class="material-icons right">navigate_next</i>
         </button>
       </a>
     </center>
   </div>
 
   <div class="row feature-bloc">
-    <h4 class="center-align uppercase">Comment ça marche ?</h4>
+    <h4 class="center-align uppercase">{{_ "becoming-coach.section-five.title"}}</h4>
     <div class="container">
-      <p class="justify">Si vous donnez déjà des cours, vous pouvez rejoindre la plateforme immédiatement et gratuitement.
-        Nous pouvons exister grâce à une commission prélevée sur chaque réservation effectuée via la plateforme, ce qui
-        signifie que nous sommes payés au résultat. Une fois inscrit, nous rentrerons en contact avec vous afin de recueillir
-         vos données bancaires. </p>
+      <p class="justify">{{_ "becoming-coach.section-five.explanation"}}</p>
 
         <div class="row firstRow white-text">
           <div class="col s6">
@@ -166,8 +148,8 @@
               <center>
                 <div class="ib"><i class="material-icons icon-white white-text">dashboard</i></div>
                 <div class="row">
-                  <h4 class="uppercase white-text"><b>GRATUIT</b></h4>
-                  <p>L'outil de gestion est gratuit à l'utilisation ! Toutes vos séances enregistrées sont par ailleurs automatiquement référencées sur la plateforme.</p>
+                  <h4 class="uppercase white-text"><b>{{_ "becoming-coach.section-five.features.one.title"}}</b></h4>
+                  <p>{{_ "becoming-coach.section-five.features.one.explanation"}}</p>
                 </div>
               </center>
             </div>
@@ -178,7 +160,7 @@
                 <div class="row">
                   <div class="ib"><i class="material-icons icon-white white-text">web</i></div>
                   <h4 class="uppercase white-text">0,25€ + 15%</h4>
-                  <p>Paiement au résultat ! La commission s'applique sur chaque réservation effectuée via la plateforme et se calcule par rapport au prix de la place.</p>
+                  <p>{{_ "becoming-coach.section-five.features.two.explanation"}}</p>
                 </div>
             </center>
             </div>
@@ -192,53 +174,53 @@
   <div class="row feature-bloc" id="join">
     <div class="col m6 hide-on-small-only">
       <div class="container">
-        <h4 class="uppercase">Des questions ?</h4>
+        <h4 class="uppercase">{{_ "becoming-coach.contact.title"}}</h4>
         <p>
-          Vous pouvez nous joindre directement à nos bureaux, par e-mail ou <b>via le chat</b> pour plus d'informations.
+          {{_ "becoming-coach.contact.explanation"}}
         </p>
         <hr>
         <p>
-            Rue de la Science 23
-            <br> 1000 Bruxelles
+            {{_ "becoming-coach.contact.address.street"}}
+            <br> {{_ "becoming-coach.contact.address.zip"}}
         </p>
         <hr>
         <p>
-            <strong>E-mail:</strong> vincent@trys.be
+            <strong>{{_ "becoming-coach.contact.email"}}</strong> vincent@trys.be
             <br>
         </p>
       </div>
     </div>
     <div class="col m6 s12">
       <div class="container">
-        <h4 class="center-align uppercase">Commencer maintenant</h4>
-        <form class="form-email" id="form" data-success="Merci d'avoir rempli ce formulaire, nous rentrerons en contact très prochainement"
-            data-error="Veuillez remplir l'ensemble des champs correctement, s'il vous plaît.">
+        <h4 class="center-align uppercase">{{_ "becoming-coach.contact.form.title"}}</h4>
+        <form class="form-email" id="form" data-success='{{_ "becoming-coach.contact.form.data-success"}}'
+            data-error='{{_ "becoming-coach.contact.form.data-error"}}'>
             <div class="row">
               <div class="input-field col s6">
                 <input id="lastName" type="text" class="validate" required>
-                <label for="lastName">Nom</label>
+                <label for="lastName">{{_ "becoming-coach.contact.form.lastname"}}</label>
               </div>
               <div class="input-field col s6">
                 <input id="firstName" type="text" class="validate" required>
-                <label for="firstName">Prénom</label>
+                <label for="firstName">{{_ "becoming-coach.contact.form.firstname"}}</label>
               </div>
             </div>
 
             <div class="row">
               <div class="input-field col s12">
                 <input id="email" type="email" class="validate" required value="{{email}}">
-                <label for="email">Adresse e-mail</label>
+                <label for="email">{{_ "becoming-coach.contact.form.email"}}</label>
               </div>
             </div>
 
             <div class="row">
               <div class="input-field col s6">
                 <input id="phone" type="text" class="validate">
-                <label for="phone">Téléphone</label>
+                <label for="phone">{{_ "becoming-coach.contact.form.phone"}}</label>
               </div>
               <div class="input-field col s6">
                 <input id="city" type="text" class="validate">
-                <label for="city">Commune où vous excercez</label>
+                <label for="city">{{_ "becoming-coach.contact.form.city"}}</label>
               </div>
             </div>
             <div class="row">
@@ -254,13 +236,13 @@
             <div class="row">
               <div class="input-field col s6">
                 <input id="password" type="password" class="validate">
-                <label for="password">Choisissez un mot de passe</label>
+                <label for="password">{{_ "becoming-coach.contact.form.password"}}</label>
               </div>
             </div>
             {{/if}}
             <div class="row">
               <div class="col s6">
-                <button type="submit" class="btn-1 btn-border-2">Commencer</button>
+                <button type="submit" class="btn-1 btn-border-2">{{_ "becoming-coach.contact.form.button"}}</button>
               </div>
             </div>
         </form>

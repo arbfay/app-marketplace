@@ -1,0 +1,55 @@
+{
+  "cpSideMenu" : {
+    "home":"Accueil",
+    "profile":"Profil Coach",
+    "classes":"Cours",
+    "clients":"Clients",
+    "contact":"Ligne Directe"
+  },
+  "cpHome" : {
+    "welcome":"Bienvenue",
+    "nextClasses":"Vos prochains cours",
+    "nextClasses_tooltip":"Ce sont les 3 cours à venir.",
+    "noClasses":"Aucun cours à venir. Vous devriez en ajouter !",
+    "stats":"Statistiques",
+    "stats_tooltip":"Les statistiques ne sont pas encore disponibles. Plus tard, ils vous permettront de savoir comment se porte votre activité.",
+    "stats_clients":"clients",
+    "stats_bookings":"réservations Trys",
+    "stats_classes":"cours à venir",
+    "noStats":"Rien à afficher.",
+    "info_title":"Il vaut mieux le savoir",
+    "info_default":"Toutes les séances sur votre Panneau de Gestion sont automatiquement référencées sur le site web pour que les utilisateurs puissent réserver leur place."
+  },
+  "cpLessonCard":{
+    "see":"Voir"
+  },
+  "cpProfile":{
+    "template_tooltip":"Seuls votre photo de profil, votre nom, votre prénom et votre description seront visibles des utilisateurs. Le reste nous sert afin de pouvoir communiquer avec vous.",
+    "lastname":"Nom",
+    "firstname":"Prénom",
+    "email":"E-mail",
+    "phone":"Téléphone",
+    "address":"Adresse",
+    "description":"Description",
+    "update-form_title":"Modifier vos informations",
+    "street":"Rue",
+    "zip":"Code Postal",
+    "city":"Commune",
+    "photo-input_placeholder":"Nouvelle photo de profil.",
+    "submit":"Enregistrer"
+  },
+  "cpLessons":{
+    "template_tooltip":"Créez un cours pour commencer. Tous les cours que vous enregistrez ici sont automatiquement référencés sur la plateforme Trys pour que les utilisateurs puissent effectuer des réservations. Si vous constatez un problème, signez le le plus rapidement possible.",
+    "buttons":{
+        "new-lesson":"Créer un cours",
+        "new-lesson_tooltip":"Créez un nouveau cours dans votre activité ?",
+        "problem":"Signaler un problème",
+        "problem_tooltip":"Vous avez constaté un problème ?"
+      },
+    "future-classes":"À venir",
+    "past-classes":"Passés",
+    "no-future-lasses":"Aucun cours à venir. Ajoutez-en un !",
+    "see-more":"Voir plus",
+    "no-past-classes":"Aucun cours passé."
+  }
+}

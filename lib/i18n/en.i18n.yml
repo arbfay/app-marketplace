@@ -1,0 +1,275 @@
+# Homepage
+homepage :
+  headline :
+    line1 : Réservez votre place
+    line2 : Et gagnez des cadeaux en vous dépensant
+  next-classes : Les prochaines cours
+  features :
+    one : Plus de recherches fastidieuses
+    one-explain : Des coachs qui donnent des cours partout à Bruxelles et que vous pouvez trouver en un seul endroit. Voilà qui aide.
+    two : Rester motivé avec des cadeaux !
+    two-explain : Pour chaque cours, recevez des points et entrez ainsi dans l'arène. Hissez-vous dans le top 10% et recevez des cadeaux.
+    three : Avec une entreprise qui s'engage
+    three-explain : Il ne s'agit pas seulement d'une plateforme, nous nous engageons avec nos coachs pour vous aider à devenir meilleur.
+  band :
+    content : Vous êtes professeur de yoga, pilates ou tai chi ?
+    button : Découvrez Trys >>
+# Becoming coach page
+becoming-coach :
+  headline :
+    line1 : Gérez votre activité
+    line2 : Trouvez des clients
+  subheadline : Avec un seul outil dédié pour les professeurs de Yoga, Pilates et Tai Chi
+  cta : Découvrir
+  section-one :
+    title : Gérez votre activité
+    explain : Notre outil de gestion s’appelle le Coach Panel et il vous permet d’enregistrer vos cours dans notre calendrier, d’inscrire vos clients et leur assigner une de vos cartes. De cette manière, vous pouvez enregistrer les présents lors de chaque cours et leurs cartes seront automatiquement mises à jour. Plus pratique que le papier ou la mémoire !
+    features :
+      calendar : Calendrier
+      clients : Clients
+      attending : Présences
+      cards : Cartes
+    cta : Commencez maintenant
+  section-two :
+    title : Nous participons à la construction d'un monde meilleur
+    explanation : Nous le savons, une activité physique régulière fait de nous une personne meilleure sur le plan de la santé, mais sur le plan humain aussi. En aidant un maximum de personnes à excercer régulièrement une activité physique, c'est le monde entier que nous aidons !
+  section-three :
+    title : Trouvez de nouveaux clients
+    explanation : Tous vos cours enregistrés sur l’outil de gestion sont automatiquement répertoriés sur notre plateforme où les utilisateurs peuvent les trouver et effectué des réservations. Lors de chaque réservation, vous serez avertis par e-mail et le nom de l’inscrit sera affiché sur la liste de présence du cours automatiquement. Une pierre, deux coups !
+    features :
+      indexed : Référencement
+      payment : Paiement en ligne
+    cta : Commencez maintenant
+  section-four :
+    title : Nous sommes là pour vous aider
+    cols :
+      one :
+        title : Achats groupés
+        explanation : Nous rassemblons un nombre important de professionnels, ce qui permet d'effectuer des achats groupés et de réduire ainsi les coûts pour tous les participants à l'achat.
+      two :
+        title : Réseau
+        explanation : Nous organisons des rencontres entre enseignants afin de vous donner l'opportunité de rencontrer d'autres passionés et de partager vos bonnes pratiques.
+      three :
+        title : Soutien
+        explanation : Si vous rencontrez des difficultés dans votre activité, nous pourrons vous soutenir et vous aider à les surmonter grâce à notre réseau notamment.
+    cta : Rejoindre
+  section-five :
+    title : Comment ça marche ?
+    explanation : Si vous donnez déjà des cours, vous pouvez rejoindre la plateforme immédiatement et gratuitement. Nous pouvons exister grâce à une commission prélevée sur chaque réservation effectuée via la plateforme, ce qui signifie que nous sommes payés au résultat. Une fois inscrit, nous rentrerons en contact avec vous afin de recueillir vos données bancaires.
+    features :
+      one :
+        title : GRATUIT
+        explanation : L'outil de gestion est gratuit à l'utilisation ! Toutes vos séances enregistrées sont par ailleurs automatiquement référencées sur la plateforme.
+      two :
+        title : Commission
+        explanation : Paiement au résultat ! La commission s'applique sur chaque réservation effectuée via la plateforme et se calcule par rapport au prix de la place.
+  contact :
+    title : Des questions ?
+    explanation : Vous pouvez nous joindre directement à nos bureaux, par e-mail ou via le chat pour plus d'informations.
+    address :
+      street : Rue de la Science 23
+      zip : 1000 Bruxelles
+    email : E-mail
+  form :
+    title : Commencer maintenant
+    data-success : Merci d'avoir rempli ce formulaire, nous rentrerons en contact très prochainement
+    data-error : Veuillez remplir l'ensemble des champs correctement, s'il vous plaît.
+    lastname : Nom
+    firstname : Prénom
+    email : Adresse e-mail
+    phone : Téléphone
+    city : Commune où vous exercez
+    password : Choisissez un mot de passe
+    button : Commencer
+# All processes related to authentication
+authentication :
+  email : Adresse e-mail
+  password : Mot de passe
+  data-error : Ceci n'est pas une adresse valide.
+  login :
+    title : Se connecter
+    button : Se connecter
+    signup : Pas encore inscrit ?
+    forgot : Mot de passe oublié ?
+  signup :
+    title : Devenir membre
+    agreement :
+      i : J'accepte les
+      conditions : Conditions Générales d'Utilisation
+    button : S'inscrire
+    login :
+      line1 : Déjà membre ?
+      line2 : Connectez-vous par ici !
+  forgot :
+    title : Réinitialiser votre mot de passe
+    explanation : Saisissez l'adresse e-mail associée à votre compte. Nous vous enverrons un lien par e-mail pour réinitialiser votre mot de passe.
+    button : Envoyer le lien de réinitialisation
+    done : Le lien de réinitialisation a été envoyé à l'adresse e-mail
+# Search page
+search :
+  nextTo : À proximité de...
+  button : Chercher
+  see-more : Afficher plus
+# Lesson page
+lesson :
+  description : Description
+  address : Adresse
+  next-classes : Prochaines séances
+  booking-button : Reserver
+  points-card : points à gagner avec ce cours !
+# Profile page
+profile :
+  headline : Bienvenue
+  subheadline : Surtout n'hésitez pas à nous dire ce que vous pensez de nous via le chat en bas à droite.
+  sideMenu :
+    infos : Mes infos
+    bookings : Mes réservations
+    change-password : Changer de mot de passe
+    logout : Se déconnecter
+  bookings :
+    title : Vos réservations
+  change-password :
+    title : Changer de mot de passe
+    old : Ancien mot de passe
+    new : Nouveau mot de passe
+    button : Modifier
+  edit :
+    title : Vos informations
+    lastname : Nom
+    firstname : Prénom
+    street : Rue
+    zip : Code postal
+    city : Commune
+    birthdate : Date de naissance
+    phone : Téléphone
+    button : Modifier
+# checkout
+checkout :
+  buttons :
+    cancel : Annuler
+    payment : Paiement
+# Coaching Panel
+cpSideMenu :
+  home : Home
+  profile : Coach profile
+  classes : Classes
+  clients : Direct line
+cpHome :
+  welcome : Welcome
+  nextClasses : Your next classes
+  nextClasses_tooltip : These are your next 3 classes
+  noClasses : No coming courses. You should add some of them !
+  stats : Statistics
+  stats_tooltip : They are not yet available. Later they will give you the opportunity to track your activity.
+  stats_clients : Clients
+  stats_bookings : Bookings on Trys
+  stats_classes : Coming classes
+  noStats : Nothing to show.
+  info_title : Good to know
+  info_default : All the classes on your Coach Panel are automatically indexed on the website so that users can book their sit.
+cpLessonCard :
+  see : See
+cpProfile :
+  template_tooltip : Only your profile picture, your last name, your first name et your description are public data.
+  lastname : Last Name
+  firstname : First Name
+  email : Email
+  phone : Phone Number
+  address : Address
+  description : Description
+  update-form_title : Update your profile
+  street : Street
+  zip : Zip code
+  city : City
+  photo-input_placeholder : New profile picture
+  submit : Submit
+cpLessons :
+  template_tooltip : Begin by adding your first class ! All the classes you add here are automatically indexed on the website so that users can book their sits.
+  buttons :
+    new-lesson : Add a class
+    new-lesson_tooltip : Add a new class in your panel ?
+    problem : Report a problem
+    problem_tooltip : Have you encountered a problem ?
+  future-classes : Coming
+  past-classes : Past
+  no-future-classes : No coming classes. Add one !
+  see-more : See more
+  no-past-classes : No past classes.
+cpLesson :
+  buttons :
+    return : Retour
+    cancel : Annuler le cours
+    cancel_tooltip : Le cours ne pourra finalement pas être donné ?
+    edit : Modifier le cours
+    edit_tooltip : Les informations sont incorrectes ?
+    duplicate : Dupliquer le cours
+    duplicate_tooltip : Plutôt que de créer un nouveau cours avec le même titre et la même addresse que ce cours, pourquoi pas simplement copier celui-ci avec de nouvelles dates ?
+  short-desc : Courte description
+  long-desc : Longue description
+  location : Lieu
+  instructions : Instructions supplémentaires
+  attending-list :
+    title : Liste des participants
+    tooltip : Vous pouvez retrouver ici les utilisateurs Trys, qui ont effectué une réservation pour votre cours, ainsi que vos clients que vous avez inscrits vous-même. Idéal pour faire la liste des présences !
+    trys-user : utilisateurs
+    client : votre client
+    no-client : Aucun inscrit.
+    button-add : Inscrire un client
+cpLessonDuplicate :
+  buttons :
+    return : Retour
+    submit : Confirmer
+  title : Dupliquer un cours à une nouvelle date
+  subtitle : Vous pouvez multiplier les dates de vos cours en dupliquant plusieurs fois.
+  form :
+    category : Catégorie
+    price : Prix par participant
+    attend : Nombre de participants
+    duration : Durée (en minutes)
+    commission : Calcul de la commission par réservation sur Trys
+    repeat : Répéter 5 fois
+    instructions : Instructions supplémentaires
+cpLessonInsert :
+  buttons :
+    return : Retour
+    submit : Enregistrer
+  title : Nouveau cours
+  form :
+    title : Titre du cours (ex: XIntense Accro Yoga)
+    short-desc : Courte description (max. 150 lettres)
+    long-desc : Longue description (max. 1000 lettres)
+    address : Rue et N°
+    zip : Code postal
+    city : Commune
+    price : Prix par participant
+    attend : Nombre de participants
+    duration : Durée (en minutes)
+    commission : Calcul de la commission par réservation sur Trys
+    repeat : Répéter 5 fois
+    instructions : Instructions supplémentaires (Exemple: bâtiment avec porte rose, apporter son propre matériel, ...)
+    photo : Télécharger 1 photo pour illustrer votre cours.
+cpLessonInsertAttendees :
+  title : Inscrire un client au cours
+  form :
+    input : Nom ou prénom du client
+    from-card : Retirer 1 place sur une carte du client
+    from-card_tooltip : Si le client dispose d'une carte valide, une place lui sera automatiquement retirée. Sinon, le client sera quand même inscrit, et vous recevrez une notification.
+    button : Inscrire
+cpClients :
+  tooltip : Enregistrez ici vos clients réguliers, et créez les cartes que vous vendez habituellement à ces clients. Cela vous permet de les inscrire à vos cours et d'octroyer les bonnes cartes à chacun.
+  subtitle : Vous pouvez gérer vos clients qui n'utilisent pas Trys en les enregistrant ici gratuitement.
+  buttons :
+    add : Nouveau client
+    add_tooltip : Vous avez un nouveau client qui s'est inscrit ?
+    new-card : Créer une carte
+    new-card_tooltip : Vous créez une nouvelle carte ? Exemple : Carte de 10 places valide pendant 6 mois ?
+  table :
+    firstname : Prénom
+    lastname : Nom
+    email : E-mail
+    phone : Tél
+    actions : Actions
+  cards :
+    title : Vos cartes
+    valid : Validité
+    attendings : Places
