@@ -1,3 +1,33 @@
+# Navigation bar
+nav :
+  lang :
+    french : Français
+    dutch : Nederlands
+    english : English
+  ranking : Classement
+  profile : Mon Profil
+  coachPanel : Coach Panel
+  logout : Se deconnecter
+  signup : S'inscrire
+  login : Se connecter
+  becomeCoach : Devenir coach
+# Footer
+foot :
+  home : Accueil
+  about : À propos
+  contact : Contactez-nous
+  blog : Blog "the stretch"
+  faq : FAQ
+  join : Join Us
+  follow : Suivez-nous
+  rights : Tous droits réservés.
+  version : Version 1.1.0
+  feedback : Donner un feedback
+# Erreur 404
+err404 :
+  error : Erreur 404
+  line1 : Cette page semble ne pas exister.
+  line2 : Peut-être que vous apprécierez cette petite parodie par contre !
 # Homepage
 homepage :
   headline :
@@ -143,11 +173,21 @@ profile :
     birthdate : Date de naissance
     phone : Téléphone
     button : Modifier
+# ranking
+ranking :
+  line1 : Vous disposez de
+  line 2 : points.
+  empty : Le classement n'est pas encore disponible.
 # checkout
 checkout :
   buttons :
     cancel : Annuler
     payment : Paiement
+    myprofile : Mon Profil
+  confirmed : Votre paiement a été accepté.
+  thankyou : Merci d'avoir réservé votre place avec Trys !
+  meet : Rendez-vous
+  at : à l'adresse
 # Coaching Panel
 cpSideMenu :
   home : Home

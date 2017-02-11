@@ -1,12 +1,11 @@
 <template name="ranking">
   <div class="row">
     <div class="container" style="padding-top:10vh;">
-      <p class="center-align flow-text">Vous disposez de {{points}} points.</p>
+      <p class="center-align flow-text">{{_ "ranking.line1"}} {{points}} {{_ "ranking.line2"}}</p>
       <div class="center-align" style="
         color:#9e9e9e;
       "><i class="material-icons" style="font-size:200px;">poll</i></div>
-      <p class="center-align flow-text">Le classement n'est pas encore
-        disponible.</p>
+      <p class="center-align flow-text">{{_ "ranking.empty"}}</p>
     </div>
   </div>
 </template>

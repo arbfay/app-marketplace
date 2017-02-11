@@ -1,8 +1,8 @@
 <template name="navbar">
   <ul id="languages" class="dropdown-content">
-    <li><a href="#!">Français</a></li>
-    <li><a href="#!">Nederlands</a></li>
-    <li><a href="#!">English</a></li>
+    <li><a href="#!">{{_ "nav.lang.french"}}</a></li>
+    <li><a href="#!">{{_ "nav.lang.dutch"}}</a></li>
+    <li><a href="#!">{{_ "nav.lang.english"}}</a></li>
   </ul>
   {{#if isCoach id=currentUser }}
     {{> navbarCoach}}
@@ -20,16 +20,16 @@
         <i class="material-icons">menu</i>
       </a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="/ranking"><i class="material-icons left">assessment</i>Classement</a></li>
-        <li><a href="/profile"><i class="material-icons left">account_circle</i>Mon profil</a></li>
-          <li><a href="/coaching/panel"><i class="material-icons left">dashboard</i>Coach Panel</a></li>
-          <li><a href="#" class="logoutLink"><i class="fa fa-sign-out left" aria-hidden="true"></i>Se deconnecter</a></li>
+        <li><a href="/ranking"><i class="material-icons left">assessment</i>{{_ "nav.ranking"}}</a></li>
+        <li><a href="/profile"><i class="material-icons left">account_circle</i>{{_ "nav.profile"}}</a></li>
+          <li><a href="/coaching/panel"><i class="material-icons left">dashboard</i>{{_ "nav.coachPanel"}}</a></li>
+          <li><a href="#" class="logoutLink"><i class="fa fa-sign-out left" aria-hidden="true"></i>{{_ "nav.logout"}}</a></li>
       </ul>
       <ul class="side-nav" id="mobile-demo">
-          <li><a href="/ranking"><i class="material-icons left">assessment</i>Classement</a></li>
-          <li><a href="/profile"><i class="material-icons left">account_circle</i>Mon profil</a></li>
-          <li><a href="/coaching/panel"><i class="material-icons left">dashboard</i>Coach Panel</a></li>
-          <li><a href="#" class="logoutLink"><i class="fa fa-sign-out left" aria-hidden="true"></i>Se deconnecter</a></li>
+          <li><a href="/ranking"><i class="material-icons left">assessment</i>{{_ "nav.ranking"}}</a></li>
+          <li><a href="/profile"><i class="material-icons left">account_circle</i>{{_ "nav.profile"}}</a></li>
+          <li><a href="/coaching/panel"><i class="material-icons left">dashboard</i>{{_ "nav.coachPanel"}}</a></li>
+          <li><a href="#" class="logoutLink"><i class="fa fa-sign-out left" aria-hidden="true"></i>{{_ "nav.logout"}}</a></li>
         </ul>
       </div>
     </nav>
@@ -47,14 +47,14 @@
         <i class="material-icons">menu</i>
       </a>
       <ul  class="right hide-on-med-and-down">
-        <li><a href="/ranking"><i class="material-icons left">assessment</i>Classement</a></li>
-        <li><a href="/profile"><i class="material-icons left">account_circle</i>Mon profil</a></li>
-          <li><a href="#" class="logoutLink"><i class="fa fa-sign-out left" aria-hidden="true"></i>Se deconnecter</a></li>
+        <li><a href="/ranking"><i class="material-icons left">assessment</i>{{_ "nav.ranking"}}</a></li>
+        <li><a href="/profile"><i class="material-icons left">account_circle</i>{{_ "nav.profile"}}</a></li>
+          <li><a href="#" class="logoutLink"><i class="fa fa-sign-out left" aria-hidden="true"></i>{{_ "nav.logout"}}</a></li>
       </ul>
       <ul id="mobile-demo" class="side-nav">
-        <li><a href="/ranking"><i class="material-icons left">assessment</i>Classement</a></li>
-        <li><a href="/profile"><i class="material-icons left">account_circle</i>Mon profil</a></li>
-          <li><a href="#" class="logoutLink"><i class="fa fa-sign-out left" aria-hidden="true"></i>Se deconnecter</a></li>
+        <li><a href="/ranking"><i class="material-icons left">assessment</i>{{_ "nav.ranking"}}</a></li>
+        <li><a href="/profile"><i class="material-icons left">account_circle</i>{{_ "nav.profile"}}</a></li>
+          <li><a href="#" class="logoutLink"><i class="fa fa-sign-out left" aria-hidden="true"></i>{{_ "nav.logout"}}</a></li>
         </ul>
       </div>
     </nav>
@@ -69,15 +69,15 @@
           <i class="material-icons">menu</i>
         </a>
         <ul  class="right hide-on-med-and-down">
-          <li><a href="/login">Se connecter</a></li>
-          <li><a href="/signup" class="btn waves-effect waves-light red accent-2">S'inscrire</a></li>
-          <li><a href="/coaching/become">Devenir coach</a></li>
+          <li><a href="/login">{{_ "nav.signup"}}</a></li>
+          <li><a href="/signup" class="btn waves-effect waves-light red accent-2">{{_ "nav.login"}}</a></li>
+          <li><a href="/coaching/become">{{_ "nav.becomeCoach"}}</a></li>
 
         </ul>
         <ul id="mobile-demo" class="side-nav">
-            <li><a href="/login">Se connecter</a></li>
-            <li><a href="/signup" class="btn waves-effect waves-light red accent-2">S'inscrire</a></li>
-            <li><a href="/coaching/become">Devenir coach</a></li>
+            <li><a href="/login">{{_ "nav.signup"}}</a></li>
+            <li><a href="/signup" class="btn waves-effect waves-light red accent-2">{{_ "nav.login"}}</a></li>
+            <li><a href="/coaching/become">{{_ "nav.becomeCoach"}}</a></li>
           </ul>
         </div>
       </nav>

@@ -1,9 +1,9 @@
 <template name="reservationRecap">
-    <div class="white-text" style="height:35vh;width:100vw;background-color:#81c784; ">
+    <div class="white-text booking-ban">
       <h2 class="center-align white-text" style="padding-top:20px;"><i class="material-icons" style="font-size:46px;">check_circle</i></h2>
-      <h3 class="center-align white-text">Votre paiement a été accepté.</h3>
-      <h5 class="center-align white-text">Merci d'avoir réservé votre place avec Trys !</h5>
-      <h3 class="center-align white-text">+ 50 points</h3>
+      <h3 class="center-align white-text">{{_ "checkout.confirmed"}}</h3>
+      <h5 class="center-align white-text">{{_ "checkout.thankyou"}}</h5>
+      <h3 class="center-align white-text"></h3>
     </div>
 
     <div class="container" style="margin-top:30px;">
@@ -14,13 +14,13 @@
       </div>
 
       <div class="row">
-        <h4>Rendez-vous {{timeFromNow}}<br>
-            à l'adresse : {{addressToString}}</h4>
+        <h4>{{_ "checkout.meet"}} {{timeFromNow}}<br>
+            {{_ "checkout.at"}} : {{addressToString}}</h4>
       </div>
 
       <div class="row">
         <button class="btn cyan darken-3 center-align myProfile">
-          Mon profil
+          {{_ "checkout.buttons.myprofile"}}
         </button>
       </div>
     </div>

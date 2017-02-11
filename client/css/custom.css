@@ -277,6 +277,12 @@ display:inline-block;
   border-radius:2px !important;
 }
 
+.booking-ban{
+  height:35vh;
+  width:100vw;
+  background-color:#81c784;
+}
+
 #myProgress {
     position: relative;
     width: 100%;
