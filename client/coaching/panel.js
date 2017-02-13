@@ -1,4 +1,59 @@
+attendingsLeft = function(client){
+  console.log(client);
+  if(client.cards){
+    var cards = client.cards;
+    cards.sort(function(ca,cb){
+      return cb.attendingsLeft-ca.attendingsLeft;
+    });
+    if(cards[0]){
+        var i = parseInt(cards[0].attendingsLeft);
+        Session.set('atLe', {cards : true,
+                i : i});
+    }
+    else {
+      Session.set('atLe', {cards : false,
+              i : 0});
+    }
+  } else {
+      Session.set('atLe', {cards : false,
+            i : 0});
+  }
+};
 
+getClientByNames = function(fullname, callback){
+  var names = fullname.split(" ");
+  var lastName = names[0];
+  var firstName=names[1];
+  for(var i=1;i<names.length;i++){
+    if(names[i+1]){firstName += " "+names[i+1];}
+  }
+  var client = Clients.findOne({lastName:lastName,
+                                firstName:firstName,});
+  if(!client){
+    lastName = names[0] +" "+ names[1];
+    firstName=names[2];
+    for(var i=2;i<names.length;i++){
+      if(names[i+1]){firstName += " "+names[i+1];}
+    }
+    client = Clients.findOne({lastName:lastName,
+                              firstName:firstName,});
+  }
+  if(!client){
+    lastName = names[0] +" "+ names[1]+" "+names[2];
+    firstName=names[3];
+    for(var i=3;i<names.length;i++){
+      if(names[i+1]){firstName += " "+names[i+1];}
+    }
+    client = Clients.findOne({lastName:lastName,
+                              firstName: firstName});
+  }
+  console.log(client);
+
+
+  if(callback){callback(client);}
+
+  return client;
+};
 
 geocode = function(address){
   if(GoogleMaps.loaded()){
@@ -771,6 +826,25 @@ Template.coachingPanelAttendingList.events({
   }
 });
 
+Template.coachingPanelLessonInsertAttendees.helpers({
+  sitsLeft : function(){
+    var name = Session.get('autocomplete-input');
+    if(name){
+      //var res = attendingsLeft(getClientByNames(name));
+      var c = getClientByNames(name, attendingsLeft);
+      var res = Session.get('atLe');
+      if(!res){return '';}
+
+      if(res.cards){
+        return res.i +" "+ TAPi18n.__("cpClient.cards.sitsLeft", {}, lang_tag=null);
+      } else if (!res.cards) {
+        return "No card.";
+      }
+    } else {
+      return '';
+    }
+  }
+})
 
 Template.coachingPanelLessonInsertAttendees.events({
   "click .btnReturn" : function(event){
@@ -779,35 +853,9 @@ Template.coachingPanelLessonInsertAttendees.events({
   },
   "submit #newAttendee": function(event){
     event.preventDefault();
-
-    var name=$("#autocomplete-input").val();
-    var names = name.split(" ");
-    var lastName = names[0];
-    var firstName=names[1];
-    for(var i=1;i<names.length;i++){
-      if(names[i+1]){firstName += " "+names[i+1];}
-    }
     var fromCard = event.target.fromCard.checked;
-    var client = Clients.findOne({lastName:lastName,
-                                  firstName:firstName,});
-    if(!client){
-      lastName = names[0] +" "+ names[1];
-      firstName=names[2];
-      for(var i=2;i<names.length;i++){
-        if(names[i+1]){firstName += " "+names[i+1];}
-      }
-      client = Clients.findOne({lastName:lastName,
-                                firstName:firstName,});
-    }
-    if(!client){
-      lastName = names[0] +" "+ names[1]+" "+names[2];
-      firstName=names[3];
-      for(var i=3;i<names.length;i++){
-        if(names[i+1]){firstName += " "+names[i+1];}
-      }
-      client = Clients.findOne({lastName:lastName,
-                                firstName: firstName});
-    }
+    var name = $("#autocomplete-input").val();
+    var client = getClientByNames(name);
 
     if(!client){
         Materialize.toast("Ce client n'existe pas.",4000,'rounded');

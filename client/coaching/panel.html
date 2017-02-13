@@ -729,8 +729,11 @@
            <form id="newAttendee">
              <div class="input-field col s12">
                <i class="material-icons prefix">person</i>
-               <input type="text" id="autocomplete-input" class="autocomplete">
+               <input type="text" id="autocomplete-input" class="autocomplete" onchange="Session.set('autocomplete-input', $('#autocomplete-input').val())" onclick="Session.set('autocomplete-input', $('#autocomplete-input').val())">
                <label for="autocomplete-input">{{_ "cpLessonInsertAttendees.form.input"}}</label>
+             </div>
+             <div class="input-field col s12">
+               <span id="sitsLeftInCards">{{sitsLeft}}</span>
              </div>
              <div class="input-field col s12">
                 <input type="checkbox" name="fromCard" value="true" id="fromCard" />
@@ -754,11 +757,10 @@
     for (var i =0;i<clients.length;i++){
       var lastName=clients[i].lastName+" "+clients[i].firstName;
       data[lastName]=null;
-
     }
     $('input.autocomplete').autocomplete({
       data:data
-  });
+    });
   </script>
 
   <script>
