@@ -88,6 +88,11 @@ geocode = function(address){
   }
 };
 
+translate = function(lang){
+  TAPi18n.setLanguage(lang);
+  moment.locale(lang);
+}
+
 Template.coachingPanel.helpers({
   coachProfile:function(){
     var coachEmail = Accounts.user().emails[0].address;
@@ -158,7 +163,14 @@ Template.coachingPanel.events({
     event.preventDefault();
     BlazeLayout.render('coachingPanel', {content:'coachingPanelContact'});
   },
-
+  "click .trans_en" : function(event){
+    event.preventDefault();
+    translate("en");
+  },
+  "click .trans_fr" : function(event){
+    event.preventDefault();
+    translate("fr");
+  }
 });
 
 Template.coachingPanelHome.helpers({

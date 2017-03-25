@@ -225,7 +225,7 @@ Template.lessonConfirmationCard.helpers({
 
     var coachEmail = lesson.coachEmail;
     Meteor.subscribe('matchingCoachByMail', coachEmail);
-    var coach = Coaches.findOne();
+    var coach = Coaches.findOne({email:coachEmail});
     Session.set("coach", coach);
 
     var coachId = coach._id;
@@ -248,7 +248,13 @@ Template.lessonConfirmationCard.helpers({
 
   },
   imgUrl : function(){
-    var lesson = Session.get("lesson");
+    var lessonId = FlowRouter.getParam('lessonId');
+    var lesson = Lessons.findOne({_id:lessonId});
+    if (lesson){
+      return lesson.imgUrl;
+    } else {
+      return "";
+    }
     return lesson.imgUrl;
   },
   shortDesc : function(){

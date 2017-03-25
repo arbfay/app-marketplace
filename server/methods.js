@@ -130,14 +130,8 @@ Meteor.methods({
 
      UserProfiles.insert(data);
 
-     SSR.compileTemplate('htmlEmail', Assets.getText('welcome-email.html'));
-
-     Email.send({
-        to: data.email,
-        from: "Fayçal de Trys <faycal@trys.be>",
-        subject: "Mot de bienvenue et petite question",
-        html: SSR.render('htmlEmail',{}),
-      });
+    sendRegularEmail(data,'welcome-email.html',
+                        "Fayçal de Trys <faycal@trys.be>","Mot de bienvenue et petite question");
 
      return true;
    },
@@ -160,14 +154,8 @@ Meteor.methods({
 
      UserProfiles.insert(data);
 
-     SSR.compileTemplate('htmlEmail', Assets.getText('welcome-coach-email.html'));
-
-     Email.send({
-        to: data.email,
-        from: "Fayçal de Trys <faycal@trys.be>",
-        subject: "Vous avez maintenant accès au Trys Coach Panel !",
-        html: SSR.render('htmlEmail',{}),
-      });
+     sendRegularEmail(data,'welcome-coach-email.html',
+                        "Team Trys <contact@trys.be>","Vous avez maintenant accès au Trys Coach Panel !");
 
    },
    updateUserProfile : function(id,data){
@@ -501,9 +489,9 @@ Meteor.methods({
      var reservationDate = moment(reservation.createdAt);
      reservationDate = reservationDate.format("dddd DD MMMM, HH:mm");
      var lessonDate = moment(lesson.date);
-     SSR.compileTemplate('htmlEmail', Assets.getText('billing-email.html'));
 
      var data = {
+       email : userProfile.email,
        coachName:coachNames,
        firstName:userProfile.firstName,
        lastName:userProfile.lastName,
@@ -519,16 +507,11 @@ Meteor.methods({
        duration:lesson.duration,
      };
 
-     Email.send({
-        to: userProfile.email,
-        from: "Team Trys <faycal@trys.be>",
-        subject: "Votre réservation sur Trys",
-        html: SSR.render('htmlEmail',data),
-      });
-
-      SSR.compileTemplate('coachEmail', Assets.getText('reservation-email.html'));
+     sendRegularEmail(data,'billing-email.html',
+                         "Team Trys <contact@trys.be>","Votre réservation sur Trys");
 
       var dataTwo = {
+        email : coachProfile.email,
         lessonTitle:lesson.title,
         firstName:userProfile.firstName,
         lastName:userProfile.lastName,
@@ -536,12 +519,8 @@ Meteor.methods({
         timeForHuman:lessonDate.format('HH:mm'),
       };
 
-      Email.send({
-         to: userProfile.email,
-         from: "Team Trys <faycal@trys.be>",
-         subject: "Nouvelle réservation sur Trys",
-         html: SSR.render('coachEmail',dataTwo),
-       });
+     sendRegularEmail(dataTwo,'reservation-email.html',
+                         "Team Trys <contact@trys.be>","Nouvelle réservation sur Trys");
 
      return true;
    },
@@ -575,19 +554,23 @@ Meteor.methods({
       var relUrl = "reset-password/"+token;
       var resetPasswordUrl = Meteor.absoluteUrl(relUrl);
 
-      SSR.compileTemplate('htmlEmail', Assets.getText('reset-password-email.html'));
-
       var data = {
         resetPasswordUrl:resetPasswordUrl,
         email:email,
       };
 
-      Email.send({
-         to: email,
-         from: "Trys <contact@trys.be>",
-         subject: "Mot de passe oublié ?",
-         html: SSR.render('htmlEmail',data),
-       });
-
+      sendRegularEmail(data,'reset-password-email.html',
+                          "Trys <contact@trys.be>","Mot de passe oublié ?");
     },
 });
+
+sendRegularEmail = function (data, htmlFile, from, subject){
+  SSR.compileTemplate('htmlEmail', Assets.getText(htmlFile));
+
+  Email.send({
+     to: data.email,
+     from: from,
+     subject: subject,
+     html: SSR.render('htmlEmail',{}),
+   });
+};

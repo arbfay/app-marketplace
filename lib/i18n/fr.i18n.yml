@@ -176,7 +176,7 @@ profile :
 # ranking
 ranking :
   line1 : Vous disposez de
-  line 2 : points.
+  line2 : points.
   empty : Le classement n'est pas encore disponible.
 # checkout
 checkout :
@@ -193,8 +193,9 @@ cpSideMenu :
   home : Accueil
   profile : Profil Coach
   classes : Cours
-  clients : Clients
+  clients : Étudiants
   contact : Ligne Directe
+  translate : Traduire
 cpHome :
   welcome : Bienvenue
   nextClasses : Vos prochains cours
@@ -357,8 +358,8 @@ cpClientUpdate :
     cancel : Annuler
 cpContact :
   title : Contact rapide
-  subtitle : Vous pouvez nous joindre rapidement en nous visitant, par téléphone ou <b>via le chat direct.</b>
-  address : Rue de la Science 23 <br> 1000 Bruxelles
+  subtitle : Vous pouvez nous joindre rapidement en nous visitant, par téléphone ou via le chat direct.
+  address : Rue de la Science 23, 1000 Bruxelles
   phone : Téléphone
   form :
     title : Formulaire

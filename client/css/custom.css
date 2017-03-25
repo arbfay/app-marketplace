@@ -15,6 +15,7 @@
   padding-top:5px;
   padding-bottom:3px;
 }
+
 .menu-coach-panel{
   background-color:#292929 !important;
   color:#ffffff !important;
@@ -361,4 +362,14 @@ footer{
 @keyframes animatetop {
     from {top: -300px; opacity: 0}
     to {top: 0; opacity: 1}
+}
+
+.transBar {
+  color : #757575;
+  font-size:18px;
+}
+
+.tranBar a {
+  font-style: none;
+  font-size: 30px;
 }
