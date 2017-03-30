@@ -55,7 +55,7 @@ becoming-coach :
   cta : Découvrir
   section-one :
     title : Gérez votre activité
-    explain : Notre outil de gestion s’appelle le Coach Panel et il vous permet d’enregistrer vos cours dans notre calendrier, d’inscrire vos clients et leur assigner une de vos cartes. De cette manière, vous pouvez enregistrer les présents lors de chaque cours et leurs cartes seront automatiquement mises à jour. Plus pratique que le papier ou la mémoire !
+    explanation : Notre outil de gestion s’appelle le Coach Panel et il vous permet d’enregistrer vos cours dans notre calendrier, d’inscrire vos clients et leur assigner une de vos cartes. De cette manière, vous pouvez enregistrer les présents lors de chaque cours et leurs cartes seront automatiquement mises à jour. Plus pratique que le papier ou la mémoire !
     features :
       calendar : Calendrier
       clients : Clients

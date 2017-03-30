@@ -13,6 +13,7 @@ calcEarning=function(d,n){
 
 
 Template.searchResults.onCreated(()=>{
+
   var template = Template.instance();
 
   if(! GoogleMaps.loaded()){
@@ -189,7 +190,7 @@ Template.searchResults.helpers({
       var l = template.searchLocation.get();
       return {
         center: new google.maps.LatLng(l.coordinates[1], l.coordinates[0]),
-        zoom: 13,
+        zoom: 14,
         styles : [
           {"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},
           {"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},

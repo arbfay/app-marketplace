@@ -1,7 +1,7 @@
 
 Template.lessonMap.onRendered(function() {
   GoogleMaps.ready('lessonMap', function(map) {
-    var res = Session.get('lesson');
+    var res = Lessons.findOne();
     if(res)
       {var geospatial = res.geospatial;
       var coord = geospatial.coordinates;
@@ -33,7 +33,7 @@ Template.lessonMap.helpers({
       var geo = lesson.geospatial;
       return {
         center: new google.maps.LatLng(geo.coordinates[1], geo.coordinates[0]),
-        zoom: 14,
+        zoom: 12,
         styles : [
           {"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},
           {"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},
