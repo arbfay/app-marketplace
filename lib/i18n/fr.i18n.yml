@@ -10,7 +10,9 @@ nav :
   logout : Se deconnecter
   signup : S'inscrire
   login : Se connecter
-  becomeCoach : Devenir coach
+  becomeCoach : Vous enseignez ?
+  home: Accueil
+  contact : Contactez-nous
 # Footer
 foot :
   home : Accueil
@@ -138,6 +140,7 @@ authentication :
 # Search page
 search :
   nextTo : À proximité de...
+  nextToNav : Rechercher à proximité de...
   button : Chercher
   see-more : Afficher plus
 # Lesson page

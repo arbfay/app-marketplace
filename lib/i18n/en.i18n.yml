@@ -11,6 +11,8 @@ nav :
   signup : Sign in
   login : Log in
   becomeCoach : Become coach
+  home : Home
+  contact : Contact us
 # Footer
 foot :
   home : Home

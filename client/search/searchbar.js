@@ -26,3 +26,16 @@ Template.searchbarForResults.events({
 Template.searchbarForResults.onRendered(function(){
   $("#address").val(FlowRouter.getQueryParam('address'));
 });
+
+Template.searchbarNav.events({
+  "submit .search-bar-nav" (event, template){
+    event.preventDefault();
+
+    var c=event.target.address.value;
+    analytics.track("Search", {
+      eventName: "Homepage",
+    });
+    event.target.address.value = '';
+    FlowRouter.go('/search',{},{address:c});
+  }
+});
