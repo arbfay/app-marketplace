@@ -134,6 +134,7 @@ Template.coachingPanel.helpers({
     return {
       firstName:up.firstName,
       lastName:up.lastName,
+      coachEmail : coachEmail,
       imgUrl:imgUrl,
     };
   },
