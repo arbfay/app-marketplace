@@ -1,3 +1,7 @@
+var settings = Meteor.settings.private.MailChimp,
+   chimp    = new MailChimp( settings.apiKey, { version: '2.0' } ),
+   listId   = settings.listId;
+
 Meteor.methods({
   count:function(collectionName){
      if(collectionName==="lessons"){
@@ -130,8 +134,21 @@ Meteor.methods({
 
      UserProfiles.insert(data);
 
-    sendRegularEmail(data,'welcome-email.html',
-                        "Fayçal de Trys <faycal@trys.be>","Mot de bienvenue et petite question");
+     //sendRegularEmail(data,'welcome-email.html',
+    //                    "Fayçal de Trys <faycal@trys.be>","Mot de bienvenue et petite question");
+
+      try {
+           var subscribe = chimp.call( 'lists', 'subscribe', {
+             id: listId,
+             email: {
+               email: data.email,
+             }
+           });
+
+          return subscribe;
+     } catch( exception ) {
+       return exception;
+     }
 
      return true;
    },

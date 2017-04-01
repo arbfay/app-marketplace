@@ -12,5 +12,11 @@
   "kadira": {
     "appId": "b7ZRbumoEvnvp33zL",
     "appSecret": "e1a4180e-73e6-44a6-90e4-f9595637a5af"
+  },
+  "private": {
+    "MailChimp" : {
+      "apiKey": "f3cafdadc98c8247f6d9edba1d391750-us10",
+      "listId": "933ab40990"
+    }
   }
 }
