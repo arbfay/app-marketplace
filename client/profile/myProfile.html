@@ -1,24 +1,29 @@
 <template name="myProfile">
-  {{> navbar}}
-  <div class="grey lighten-4">
+  {{> newNavbar}}
+
+  <div class="grey lighten-4 background-profile-page">
     <div class="container">
       <div class="row firstRow">
-        <div class="card-panel">
-          <div class="row firstRow">
-              <h3 class="valign">
-                {{_ "profile.headline"}} {{firstName}},</h3>
-              <h5>{{_ "profile.subheadline"}}</h5>
-            </div>
+        <div class="col s12 m12">
+          <div class="card-panel">
+            <div class="row firstRow">
+                <h3 class="valign">
+                  {{_ "profile.headline"}} {{firstName}},</h3>
+                <h5>{{_ "profile.subheadline"}}</h5>
+              </div>
+          </div>
         </div>
       </div>
 
       <div class="row firstRow">
         <div class="col m4 s12">
-          <div class="collection">
-            <a href="#!" class="collection-item myInfo">{{_ "profile.sideMenu.infos"}}</a>
-            <a href="#!" class="collection-item myRes">{{_ "profile.sideMenu.bookings"}}</a>
-            <a href="#!" class="collection-item changePass">{{_ "profile.sideMenu.change-password"}}</a>
-            <a href="#!" class="collection-item logOut">{{_ "profile.sideMenu.logout"}}</a>
+          <div class="card">
+            <ul>
+              <li><a href="#!" class="collection-item side-nav-link myInfo">{{_ "profile.sideMenu.infos"}}</a></li>
+              <li><a href="#!" class="collection-item side-nav-link myRes">{{_ "profile.sideMenu.bookings"}}</a></li>
+              <li><a href="#!" class="collection-item side-nav-link changePass">{{_ "profile.sideMenu.change-password"}}</a></li>
+              <li><a href="#!" class="collection-item side-nav-link logOut">{{_ "profile.sideMenu.logout"}}</a></li>
+            </ul>
           </div>
         </div>
         <div class="col m8 s12">
