@@ -1,6 +1,6 @@
-var settings = Meteor.settings.private.MailChimp,
-   chimp    = new MailChimp( settings.apiKey, { version: '2.0' } ),
-   listId   = settings.listId;
+//var settings = Meteor.settings.private.MailChimp,
+//   chimp    = new MailChimp( settings.apiKey, { version: '2.0' } ),
+//   listId   = settings.listId;
 
 Meteor.methods({
   count:function(collectionName){
