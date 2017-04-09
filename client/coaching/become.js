@@ -20,7 +20,7 @@ Template.becomeCoach.events({
               +"Commune : "+city+"<br>"
               +"Discipline : "+category+"<br>";
 
-    Meteor.call("sendMail","contact@trys.be",email,"Message/inscription d'un coach",text,
+    Meteor.call("sendMail","contact@trys.be",email,"Inscription d'un coach",text,
             (err,res)=>{
               if(err){
                 Materialize.toast("Problème avec l'envoi de l'email : "+err,4000,'rounded');

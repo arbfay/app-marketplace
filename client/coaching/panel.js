@@ -1028,17 +1028,20 @@ Template.coachingPanelLessonInsert.events({
      var instructions = t.instructions.value;
      var maxAttendees = t.maxAttendees.value;
      var price=t.price.value;
-     var date = t.date.value;
      var time = t.time.value;
-     var repeat = t.recurrent.checked;
 
      var attendeesList = "";
 
      //Composition of the address
      var address = street+" , "+zip+" "+city;
      //Date in milliseconds since 1st january 1970
-     var dateInMilli = dateInUnix(date,time);
-
+     var datesInMilli=new Array();
+     var datepicks = $('#multiple-calendar').DatePickerGetDate();
+     var dates = datepicks[0];
+     var r = dates.length;
+     for(i=0;i<r;i++){
+       datesInMilli.push(dateInUnix(dates[i],time));
+     }
      //Pricing
      var commission=0.25;
      commission += price*0.15;
@@ -1076,10 +1079,7 @@ Template.coachingPanelLessonInsert.events({
        Session.set('loc',loc);
      }
 
-     var r=0;
-     if(repeat){
-       r=5;
-     }
+
 
      var image = document.getElementById('photo').files[0];
      var reader = new FileReader();
@@ -1103,9 +1103,9 @@ Template.coachingPanelLessonInsert.events({
            console.log(response);
 
                var location = Session.get('loc');
-               var d = dateInMilli;
-                for(var i = 0; i<=r;i++){
-                  d = dateInMilli + i*604800000;
+               var d = datesInMilli;
+                for(var i = 0; i<r;i++){
+                  d = datesInMilli[i];
                   var toInsert={
                     imgUrl:imgUrl,
                     title:title,
@@ -1138,7 +1138,6 @@ Template.coachingPanelLessonInsert.events({
 
                 t.maxAttendees='';
                 t.price.value='';
-                t.date.value='';
                 t.time.value='';
          }
 
@@ -1175,12 +1174,16 @@ Template.coachingPanelLessonDuplicate.events({
        var instructions = t.instructions.value;
        var maxAttendees = t.maxAttendees.value;
        var price=t.price.value;
-       var date = t.date.value;
        var time = t.time.value;
-       var repeat = t.recurrent.checked;
 
        //Date in milliseconds since 1st january 1970
-       var dateInMilli = dateInUnix(date,time);
+       var datesInMilli=new Array();
+       var datepicks = $('#multiple-calendar').DatePickerGetDate();
+       var dates = datepicks[0];
+       var r = dates.length;
+       for(i=0;i<r;i++){
+         datesInMilli.push(dateInUnix(dates[i],time));
+       }
 
        //Pricing
        var commission=0.25;
@@ -1188,24 +1191,18 @@ Template.coachingPanelLessonDuplicate.events({
 
        maxAttendees= parseInt(maxAttendees);
 
-       var r=0;
-       if(repeat){
-         r=5;
-       }
-
-
       var toInsert = lesson;
-      delete toInsert._id;
-      toInsert.date=dateInMilli;
-      toInsert.duration=duration;
-      toInsert.maxAttendeesLeft=maxAttendees;
-      toInsert.price=price;
-      toInsert.commission=commission;
-      toInsert.createdAt=new Date();
-      toInsert.updatedAt=new Date();
-      toInsert.instructions = instructions;
+        delete toInsert._id;
+        toInsert.date=datesInMilli[0];
+        toInsert.duration=duration;
+        toInsert.maxAttendeesLeft=maxAttendees;
+        toInsert.price=price;
+        toInsert.commission=commission;
+        toInsert.createdAt=new Date();
+        toInsert.updatedAt=new Date();
+        toInsert.instructions = instructions;
       for(var i = 0; i<=r;i++){
-        toInsert.date = dateInMilli + i*604800000;
+        toInsert.date = datesInMilli[i];
 
         Meteor.call("insertLessonByCoach", toInsert, (err,res)=>{
          if(res){
@@ -1216,7 +1213,6 @@ Template.coachingPanelLessonDuplicate.events({
         });
       }
 
-      t.date.value='';
       t.time.value='';
      }
 });
@@ -1250,7 +1246,10 @@ Template.coachingPanelContact.events({
 });
 
 dateInUnix = function(date,time){
-  var str = date+" "+time;
+  var str = moment(date);
+  var t = ""+time; t = t.split(':');
+  str.set('hour', t[0]);
+  str.set('minute', t[1]);
   if(!time){
     var m = moment(str,['DD-MM-YYYY','MM-DD-YYYY','YYYY-DD-MM','YYYY-MM-DD']);
   } else {

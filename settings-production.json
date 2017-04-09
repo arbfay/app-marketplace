@@ -17,6 +17,12 @@
     "MailChimp" : {
       "apiKey": "f3cafdadc98c8247f6d9edba1d391750-us10",
       "listId": "933ab40990"
+    },
+    "oAuth" : {
+      "facebook":{
+        "apiId" :"743688789123679",
+        "secret":"5938a2fa5226b250ddba62d48c40e499"
+      }
     }
   }
 }

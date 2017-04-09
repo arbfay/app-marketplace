@@ -290,7 +290,7 @@ cpLessonInsert :
     attend : Nombre de participants
     duration : Durée (en minutes)
     commission : Calcul de la commission par réservation sur Trys
-    repeat : Répéter 5 fois
+    repeat : Séléctionnez toutes les dates durant lesquelles ce cours aura lieu.
     instructions : Instructions supplémentaires (Exemple: bâtiment avec porte rose, apporter son propre matériel, ...)
     photo : Télécharger 1 photo pour illustrer votre cours.
 cpLessonInsertAttendees :

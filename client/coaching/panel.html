@@ -526,15 +526,13 @@
             {{_ "cpLessonDuplicate.form.commission"}} <br>
             <b><span class="commissionValue">2</span> €</b>
           </div>
-          <div class="input-field col s6 m4">
-            <i class="material-icons prefix">today</i>
-            <input id="date" type="date" class="datepicker" required>
-            <label for="date"></label>
-          </div>
-          <div class="input-field col s6 m4 center-align">
-            <input type="checkbox" id="recurrent" />
-            <label for="recurrent">
-              <i class="material-icons">replay_5</i>{{_ "cpLessonDuplicate.form.repeat"}}</label>
+          <div class="input-field col s12 m8">
+            <div class="col s6 m6">
+              <p class="flow-text">{{_ "cpLessonInsert.form.repeat"}}</p>
+            </div>
+            <div class="col s6 m6">
+              <div id="multiple-calendar"></div>
+            </div>
           </div>
           <div class="input-field col s6 m4">
             <i class="material-icons prefix">schedule</i>
@@ -564,7 +562,13 @@
       commission += price*0.15;
 
       $('.commissionValue').replaceWith('<span class="commissionValue">'+commission+'</span>');
-    }
+    };
+
+    $('#multiple-calendar').DatePicker({
+      mode: 'multiple',
+      inline: true,
+      calendars: 1,
+    });
 
   </script>
 
@@ -655,15 +659,13 @@
             Calcul de la commission par réservation sur Trys <br>
             <b><span class="commissionValue">2</span> €</b>
           </div>
-          <div class="input-field col s6 m4">
-            <i class="material-icons prefix">today</i>
-            <input id="date" type="date" class="datepicker" required>
-            <label for="date"></label>
-          </div>
-          <div class="input-field col s6 m4 center-align">
-            <input type="checkbox" id="recurrent" />
-            <label for="recurrent">
-              <i class="material-icons">replay_5</i>{{_ "cpLessonInsert.form.repeat"}}</label>
+          <div class="input-field col s12 m8">
+            <div class="col s6 m6">
+              <p class="flow-text">{{_ "cpLessonInsert.form.repeat"}}</p>
+            </div>
+            <div class="col s6 m6">
+              <div id="multiple-calendar"></div>
+            </div>
           </div>
           <div class="input-field col s6 m4">
             <i class="material-icons prefix">schedule</i>
@@ -704,7 +706,13 @@
       commission += price*0.15;
 
       $('.commissionValue').replaceWith('<span class="commissionValue">'+commission+'</span>');
-    }
+    };
+
+    $('#multiple-calendar').DatePicker({
+      mode: 'multiple',
+      inline: true,
+      calendars: 1,
+    });
 
   </script>
 
