@@ -3,6 +3,14 @@
 </template>
 
 <template name="lessonPage">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.8&appId=743688789123679";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
   {{#with lesson}}
     <div class="section" style="
                               height:60vh;
@@ -27,12 +35,12 @@
 
     <div class="row grey lighten-5 firstRow">
       <div class="container">
-        <div class="row">
-          <div style="padding-top:30px;">
+        <div class="row" style="padding-top:30px;">
+          <div class="col s12 m7">
             {{#with coach}}
               <div class="card-panel">
                 <div class="row firstRow">
-                  <img src="{{coachImgUrl}}" alt="Photo de profil" class="circle left" width="70px;" style="margin-right:10px;">
+                  <img src="{{coachImgUrl}}" alt="Photo de profil" class="circle left" width="70px;" height="70px;" style="margin-right:10px;">
                   <span class="title"><a href="#">{{coachName}}</a></span>
                   <p>
                     {{description}}
@@ -40,6 +48,17 @@
                 </div>
               </div>
             {{/with}}
+          </div>
+          <div class="col s12 m4 offset-m1">
+            <div class="card-panel">
+              <div class="row firstRow">
+                  <h5>Aller avec un ami</h5>
+                  <!--Email input form
+                  <hr>-->
+                  <div class="fb-share-button" data-href="{{currentUrl}}" data-layout="button" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+                  <div class="fb-send" data-href="{{currentUrl}}" data-layout="button_count"></div>
+              </div>
+            </div>
           </div>
         </div>
 

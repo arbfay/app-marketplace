@@ -1,3 +1,63 @@
+var ogMeta = function(description, url, title, img) {
+  $('meta[property^="og:"]').remove();
+  $('<meta>', {
+    property: 'og:type',
+    content: 'article'
+  }).appendTo('head');
+  $('<meta>', {
+    property: 'og:site_name',
+    content: location.hostname
+  }).appendTo('head');
+  $('<meta>', {
+    property: 'og:url',
+    content: url
+  }).appendTo('head');
+  $('<meta>', {
+    property: 'og:title',
+    content: title
+  }).appendTo('head');
+  $('<meta>', {
+    property: 'og:description',
+    content: description
+  }).appendTo('head');
+  $('<meta>', {
+    property: 'og:image',
+    content: img
+  }).appendTo('head');
+};
+
+/*var twitterMeta = function(author,url,title,imgUrl){
+  $('meta[property^="twitter:"]').remove();
+  $('<meta>', {
+    property: 'twitter:card',
+    content: 'summary'
+  }).appendTo('head');
+  if (author) {
+    $('<meta>', {
+      property: 'twitter:creator',
+      content: author
+    }).appendTo('head');
+  }
+
+  $('<meta>', {
+    property: 'twitter:url',
+    content: location.origin + location.pathname
+  }).appendTo('head');
+  $('<meta>', {
+    property: 'twitter:title',
+    content: "" + title
+  }).appendTo('head');
+
+  $('<meta>', {
+    property: 'twitter:description',
+    content: description
+  }).appendTo('head');
+  $('<meta>', {
+    property: 'twitter:image',
+    content: img
+  }).appendTo('head');
+}*/
+
 
 Template.lessonMap.onRendered(function() {
   GoogleMaps.ready('lessonMap', function(map) {
@@ -67,7 +127,7 @@ Template.lessonPage.onRendered(function(){
           }
         });
       }
-});
+  });
 
 Template.lessonPage.helpers({
   lesson : function(){
@@ -75,7 +135,11 @@ Template.lessonPage.helpers({
     var lessonId = FlowRouter.getParam('lessonId');
     var lesson = Lessons.findOne(lessonId);
     template.selectedLesson = new ReactiveVar(lesson);
+    ogMeta(lesson.shortDesc,$(location).attr('href'), lesson.title, lesson.imgUrl);
     return lesson;
+  },
+  currentUrl : function(){
+    return $(location).attr('href');
   },
   coach : function(){
     var coachEmail = this.coachEmail;

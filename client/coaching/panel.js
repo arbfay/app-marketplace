@@ -1201,7 +1201,7 @@ Template.coachingPanelLessonDuplicate.events({
         toInsert.createdAt=new Date();
         toInsert.updatedAt=new Date();
         toInsert.instructions = instructions;
-      for(var i = 0; i<=r;i++){
+      for(var i = 0; i<r;i++){
         toInsert.date = datesInMilli[i];
 
         Meteor.call("insertLessonByCoach", toInsert, (err,res)=>{
