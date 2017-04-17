@@ -28,6 +28,21 @@ Meteor.methods({
 
       return 1;
    },
+   newsletterSubscribe : function(email){
+     try {
+          var subscribe = chimp.call( 'lists', 'subscribe', {
+            id: listId,
+            email: {
+              email: email,
+            }
+          });
+
+         return subscribe;
+    } catch( exception ) {
+      return exception;
+    }
+    return false;
+   },
    loginLinkSecure : function(tok,userEmail,emailTo){
      check(tok, 'bonbon');
      var user = Accounts.findUserByEmail(userEmail);

@@ -247,6 +247,28 @@
     padding-left:10px;
 }
 
+
+/** Homepage Css **/
+
+.searchImg{
+  /**height:90vh;
+  width:100vw;
+  background: -moz-linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4)), url(https://res.cloudinary.com/trys/image/upload/v1483362193/Yoga-Class-Picture-2_z42ejp.jpg) no-repeat center center;
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4)), url(https://res.cloudinary.com/trys/image/upload/v1483362193/Yoga-Class-Picture-2_z42ejp.jpg) no-repeat center center;
+  background: -o-linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4)), url(https://res.cloudinary.com/trys/image/upload/v1483362193/Yoga-Class-Picture-2_z42ejp.jpg) no-repeat center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4)), url(https://res.cloudinary.com/trys/image/upload/v1483362193/Yoga-Class-Picture-2_z42ejp.jpg) no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;**/
+  background-color:white;
+  font-weight:600;
+  color:#0097A7;
+}
+
+/** End Homepage CSS **/
+
+
 .icon{
   display: inline-block;
   width: 80px;
@@ -358,11 +380,11 @@
   }
 
 .card-location{
-text-align:right;
-  font-size: 15px;
-  vertical-align: middle;
-clear:left;
-display:inline-block;
+  text-align:right;
+    font-size: 15px;
+    vertical-align: middle;
+  clear:left;
+  display:inline-block;
 }
 
 .card-elem-light{
@@ -410,18 +432,7 @@ display:inline-block;
   text-decoration-color: white;
 }
 
-.searchImg{
-  height:90vh;
-  width:100vw;
-  background: -moz-linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4)), url(https://res.cloudinary.com/trys/image/upload/v1483362193/Yoga-Class-Picture-2_z42ejp.jpg) no-repeat center center;
-  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4)), url(https://res.cloudinary.com/trys/image/upload/v1483362193/Yoga-Class-Picture-2_z42ejp.jpg) no-repeat center center;
-  background: -o-linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4)), url(https://res.cloudinary.com/trys/image/upload/v1483362193/Yoga-Class-Picture-2_z42ejp.jpg) no-repeat center center;
-  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4)), url(https://res.cloudinary.com/trys/image/upload/v1483362193/Yoga-Class-Picture-2_z42ejp.jpg) no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
+
 
 .lesson-card-img {
   height:100%
@@ -604,4 +615,19 @@ footer{
 
 .coach-panel-main-shadow{
   box-shadow : -6px 0px 2px -4px rgba(0,0,0,0.2);
+}
+
+.vert-divider{
+  border-left:1px solid #616161;
+  height:100%;
+  width:10px;
+  margin-left:10px;
+}
+
+.semi-transp-text{
+  color : rgba(255,255,255,0.7);
+}
+.footer-container{
+  width:80% !important;
+  padding-top:20px;
 }

@@ -587,9 +587,253 @@
         {{_ "cpLessonInsert.buttons.return"}}</button>
     </div>
     <div class="card-panel">
-      <h4>{{_ "cpLessonInsert.title"}}</h4>
+      <h2>{{_ "cpLessonInsert.title"}}</h2>
       <div class="row">
         <form id="insertLessonByCoach">
+          <div class="row">
+            <div class="col m4 hide-on-small-only">
+              Choisissez un titre original afin de démarquer ce cours des autres cours.
+            </div>
+            <div class="input-field col s12 m8">
+              <i class="material-icons prefix">title</i>
+              <input id="title" type="text" class="validate" required>
+              <label for="title">{{_ "cpLessonInsert.form.title"}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col m4 hide-on-small-only">
+              Les descriptions courtes sont utilisées sur les récapitulatifs des réservations,
+              les e-mails envoyés aux membres ainsi que sur les réseaux sociaux. Quant aux descriptions longues,
+              elles sont utilisées sur la page du cours visible par les candidats.
+            </div>
+            <div class="row col s12 m8">
+              <div class="input-field">
+                <i class="material-icons prefix">drag_handle</i>
+                <input id="shortDesc" type="text" length="150" class="validate" required>
+                <label for="shortDesc">{{_ "cpLessonInsert.form.short-desc"}}</label>
+              </div>
+              <div class="input-field">
+                <i class="material-icons prefix">view_headline</i>
+                <textarea id="longDesc" length="1000" class="materialize-textarea" required></textarea>
+                <label for="longDesc">{{_ "cpLessonInsert.form.long-desc"}}</label>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col m4 hide-on-small-only">
+              Quelle est la catégorie de ce cours ?
+            </div>
+            <div class="input-field inline col s12 m8" style="margin-top:0px !important;">
+                <input name="category" type="radio" id="yoga" value="Yoga"/>
+                <label for="yoga">Yoga
+                  <span class="vert-divider">&nbsp;</span>
+                </label>
+                <input name="category" type="radio" id="pilates" value="Pilates" />
+                <label for="pilates">Pilates
+                  <span class="vert-divider">&nbsp;</span>
+                </label>
+                <input name="category" type="radio" id="taiChi" value="Tai Chi" />
+                <label for="taiChi">Tai Chi</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col m4 hide-on-small-only">
+              A quel type de connaisseurs s'adresse ce cours ?
+            </div>
+            <div class="input-field inline col s12 m8" style="margin-top:0px !important;">
+                <input name="level" type="radio" id="beginner" value="Beginner"/>
+                <label for="beginner">Débutant
+                  <span class="vert-divider">&nbsp;</span>
+                </label>
+                <input name="level" type="radio" id="intermediate" value="Intermediate" />
+                <label for="intermediate">Intermédiaire
+                  <span class="vert-divider">&nbsp;</span>
+                </label>
+                <input name="level" type="radio" id="advanced" value="Advanced" />
+                <label for="advanced">Avancé
+                  <span class="vert-divider">&nbsp;</span>
+                </label>
+                <input name="level" type="radio" id="all" value="All" />
+                <label for="all">Tous niveaux</label>
+            </div>
+          </div>
+          <div class="row" style="margin-top:2em;">
+            <div class="col m4 hide-on-small-only">
+              Le niveau Mindful indique aux visiteurs le niveau de spiritualité et de
+              philosophie du cours. Exemple : un cours de yoga très orienté autour de l'hindouisme
+              intéresse un public différent d'un cours de yoga sans référence à une religion.
+            </div>
+            <div class="col m8 s12">
+              <p class="range-field">
+                <input type="range" id="mindful" min="0" max="5" />
+                <label for="mindful">Niveau Mindful</label>
+              </p>
+            </div>
+          </div>
+          <div class="row" style="margin-top:2em;">
+            <div class="col m4 hide-on-small-only">
+              Le niveau d'intensité physique représente la quantité d'effort physique à
+              fournir lors du cours. Un faible niveau d'intensité physique sera interprété
+              comme un cours plus "relax".
+            </div>
+            <div class="col m8 s12">
+              <p class="range-field">
+                <input type="range" id="intensity" min="0" max="5" />
+                <label for="intensity">Intensité physique</label>
+              </p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col m4 hide-on-small-only">
+              Le prix que vous choisissez est celui qui sera payé lors des
+              réservations. La commission sera donc prélevée de ce prix.
+            </div>
+            <div class="col m8 s12">
+              <div class="input-field col m4 s12">
+                <i class="material-icons prefix">euro_symbol</i>
+                <input id="price" type="number" max="100" min="5" step="0.1" class="validate baseCalculation" onchange="changeCommission()" required>
+                <label for="price">{{_ "cpLessonInsert.form.price"}}</label>
+              </div>
+              <div class="input-field col m5 s12">
+                Commission par réservation sur Trys <br>
+                <b><span class="commissionValue">-</span> €</b>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col m4 hide-on-small-only">
+              Indiquez ici le nombre de place total que comprend votre cours, incluant vos
+              propres étudiants et clients. Aucun enregistrement au cours, que ce soit par vous-même
+              ou via la plateforme ne sera autorisé une fois la limite atteinte.
+            </div>
+            <div class="col m8 s12">
+              <div class="input-field col m4 s12">
+                <i class="material-icons prefix">people</i>
+                <input id="maxAttendees" type="number" max="30" min="0" class="validate" required>
+                <label for="maxAttendees">{{_ "cpLessonInsert.form.attend"}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col m4 hide-on-small-only">
+              Sélectionnez toutes les dates durant lesquelles ce cours sera donné, ainsi
+              que l'heure et la durée du cours en minute.
+            </div>
+            <div class="col m8 s12">
+              <div class="input-field col m4 s12">
+                <div class="col s12 m6">
+                  <div id="multiple-calendar"></div>
+                </div>
+              </div>
+              <div class="col m6 s12">
+                <div class="input-field">
+                  <i class="material-icons prefix">schedule</i>
+                  <input id="time" class="timepicker" type="time" required>
+                  <label for="time"></label>
+                </div>
+                <div class="input-field">
+                  <i class="material-icons prefix">update</i>
+                  <input id="duration" type="number" min="0" required>
+                  <label for="duration">{{_ "cpLessonInsert.form.duration"}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col m4 hide-on-small-only">
+              Quelle est l'adresse du lieu où sera donné le cours ?
+              Elle doit pouvoir être reconnue par Google Maps. Evitez les
+              numéros de sonnettes ou de boîte par exemple.
+            </div>
+            <div class="col m8 s12">
+              <div class="row">
+                <div class="input-field col s12">
+                  <i class="material-icons prefix">location_on</i>
+                  <input id="street" type="text" class="validate" length="150" required >
+                  <label for="street">{{_ "cpLessonInsert.form.address"}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <i class="material-icons prefix">location_city</i>
+                  <input id="zip" type="text" class="validate" length="5">
+                  <label for="zip">{{_ "cpLessonInsert.form.zip"}}</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="city" type="text" class="validate" length="150" required>
+                  <label for="city">{{_ "cpLessonInsert.form.city"}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col m4 s12">
+              Indiquez toutes les facilités et équipements disponibles sur le lieu du cours
+              afin que les élèves puissent s'organiser de manière efficace.
+            </div>
+            <div class="col m8 s12">
+              <p>
+                <input type="checkbox" id="car" />
+                <label for="car">Parking</label>
+              </p><p>
+                <input type="checkbox" id="bike" />
+                <label for="bike">Parking vélo</label>
+              </p><p>
+                <input type="checkbox" id="dressing" />
+                <label for="dressing">Vestiaire</label>
+              </p>
+              <p>
+                <input type="checkbox" id="shower" />
+                <label for="shower">Douche</label>
+              </p>
+              <p>
+                <input type="checkbox" id="lockers" />
+                <label for="lockers">Casiers</label>
+              </p>
+              <p>
+                <input type="checkbox" id="mat" />
+                <label for="mat">Mats - Tapis</label>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col m4 hide-on-small-only">
+              Les instructions supplémentaires sont données aux personnes ayant réservées
+              au cours uniquement. Elles permettent de donner plus de précisions quant au lieu
+              où à l'habillement par exemple.
+            </div>
+            <div class="col m8 s12">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">add</i>
+                <input id="instructions" type="text" class="validate" length="350">
+                <label for="instructions">{{_ "cpLessonInsert.form.instructions"}}</label>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="input-field col s12">
+            <div class="file-field input-field">
+              <div class="btn cyan darken-3">
+                <i class="material-icons left">insert_photo</i>
+                <span>Photo</span>
+                <input type="file" name="file" id="photo" accept="image/*" required>
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder='{{_ "cpLessonInsert.form.photo"}}'>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="input-field col m4 s6">
+            <button type="submit" form="insertLessonByCoach" class="red accent-3 btn-border-2">
+              <i class="material-icons">done</i>
+              {{_ "cpLessonInsert.buttons.submit"}}</button>
+          </div>
+        </form>
+        <!--<form id="insertLessonByCoach">
           <div class="input-field col s12">
             <i class="material-icons prefix">title</i>
             <input id="title" type="text" class="validate" required>
@@ -694,7 +938,7 @@
               <i class="material-icons">done</i>
               {{_ "cpLessonInsert.buttons.submit"}}</button>
           </div>
-        </form>
+        </form>-->
       </div>
     </div>
   </div>

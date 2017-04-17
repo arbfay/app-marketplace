@@ -1030,6 +1030,18 @@ Template.coachingPanelLessonInsert.events({
      var price=t.price.value;
      var time = t.time.value;
 
+     var level = t.level.value;
+     var mindful = t.mindful.value;
+     var intensity = t.intensity.value;
+     var facilities = {
+       car : document.getElementById('car').checked,
+       bike : document.getElementById('bike').checked,
+       dressing : document.getElementById('dressing').checked,
+       shower : document.getElementById('shower').checked,
+       lockers : document.getElementById('lockers').checked,
+       mat : document.getElementById('mat').checked
+     };
+
      var attendeesList = "";
 
      //Composition of the address
@@ -1122,6 +1134,10 @@ Template.coachingPanelLessonInsert.events({
                     commission:commission,
                     date:d,
                     attendeesList:attendeesList,
+                    level:level,
+                    mindful:mindful,
+                    intensity:intensity,
+                    facilities:facilities,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                   };

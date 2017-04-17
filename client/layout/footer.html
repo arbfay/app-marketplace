@@ -1,12 +1,21 @@
 <template name="footer">
   <footer class="page-footer grey darken-4 white-text" id="footer">
-    <div class="container" style="width:80% !important; padding-top:20px;">
+    <div class="container footer-container">
       <div class="row">
 
         <div class="col m3">
-          <a href="index.html">
-            <img alt="logo" class="image-s" src="http://res.cloudinary.com/trys/image/upload/v1480159863/logo-trys-2-v1.2_txkd6b.png">
-          </a>
+          <!--<div class="input-field row">
+            <label>{{_ "foot.language"}}</label>
+            <select>
+              <option value="actual">{{actualLang}}</option>
+              <option value="other-one">{{otherLangA}}</option>
+            </select>
+          </div>-->
+          <div class="row">
+            <a href="/">
+              <img alt="logo" class="image-s" src="http://res.cloudinary.com/trys/image/upload/v1480159863/logo-trys-2-v1.2_txkd6b.png">
+            </a>
+          </div>
         </div>
 
         <div class="col m3">
@@ -43,8 +52,8 @@
         </div>
       </div>
 
-      <div class="center-align" style="font-size:14px;">
-          <span>© Copyright 2016 Trys - {{_ "foot.rights"}} / {{_ "foot.version"}}</span><br>
+      <div class="center-align">
+          <span class="semi-transp-text">© Copyright 2017 Trys - {{_ "foot.rights"}} / {{_ "foot.version"}}</span><br>
       </div>
     </div>
   </footer>

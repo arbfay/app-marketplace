@@ -1,7 +1,7 @@
 
 
 Template.lessonCard.events({
-  "click .section" : (event,template) => {
+  "click .card" : (event,template) => {
     event.preventDefault();
     var id = template.data._id;
 

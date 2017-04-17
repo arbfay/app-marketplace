@@ -15,6 +15,7 @@ nav :
   contact : Contactez-nous
 # Footer
 foot :
+  language : Langues
   home : Accueil
   about : À propos
   contact : Contactez-nous
@@ -23,7 +24,7 @@ foot :
   join : Join Us
   follow : Suivez-nous
   rights : Tous droits réservés.
-  version : Version 1.1.0
+  version : Version 1.1.3
   feedback : Donner un feedback
 # Erreur 404
 err404 :
@@ -206,7 +207,7 @@ cpHome :
   noClasses : Aucun cours à venir. Vous devriez en ajouter !
   stats : Statistiques
   stats_tooltip : Les statistiques ne sont pas encore disponibles. Plus tard, ils vous permettront de savoir comment se porte votre activité.
-  stats_clients : clients
+  stats_clients : étudiants
   stats_bookings : réservations Trys
   stats_classes : cours à venir
   noStats : Rien à afficher.
@@ -289,9 +290,9 @@ cpLessonInsert :
     price : Prix par participant
     attend : Nombre de participants
     duration : Durée (en minutes)
-    commission : Calcul de la commission par réservation sur Trys
+    commission : Commission par réservation sur Trys
     repeat : Séléctionnez toutes les dates durant lesquelles ce cours aura lieu.
-    instructions : Instructions supplémentaires (Exemple: bâtiment avec porte rose, apporter son propre matériel, ...)
+    instructions : Instructions supplémentaires (Exemple: bâtiment avec porte rose, ...)
     photo : Télécharger 1 photo pour illustrer votre cours.
 cpLessonInsertAttendees :
   title : Inscrire un client au cours

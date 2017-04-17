@@ -24,3 +24,24 @@ Template.footer.events({
         });
   }
 });
+
+Template.footer.helpers({
+  actualLang : function(template){
+    var lang = TAPi18n.getLanguage();
+
+    if(lang==="fr"){
+      return "Français";
+    } else {
+      return "English";
+    }
+  },
+  otherLangA : function(temlpate){
+    var lang = TAPi18n.getLanguage();
+
+    if(lang==="fr"){
+      return "Français";
+    } else {
+      return "English";
+    }
+  }
+})

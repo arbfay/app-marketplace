@@ -15,6 +15,7 @@ nav :
   contact : Contact us
 # Footer
 foot :
+  language : Languages
   home : Home
   about : About us
   contact : Contact us
