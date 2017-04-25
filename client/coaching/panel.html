@@ -666,7 +666,7 @@
             </div>
             <div class="col m8 s12">
               <p class="range-field">
-                <input type="range" id="mindful" min="0" max="5" />
+                <input type="range" id="mindful" min="1" max="5" />
                 <label for="mindful">Niveau Mindful</label>
               </p>
             </div>
@@ -679,7 +679,7 @@
             </div>
             <div class="col m8 s12">
               <p class="range-field">
-                <input type="range" id="intensity" min="0" max="5" />
+                <input type="range" id="intensity" min="1" max="5" />
                 <label for="intensity">Intensité physique</label>
               </p>
             </div>
@@ -797,6 +797,19 @@
                 <input type="checkbox" id="mat" />
                 <label for="mat">Mats - Tapis</label>
               </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col m4 hide-on-small-only">
+              Cette section sert à donner des indications avant la résérvation aux personnes intéressées.
+              Par exemple : "Venez avec une tenue légère et souple ainsi qu'une paire de chaussette. Le reste du matériel est fourni sur place."
+            </div>
+            <div class="col m8 s12">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">add</i>
+                <input id="preparation" type="text" class="validate" length="350">
+                <label for="preparation">{{_ "cpLessonInsert.form.preparation"}}</label>
+              </div>
             </div>
           </div>
           <div class="row">

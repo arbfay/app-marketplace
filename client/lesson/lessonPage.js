@@ -155,11 +155,43 @@ Template.lessonPage.helpers({
       coachImgUrl:url
     };
   },
+  level : function(){
+    var l = this.level;
+    var res="?";
+    switch(l){
+      case "Beginner" : res="Débutant"; break;
+      case "Intermediate" : res="Intermédiaire"; break;
+      case "Advanced" : res="Avancé"; break;
+      case "All" : res="Tous niveaux"; break;
+    }
+    return res;
+  },
   longDesc : function(){
     if(this.longDesc ===""){
       return this.shortDesc;
     } else {
       return this.longDesc;
+    }
+  },
+  facility : function(){
+    if(this.facilities){
+      var f = this.facilities;
+      var str = "";
+
+      for(var i=0; i<f.length ; i++){
+        str += ", "+facilityTranslation(f[i]);
+      }
+      str = str.slice(1,str.length);
+      return str;
+    } else {
+      return 'Aucune';
+    }
+  },
+  preparation : function(){
+    if(this.preparation){
+      return this.preparation;
+    } else {
+      return "Aucune indication.";
     }
   },
   nextDates : function(){
@@ -237,3 +269,7 @@ Template.lessonPage.events({
       }
   },
 });
+
+var facilityTranslation = function(word){
+  return word;
+}

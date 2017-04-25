@@ -58,3 +58,37 @@
     });
   </script>
 </template>
+
+<template name="lessonCard2">
+  <div class="card-panel hoverable">
+      <div class="row firstRow">
+        <div class="col s3">
+          <center class="padding-top-10">
+            {{dayForHuman}}<br>
+            <span class="card-lesson-date">{{dateForHuman}}</span>
+            <br>{{monthForHuman}}<br>
+            <span class="card-lesson-time">{{timeForHuman}}</span>
+          </center>
+        </div>
+        <div class="col s9 vert-divider-left">
+          <div style="padding-left:10px;">
+            <div class="row firstRow">
+              <a href="!#"><span class="card-lesson-title">{{title}}</span></a>
+            </div>
+            <div class="row firstRow">
+              <span class="card-lesson-elements">{{city}}・{{duration}} min・{{price}} €</span>
+            </div>
+            <div class="row firstRow">
+              <span class="card-lesson-elements">{{level}}</span>
+            </div>
+            <div class="row firstRow">
+              <div style="vertical-align:middle;">
+              par {{coachName}}
+              <!--<img src="{{coachImgUrl}}" alt="Photo de profil" class="circle" width="50px;" height="50px;" style="margin-right:10px;">-->
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</template>

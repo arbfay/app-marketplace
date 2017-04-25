@@ -85,6 +85,10 @@ Meteor.publish('namesOfUser', function(email){
   return UserProfiles.find({email : email});
 });
 
+Meteor.publish('userNames', function(email){
+  return UserProfiles.find({email : email},{fields:{firstName:1,lastName:1}});
+});
+
 Meteor.publish('reservationById', function(id){
   return Reservations.find({_id:id});
 });
@@ -105,12 +109,15 @@ Meteor.publish('promoCode', function(code){
 });
 
 Meteor.publish('coachCards',function(coachId){
-
   return CoachCards.find({coachId:coachId});
 });
 
 Meteor.publish('coachClients',function(coachId){
   return Clients.find({coachId:coachId});
+});
+
+Meteor.publish('coachBasics', function(coachEmail){
+  return Coaches.find({email:coachEmail},{fields:{email:1,imgUrl:1,_id:1}});
 });
 
 Meteor.publish('getAllSubmittedLessons', function(){

@@ -923,7 +923,7 @@
        * @see DatePickerGetDate()
        */
       getDate: function() {
-        if (this.size() > 0) {
+        if (this.length > 0) {
           return prepareDate($('#' + $(this).data('datepickerId')).data('datepicker'));
         }
       },

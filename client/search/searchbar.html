@@ -1,15 +1,20 @@
 <template name="searchbar">
-  <form class="search">
-    <div class="col m2">
-    </div>
-    <div class="input-field col m6 s12" style="color:black;">
-      <input type="text" name="address" class="validate-required searchbarMain">
-      <label for="address">&nbsp; {{_ "search.nextTo"}}</label>
-    </div>
-    <div class="col m2 s12">
-      <button type="submit" class="red accent-3 waves-effect waves-light mdl-shadow--2dp" style="border-radius:2px !important;margin-top:13px;">{{_ "search.button"}}</button>
-    </div>
-  </form>
+    <form class="search boxed">
+      <div class="row firstRow">
+        <div class="col m8 s12 vert-divider-2">
+          <div class="input-field" style="padding-left:10px;">
+            <i class="material-icons prefix search-prefix">search</i>
+            <input type="text" name="address" class="validate-required" placeholder='{{_ "search.nextTo"}}'>
+          </div>
+        </div>
+       <div class="col s3 hide-on-med-and-up">&nbsp;</div>
+        <div class="col m4 s6">
+          <div class="container">
+          <button type="submit" class="red accent-2 waves-effect waves-light search-btn">{{_ "search.button"}}</button>
+        </div>
+        </div>
+      </div>
+    </form>
 </template>
 
 <template name="searchbarForResults">
@@ -30,7 +35,7 @@
 <template name="searchbarNav">
   <form class="search-bar-nav">
     <div class="input-field" >
-       
+
       <input type="text" name="address" class="validate-required search-bar-main">
       <label for="address">&nbsp; {{_ "search.nextToNav"}}</label>
       <i class="material-icons prefix">search</i>

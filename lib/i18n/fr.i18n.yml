@@ -36,14 +36,18 @@ homepage :
   headline :
     line1 : Réservez votre place
     line2 : Et gagnez des cadeaux en vous dépensant
-  next-classes : Les prochains cours
+  next-classes : Ça commence bientôt
   features :
-    one : Plus de recherches fastidieuses
-    one-explain : Des coachs qui donnent des cours partout à Bruxelles et que vous pouvez trouver en un seul endroit. Voilà qui aide.
-    two : Rester motivé avec des cadeaux !
-    two-explain : Pour chaque cours, recevez des points et entrez ainsi dans l'arène. Hissez-vous dans le top 10% et recevez des cadeaux.
-    three : Avec une entreprise qui s'engage
-    three-explain : Il ne s'agit pas seulement d'une plateforme, nous nous engageons avec nos coachs pour vous aider à devenir meilleur.
+    one : Des cours près de chez vous
+    one-explain : Des coachs qui donnent des cours partout à Bruxelles et que vous pouvez trouver en un seul endroit, sur notre plateforme.
+    two : La bonne cause pour vous motiver
+    two-explain : Hissez-vous dans le top 10% du classement général mensuel pour recevoir le droit de faire un don, avec nos fonds, à une des associations qui vous sera proposées.
+    three : Une formule ultra-flexible
+    three-explain : Sans abonnement et sans engagement, vous pouvez vous inscrire au cours de votre choix et payer uniquement votre participation à ce cours.
+  tstimonials :
+    one-explain : Je dois avouer que j'ai longtemps payé des abonnements que je n'utilisais au final pas au maximum à d'horaires irréguliers de ma part. Avec Trys je peux maintenant payer uniquement quand je vais à un cours et quand je suis disponible.
+    two-explain : Les coachs sur plateforme sont plein d'énergie.
+    three-explain : Troisième témoignage à mettre en avant.
   band :
     content : Vous êtes professeur de yoga, pilates ou tai chi ?
     button : Découvrez Trys >>
@@ -140,9 +144,9 @@ authentication :
     done : Le lien de réinitialisation a été envoyé à l'adresse e-mail
 # Search page
 search :
-  nextTo : À proximité de...
+  nextTo : Bruxelles
   nextToNav : Rechercher à proximité de...
-  button : Chercher
+  button : Rechercher
   see-more : Afficher plus
 # Lesson page
 lesson :
@@ -293,6 +297,7 @@ cpLessonInsert :
     commission : Commission par réservation sur Trys
     repeat : Séléctionnez toutes les dates durant lesquelles ce cours aura lieu.
     instructions : Instructions supplémentaires (Exemple: bâtiment avec porte rose, ...)
+    preparation : Comment se préparer
     photo : Télécharger 1 photo pour illustrer votre cours.
 cpLessonInsertAttendees :
   title : Inscrire un client au cours

@@ -33,7 +33,7 @@
     </div>
   </div>
 
-    <div class="row grey lighten-5 firstRow">
+    <div class="row background-lesson-page firstRow">
       <div class="container">
         <div class="row" style="padding-top:30px;">
           <div class="col s12 m7">
@@ -66,12 +66,61 @@
           <div class="col s12 m6 l7">
             <div class="card-panel">
               <div class="row firstRow" style="padding-right:20px;padding-left:20px;">
-                <h4 style="margin-top:10px;">{{_ "lesson.description"}}</h4>
-                <p class="">{{longDesc}}</p>
+                  <h3 class="padding-top-10 bold">{{title}}</h3>
+                  <div class="row firstRow">
+                    <div class="col s4 level-body">
+                      <center>
+                        <div class="row firstRow">
+                          <div id="intensitydots"><i class="material-icons level-icon">fiber_manual_record</i></div>
+
+                        </div>
+                      </center>
+                    </div>
+                    <div class="col s4 level-mind">
+                      <center>
+                        <div class="row firstRow">
+                          <div id="mindfuldots"><i class="material-icons level-icon">fiber_manual_record</i></div>
+                        </div>
+                      </center>
+                    </div>
+                    <div class="col s4 level-know">
+                      <center>
+                        <div class="row firstRow">
+                          <span class="lev-i bold level-icon">B</span>
+                        </div>
+                      </center>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <center>
+                      <div class="col s4">
+                        Intensité
+                      </div>
+                      <div class="col s4">
+                        Mindful
+                      </div>
+                      <div class="col s4">
+                        {{level}}
+                      </div>
+                    </center>
+                  </div>
+
+                  <div class="divider"></div>
+                  <h4 style="margin-top:10px;">{{_ "lesson.description"}}</h4>
+                  <p class="">{{longDesc}}</p>
 
                   <div class="divider"></div>
                   <h4 style="margin-top:10px;">{{_ "lesson.address"}}</h4>
                   <p><i class="material-icons left">location_on</i>{{address}}</p>
+
+                  <div class="divider"></div>
+                  <h4 style="margin-top:10px;">Facilités</h4>
+                  <p>{{facility}}</p>
+                  <!--<div class="facilities">{{facility}}</div>-->
+
+                  <div class="divider"></div>
+                  <h4 style="margin-top:10px;">Comment se préparer</h4>
+                  <p>{{preparation}}</p>
 
                   <div class="divider"></div>
                   <h4 style="margin-top:10px;">{{_ "lesson.next-classes"}}</h4>
@@ -133,9 +182,9 @@
               </button>
             </div>
           </div>
-            <div class="card-panel white-text green">
+            <!--<div class="card-panel white-text green">
               <b>{{earning}} {{_ "lesson.points-card"}}</b>
-            </div>
+            </div>-->
           {{/with}}
         </div>
       </div>
@@ -153,5 +202,38 @@
       </div>
     </div>
   </div>
+  <script>
+    var lesson = Lessons.findOne(FlowRouter.getParam('lessonId'));
+    var int = lesson.intensity;
+    var mind = lesson.mindful;
+    var lev = lesson.level;
+
+    if(int){
+      var dot = '<i class="material-icons level-icon">fiber_manual_record</i>';
+      var dots='';
+      for(var i = 0; i<int;i++){
+        dots += dot;
+      }
+      $("#intensitydots").html(dots);
+    }
+
+    if(mind){
+      var dot = '<i class="material-icons level-icon">fiber_manual_record</i>';
+      var dots='';
+      for(var i = 0; i<mind;i++){
+        dots += dot;
+      }
+      $("#mindfuldots").html(dots);
+    }
+
+    if(lev){
+      switch(lev) {
+        case "Beginner" : $(".lev-i").html('<span class="lev-i bold level-icon">B</span>'); break;
+        case "Intermediate" : $(".lev-i").html('<span class="lev-i bold level-icon">I</span>'); break;
+        case "Advanced" : $(".lev-i").html('<span class="lev-i bold level-icon">A</span>'); break;
+        case "All" : $(".lev-i").html('<span class="lev-i bold level-icon">T</span>'); break;
+      }
+    }
+  </script>
 {{/with}}
 </template>

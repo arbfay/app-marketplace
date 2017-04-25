@@ -1026,6 +1026,7 @@ Template.coachingPanelLessonInsert.events({
      var zip = t.zip.value;
      var city = t.city.value;
      var instructions = t.instructions.value;
+     var preparation = t.preparation.value;
      var maxAttendees = t.maxAttendees.value;
      var price=t.price.value;
      var time = t.time.value;
@@ -1033,14 +1034,34 @@ Template.coachingPanelLessonInsert.events({
      var level = t.level.value;
      var mindful = t.mindful.value;
      var intensity = t.intensity.value;
-     var facilities = {
-       car : document.getElementById('car').checked,
-       bike : document.getElementById('bike').checked,
-       dressing : document.getElementById('dressing').checked,
-       shower : document.getElementById('shower').checked,
-       lockers : document.getElementById('lockers').checked,
-       mat : document.getElementById('mat').checked
-     };
+     var facilities =[];
+
+     var flist = ['car','bike', 'dressing', 'shower', 'lockers', 'mat'];
+
+     for(var i=0; i< flist.length; i++){
+       if(document.getElementById(flist[i]).checked){
+         switch (flist[i]) {
+           case 'car':
+             facilities.push("Parking");
+             break;
+           case 'bike':
+             facilities.push("Parking vélo");
+             break;
+           case 'dressing':
+             facilities.push("Vestiaire");
+             break;
+           case 'shower':
+             facilities.push("Douche");
+             break;
+           case 'lockers':
+             facilities.push("Casiers");
+             break;
+           case 'mat':
+             facilities.push("Mats");
+             break;
+         }
+       }
+     }
 
      var attendeesList = "";
 
@@ -1128,6 +1149,7 @@ Template.coachingPanelLessonInsert.events({
                     coachEmail:coachEmail,
                     address:address,
                     instructions:instructions,
+                    preparation:preparation,
                     geospatial:location,
                     maxAttendeesLeft:maxAttendees,
                     price:price,

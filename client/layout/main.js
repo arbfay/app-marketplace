@@ -34,6 +34,26 @@ Template.mainParallax.onCreated(()=>{
 
 Template.lessonsExample.helpers({
   results : function(){
-    return Lessons.find({},{limit:3});
+    var now = moment().valueOf();
+    return Lessons.find({date:{$gt:now}},{sort:{date:1},limit:3});
   }
-})
+});
+
+Template.newsletterForm.events({
+  "submit form" : (event, template)=>{
+    event.preventDefault();
+
+    var zip = event.target.zip.value;
+    var email = event.target.email.value;
+
+    Meteor.call("newsletterSubscribe", zip, email, (err,res)=>{
+      if(err){
+        Materialize.toast('Erreur');
+      } else {
+        Materialize.toast('Succès');
+        event.target.zip.value='';
+        event.target.email.value='';
+      }
+    });
+  }
+});

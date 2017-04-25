@@ -68,7 +68,7 @@ Template.signupForm.events({
       if(err){
         console.log(err);
       } else {
-        inserUP(Meteor.userId(),email,"","");
+        insertUP(Meteor.userId(),email,"","");
       }
     });
   },
