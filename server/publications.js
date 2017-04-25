@@ -86,7 +86,7 @@ Meteor.publish('namesOfUser', function(email){
 });
 
 Meteor.publish('userNames', function(email){
-  return UserProfiles.find({email : email},{fields:{firstName:1,lastName:1}});
+  return UserProfiles.find({email : email},{fields:{firstName:1,lastName:1,email:1}});
 });
 
 Meteor.publish('reservationById', function(id){

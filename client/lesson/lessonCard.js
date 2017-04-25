@@ -94,7 +94,6 @@ Template.lessonCard2.helpers({
     return profile.firstName+" "+profile.lastName;
   },
   coachImgUrl : function(){
-    Meteor.subscribe("coachBasics", this.coachEmail);
     var coach = Coaches.findOne({email:this.coachEmail});
     return coach.imgUrl;
   }
